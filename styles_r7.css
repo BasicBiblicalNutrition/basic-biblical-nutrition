@@ -1158,14 +1158,9 @@ footer{
     margin:15px 0;
 }
 
+/* Hide normal navigation on phones */
 .banner-nav{
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:18px;
-}
-
-.banner-nav a{
-    font-size:1.2rem;
+    display:none;
 }
 
 .banner-brand h1{
