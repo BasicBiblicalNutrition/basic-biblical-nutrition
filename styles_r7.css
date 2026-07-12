@@ -1198,14 +1198,18 @@ footer{
 }
 
 .bbn-menu-toggle{
-
+    display:block !important;
+    background:red !important;
+    color:white !important;
+    font-size:40px !important;
+}
+/*
+.bbn-menu-toggle{
     display:block;
-
     position:absolute;
-
     top:18px;
     right:18px;
-
     z-index:9999;
-}
+}  */
+
 }
