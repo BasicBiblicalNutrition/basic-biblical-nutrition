@@ -89,16 +89,15 @@ body{
 }
 
 .banner-overlay{
+    position:relative;
+
     width:100%;
     max-width:1180;   /* 1400px;  */
     margin:0 auto;
-
    transform: translateY(10px);
-
     display:flex;
     align-items:center;
     justify-content:flex-start;
-
     padding:0 40px;
 }
 
@@ -1198,10 +1197,20 @@ footer{
 }
 
 .bbn-menu-toggle{
-    display:block !important;
-    background:red !important;
-    color:white !important;
-    font-size:40px !important;
+    display:block;
+    position:absolute;
+    top:20px;
+    right:20px;
+    background:#F8F3E7;
+    color:#5B3D18;
+    border:1px solid #C6B17A;
+    border-radius:12px;
+    padding:10px 14px;
+    font-size:1.8rem;
+    line-height:1;
+    cursor:pointer;
+    box-shadow:0 3px 10px rgba(0,0,0,.18);
+    z-index:9999;
 }
 /*
 .bbn-menu-toggle{
