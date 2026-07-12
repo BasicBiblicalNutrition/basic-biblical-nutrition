@@ -1112,7 +1112,7 @@ footer{
  Tablet
 =====================================================*/
 
-@media (max-width:700px){
+@media (max-width:1100px){
 
 .banner{
     grid-template-columns:140px 1fr;
