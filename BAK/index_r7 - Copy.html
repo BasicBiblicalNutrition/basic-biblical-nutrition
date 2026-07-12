@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+=====================================================
+Basic Biblical Nutrition
+Home Page - R2a
+
+Version History
+R1  - Initial Cleanup
+R2  - SEO + Semantic HTML5 + CSS Variables
+R2a - Removed float layout, Flexbox conversion,
+      responsive breakpoints, card layout fix
+R2a_build_2  Changed HTML to have real text and images
+R3  -  Adding fading 'hero' images and adding powered by AI Dragon Werx at bottom of page and created really classy banner
+R4  - Changing out middle section to have a 'What is BFN?" and "Guided by Faith..." sections on left and the "Take Two" on the right.
+R5  - Adding tooltip shells
+R6 - About section
+R7 - Build 'take 2'
+
+=====================================================
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Basic Biblical Nutrition | Functional Nutrition Through a Biblical Lens</title>
+<meta name="description" content="Functional Nutrition from a biblical perspective.">
+
+<link rel="stylesheet" href="styles_r7.css">
+</head>
+<body>
+
+<!--=====================================================
+    COMPONENT
+    Premium Banner Header
+    Version 1.0
+=====================================================-->
+
+<header class="banner-header">
+  <div class="header-container">
+
+    <div class="banner-overlay">
+
+        <!-- Logo -->
+
+        <div class="banner-logo">
+
+            <a href="index_r3.html">
+
+                <img src="images/Banner/logoOnly_2.png"
+                     alt="Basic Biblical Nutrition">
+
+            </a>
+
+        </div>
+
+        <!-- Site Title -->
+
+        <div class="banner-brand">
+
+            <h1>BASIC </h1> 
+            <h1>BIBLICAL</h1>
+            <h2>NUTRITION</h2>
+
+            <p>Nourishing Body. Mind. Spirit.</p>
+
+        </div>
+
+        <!-- Divider -->
+
+        <div class="banner-divider"></div>
+
+        <!-- Navigation -->
+
+        <nav class="banner-nav">
+
+            <ul>
+
+                <li><a class="active" href="index_r3.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+
+                <li class="dropdown accessibility-menu">
+                  <a href="accessibility.html" aria-haspopup="true" aria-expanded="false">
+                  ♿ Accessibility
+                </a>
+
+                  <ul class="dropdown-content">
+                      <li><a href="#"><span class="icon">A+</span> Increase Text Size</a></li>
+                      <li><a href="#"><span class="icon">◐</span> High Contrast</a></li>
+                      <li><a href="#"><span class="icon">Aa</span> Dyslexia-Friendly Font</a></li>
+                      <li><a href="#"><img src="images/Banner/snail_3.png" class="menu-icon" alt=""> Reduce Motion</a></li>
+                      <li><a href="#"><span class="icon">📖</span> Accessibility Statement</a></li>
+                     <li><a href="#"><span class="icon">✉</span> Contact for Assistance</a></li>
+                  </ul>
+               </li>
+            </ul>
+
+        </nav>
+
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1>Functional Nutrition Through a Biblical Lens</h1>
+
+    <div class="hero-image-container">
+
+    <img class="hero-image active"
+         src="images/TopImages/oliveTrees_8.png"
+         alt="Olive Trees">
+
+    <img class="hero-image"
+         src="images/TopImages/lighthouseSunset.png"
+         alt="Lighthouse Sunset">
+
+    <img class="hero-image"
+         src="images/TopImages/Fall_Leaves_3.png"
+         alt="Fall Leaves">
+
+    <img class="hero-image"
+         src="images/TopImages/WinterPainting_7.png"
+         alt="Winter Painting">
+
+    <img class="hero-image"
+         src="images/TopImages/TexasSpring_5.png"
+         alt="Texas Spring">
+
+
+    </div>
+
+    <h2>"Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God."</h2>
+
+    <p class="scripture-reference">1 Corinthians 10:31 KJV</p>
+
+    <p>
+      Helping you restore health, renew energy, and honor God with your body.
+    </p>
+
+
+
+  <!-- GUIDED BY FAITH SECTION -->
+<!-- ==========================================================
+     COMPONENT: Home Overview
+     PURPOSE : Home page introduction
+     FUTURE : Left side loaded from XML
+              Right side loaded from XML
+     VERSION : 0.1
+========================================================== -->
+
+<section class="home-overview">
+
+    <!-- LEFT COLUMN -->
+
+    <div class="overview-left">
+
+        <article class="overview-panel">
+
+            <h2>What is Biblical Functional Nutrition?</h2>
+
+            <p>
+                Biblical Functional Nutrition combines modern science with
+                timeless biblical principles to help uncover the root causes of
+                health concerns while honoring God's design...
+            </p>
+
+            <a href="#" class="read-more">
+                Read More...
+            </a>
+
+        </article>
+
+        <article class="overview-panel guided-panel">
+
+           <div class="guided-header">
+                <h2>Guided by Faith, Governed by Nature</h2>
+           </div>
+
+          <div class="guided-layout">
+
+          <div class="guided-image">
+            <img src="images/GovByNature_6.png"
+                 alt="Guided by Faith Governed by Nature"
+                 class="feature-image">
+
+                <!-- Scripture Discovery Hotspot -->
+                <div class="bbn-hotspot debug"
+                    data-bbn-type="scripture"
+                    data-bbn-id="IS_58_11"
+                    style="left:69%; top:80%; width:30%; height:7%; transform:rotate(-11deg);">
+                    
+                </div>
+
+                <div class="bbn-hotspot debug"
+                    data-bbn-type="scripture"
+                    data-bbn-id="MT_5_16"
+                    style="left:70%; top:35%; width:22%; height:10%; transform:rotate(0deg);">
+                    
+                </div>
+
+          </div>
+
+          <div class="guided-text">
+
+             <p>
+                We believe our bodies are temples deserving of nourishment that
+                honors our Creator. Functional Nutrition seeks to identify
+                underlying contributors to health concerns while respecting
+                God's design...
+             </p>
+
+             <a href="#" class="read-more">
+                Read More...
+             </a>
+
+           </div>
+
+          </div>
+        </article>
+
+<!--======================================================
+  ABOUT TRACEY
+=======================================================-->
+<article class="overview-panel about-tracey">
+
+    <div class="about-tracey-content">
+
+        <div class="about-photo">
+            <img src="images/Romeo_n_Me_2.png"
+                 alt="Tracey - Basic Biblical Nutrition">
+        </div>
+
+        <div class="about-text">
+
+            <h2>My Journey</h2>
+
+            <p>
+                Hi! I am Tracey Williams.  The founder of <strong>Basic Biblical Nutrition</strong>,
+                Functional Nutrition Counselor, researcher, and lifelong
+                student of God's incredible design.
+            </p>
+
+            <p>
+                I believe true health comes from understanding how the
+                body was created to work—and honoring the Creator who
+                designed it.
+            </p>
+
+             <a href="about.html" class="read-more">
+                Read More...
+             </a>
+
+        </div>
+
+    </div>
+
+  </article>
+
+</div>
+
+
+
+
+    <!-- RIGHT COLUMN -->
+
+    <aside class="take2">
+
+        <div class="take2-card-image">
+            <img src="images/matchaLatte_3.png"
+                 alt="Carotenoids">
+        </div>
+
+      <h2>Take 2... and Call Me in the Morning?</h2>
+      <p class="take2-card-date">
+            Have a question about supplements? Nutrition?  We answer it -- plain and simple.
+      </p>
+     <!--=====================================================
+       Take 2 Card
+       Temporary hard-coded content
+       FUTURE : Generated from JSON/XML
+     ======================================================-->
+
+     <div class="take2-list">
+      <article class="take2-card">
+        <div class="take2-card-content">
+            <h3 class="take2-card-title">
+            Do I Need To Have a Carotenoids Complex?
+            </h3>
+            <p class="take2-card-date">
+            March 2026
+            </p>
+
+            <p class="take2-card-summary">
+            Explore this micronutrient's benefits.
+            </p>
+
+            <a href="#"
+               class="take2-card-link">
+                Read More...
+            </a>
+        </div>
+
+        <div class="take2-card-image">
+            <img src="images/Take2/carotenoids.png"
+                 alt="Carotenoids">
+        </div>
+      </article>
+
+     <div class="take2-list">
+      <article class="take2-card">
+        <div class="take2-card-content">
+            <h3 class="take2-card-title">
+            Noni Fruit - Oh! Oh? What's That Smell?
+            </h3>
+            <p class="take2-card-date">
+            March 2026
+            </p>
+
+            <p class="take2-card-summary">
+            Let's look at this pungent fruit's benefits.
+            </p>
+
+            <a href="#"
+               class="take2-card-link">
+                Read More...
+            </a>
+        </div>
+
+        <div class="take2-card-image">
+            <img src="images/Take2/noniFruit.png"
+                 alt="Noni Fruit">
+        </div>
+      </article>
+
+     <div class="take2-list">
+      <article class="take2-card">
+        <div class="take2-card-content">
+            <h3 class="take2-card-title">
+            Creatine
+            </h3>
+            <p class="take2-card-date">
+            July 2026
+            </p>
+
+            <p class="take2-card-summary">
+            It's not just for bodybuilders...
+            </p>
+
+            <a href="#"
+               class="take2-card-link">
+                Read More...
+            </a>
+        </div>
+
+        <div class="take2-card-image">
+            <img src="images/Take2/creatine.png"
+                 alt="Creatine">
+        </div>
+      </article>
+
+     <div class="take2-list">
+      <article class="take2-card">
+        <div class="take2-card-content">
+            <h3 class="take2-card-title">
+            L-Theanine - Is It Rest For The Weary?
+            </h3>
+            <p class="take2-card-date">
+            Junw 2026
+            </p>
+
+            <p class="take2-card-summary">
+            What the research says about calm, focus and better sleep.
+            </p>
+
+            <a href="#"
+               class="take2-card-link">
+                Read More...
+            </a>
+        </div>
+
+        <div class="take2-card-image">
+            <img src="images/Take2/l_theanine.png"
+                 alt="L-Theanine">
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="take2-footer">
+        <button class="take2-button">
+            Ask Us
+        </button>
+        <button class="take2-button">
+            Show All
+        </button>
+    </div>
+
+
+    </aside>
+
+</section>
+
+
+
+
+
+
+
+
+  <!-- ==========================================================
+       COMPONENT: My Momma Never Told Me...
+       PURPOSE : Featured article carousel (HTML scaffold)
+       FUTURE : JavaScript + XML driven
+       ========================================================== -->
+<!-- ==========================================================
+     COMPONENT: Featured Article Carousel
+     PURPOSE : Featured educational articles
+     FUTURE : XML Driven
+     VERSION : 0.2
+========================================================== -->
+
+<section class="second feature-section">
+
+    <h2>My Momma Never Told Me...</h2>
+
+    <p class="section-intro">
+        Practical health topics with a little humor and a lot of science.
+    </p>
+
+  <div class="carousel-wrapper">
+     <button class="carousel-arrow left">&#10094;</button>
+
+
+    <div class="feature-carousel">
+
+        <!-- Card 1 -->
+
+        <article class="feature-card">
+
+            <img src="images/MommaNever/depression2.png"
+                 alt="Looking through a frosted window during winter."
+                 class="feature-image depression-image">
+
+            <p class="feature-category">
+                Mental Wellness
+            </p>
+
+            <h3>
+                Depression
+            </h3>
+
+            <p class="feature-meta">
+                03-2026 • Tracey W.
+            </p>
+
+            <p class="feature-summary">
+                Sometimes winter isn't just outside the window. Learn how nutrition,
+                light, movement and hope work together.
+            </p>
+
+            <a href="#" class="read-more">
+                Read More
+            </a>
+
+        </article>
+
+        <!-- Card 2 -->
+
+        <article class="feature-card">
+
+            <img src="images/MommaNever/RollTheBones.png"
+                 alt="Skeleton in tuxedo rolling dice."
+                 class="feature-image">
+
+            <p class="feature-category">
+                Bone Health
+            </p>
+
+            <h3>
+                My Skeleton Was Rolling Dice Behind My Back
+            </h3>
+
+            <p class="feature-meta">
+                06-2026 • Tracey W.
+            </p>
+
+            <p class="feature-summary">
+                Bone loss doesn't happen overnight. Discover why your skeleton deserves
+                attention long before something breaks.
+            </p>
+
+            <a href="#" class="read-more">
+                Read More
+            </a>
+
+        </article>
+
+        <!-- Card 3 -->
+
+        <article class="feature-card">
+
+            <img src="images/MommaNever/TheBalance.png"
+                 alt="Feet balancing on a rope toward the sunrise."
+                 class="feature-image">
+
+            <p class="feature-category">
+                Bone Health
+            </p>
+
+            <h3>
+                Your Toes Are Supposed Be Able To Do What?
+            </h3>
+
+            <p class="feature-meta">
+                07-2026 • Tracey W.
+            </p>
+
+            <p class="feature-summary">
+                Your toes are working every second to keep you upright. Learn why healthy
+                feet are the foundation of lifelong balance.
+            </p>
+
+            <a href="#" class="read-more">
+                Read More
+            </a>
+
+        </article>
+
+        <!-- Card 4 -->
+
+        <article class="feature-card">
+
+            <img src="images/MommaNever/eye_Image2.png"
+                 alt="Eye health article coming soon."
+                 class="feature-image">
+
+            <p class="feature-category">
+                Eye Health
+            </p>
+
+            <h3>
+                Seeing Life Clearly
+            </h3>
+
+            <p class="feature-meta">
+                Coming August 2026
+            </p>
+
+            <p class="feature-summary">
+                Discover the nutrients that help protect your vision as you age.
+            </p>
+
+        </article>
+    </div>
+
+  <button class="carousel-arrow right">&#10095;</button>
+  </div>
+
+</section>
+
+
+
+  <!-- TESTIMONIALS -->
+  <section class="second">
+    <h2>What Clients Are Saying</h2>
+
+    <div class="testimonial">
+      “I received and read your suggestions and love them!” — Linda C.
+    </div>
+
+    <div class="testimonial">
+      “This approach changed everything for me—physically and spiritually.”
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <section class="cta">
+    <h2>Ready to Begin?</h2>
+    <a href="contact.html" class="button">Book Your Call</a>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 Basic Biblical Nutrition. All rights reserved.</p>
+  <p>Educational information only. Not medical advice.</p>
+
+  Designed and built with AI assistance.<br>
+  Powered by
+  <a href="ai_dragon_werx.html" target="_blank"> AI Dragon Werx™
+  </a>
+</footer>
+
+<script src="script_r7.js"></script>
+<script src="bbn_tooltips.js"></script>
+</body>
+</html>

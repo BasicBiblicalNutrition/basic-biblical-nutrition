@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+=====================================================
+Basic Biblical Nutrition
+Home Page - R2a
+
+Version History
+R1  - Initial Cleanup
+R2  - SEO + Semantic HTML5 + CSS Variables
+R2a - Removed float layout, Flexbox conversion,
+      responsive breakpoints, card layout fix
+
+=====================================================
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Basic Biblical Nutrition | Functional Nutrition Through a Biblical Lens</title>
+<meta name="description" content="Functional Nutrition from a biblical perspective.">
+
+<link rel="stylesheet" href="styles_r2a.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+
+    <!-- MAIN NAVIGATION -->
+    <nav>
+      <div class="logo">
+        <img src="images/logo_sm2.png" alt="Basic Biblical Nutrition Logo">
+      </div>
+
+      <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <div class="underline" id="underline"></div>
+      </div>
+    </nav>
+
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <h1>Functional Nutrition Through a Biblical Lens</h1>
+
+    <img src="images/oliveTrees.png" alt="Olive Trees">
+
+    <h2>"Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God."</h2>
+
+    <p class="scripture-reference">1 Corinthians 10:31 KJV</p>
+
+    <p>
+      Helping you restore health, renew energy, and honor God with your body.
+    </p>
+
+    <a href="services.html" class="button">Start Your Journey</a>
+  </section>
+
+  <!-- GUIDED BY FAITH SECTION -->
+  <section class="first">
+
+    <div class="image-column">
+      <img src="images/GovByNature.png"
+           alt="Guided by Faith Governed by Nature"
+           class="feature-image">
+    </div>
+
+    <div class="text-column">
+      <h2>Guided by Faith, Governed by Nature</h2>
+
+      <p>
+        We believe our bodies are temples deserving of nourishment that honors
+        our Creator. Functional Nutrition seeks to identify underlying
+        contributors to health concerns while respecting God's design.
+      </p>
+
+      <a href="contact.html" class="button">Discover Our Philosophy</a>
+    </div>
+
+  </section>
+
+  <!-- ==========================================================
+       COMPONENT: My Momma Never Told Me...
+       PURPOSE : Featured article carousel (HTML scaffold)
+       FUTURE : JavaScript + XML driven
+       ========================================================== -->
+  <section class="second momma-section">
+    <h2>My Momma Never Told Me...</h2>
+    <p class="section-intro">Practical health topics with a little humor and a lot of science.</p>
+    <div class="momma-carousel">
+      <article class="momma-card"><div class="image-placeholder">Winter Image</div><h3>Depression</h3><p>Coming Soon</p></article>
+      <article class="momma-card"><div class="image-placeholder">Skeleton</div><h3>My Skeleton Was Rolling Dice Behind My Back</h3><p>Bone Health</p></article>
+      <article class="momma-card"><div class="image-placeholder">Feet</div><h3>Balance & Toes</h3><p>Bone Health Series</p></article>
+      <article class="momma-card"><div class="image-placeholder">Eyes</div><h3>Eye Health</h3><p>Coming in August</p></article>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="second">
+    <h2>What Clients Are Saying</h2>
+
+    <div class="testimonial">
+      “I received and read your suggestions and love them!” — Linda C.
+    </div>
+
+    <div class="testimonial">
+      “This approach changed everything for me—physically and spiritually.”
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <section class="cta">
+    <h2>Ready to Begin?</h2>
+    <a href="contact.html" class="button">Book Your Call</a>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 Basic Biblical Nutrition. All rights reserved.</p>
+  <p>Educational information only. Not medical advice.</p>
+</footer>
+
+<script src="script_r2a.js"></script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+/*
+=====================================================
+Basic Biblical Nutrition
+Stylesheet R1
+
+SECTION INDEX
+
+01 - Global
+02 - Navigation
+03 - Hero
+04 - Buttons
+05 - Content Sections
+06 - Cards
+07 - Testimonials
+08 - CTA
+09 - Footer
+10 - Responsive
+
+=====================================================
+*/
+
+/* 01 - GLOBAL */
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  color: #2c2c2c;
+  background: #f4f2ea;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* 02 - NAVIGATION */
+
+nav {
+  position: sticky;
+  top: 0;
+  background: #f4f2ea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  position: relative;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+}
+
+.underline {
+  position: absolute;
+  bottom: -5px;
+  height: 2px;
+  background: #4a7c59;
+  transition: all 0.3s ease;
+}
+
+/* 03 - HERO */
+
+.hero {
+  text-align: center;
+  background: linear-gradient(to bottom,#f4f2ea,#ffffff);
+}
+
+.hero img {
+  width: 100%;
+  height: auto;
+  max-width: 1180px;
+}
+
+.hero h1 {
+  font-size: 3.2em;
+}
+
+/* 04 - BUTTONS */
+
+.button {
+  background: #6f8f72;
+  color: white;
+  padding: 14px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* 05 - CONTENT SECTIONS */
+
+.first,
+.second {
+  text-align: center;
+  margin: auto;
+}
+
+.first {
+  max-width: 800px;
+  padding: 20px;
+}
+
+.second {
+  max-width: 820px;
+  padding: 40px;
+}
+
+.feature-image {
+  float: left;
+  margin-left: 15px;
+  margin-right: 70px;
+  max-width: 408px;
+  width: 100%;
+  height: auto;
+}
+
+/* 06 - CARDS */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(225px,1fr));
+  gap: 30px;
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+}
+
+/* 07 - TESTIMONIALS */
+
+.testimonial {
+  font-style: italic;
+  background: #fff;
+  padding: 25px;
+  border-left: 4px solid #6f8f72;
+  margin-bottom: 20px;
+}
+
+/* 08 - CTA */
+
+.cta {
+  text-align: center;
+}
+
+/* 09 - FOOTER */
+
+footer {
+  text-align: center;
+  padding: 10px;
+  color: #888;
+}
+
+/* 10 - RESPONSIVE */
+
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width:768px) {
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    flex-direction: column;
+    width: 200px;
+    background: white;
+    padding: 20px;
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .feature-image {
+    float: none;
+    margin: 0 auto 20px auto;
+    display: block;
+  }
+}

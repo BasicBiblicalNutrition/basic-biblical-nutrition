@@ -1,0 +1,171 @@
+/*
+=====================================================
+Basic Biblical Nutrition
+Stylesheet R2
+
+01 Variables
+02 Global
+03 Navigation
+04 Hero
+05 Buttons
+06 Content Sections
+07 Cards
+08 Testimonials
+09 Footer
+10 Responsive
+=====================================================
+*/
+
+:root {
+  --bbn-bg: #f4f2ea;
+  --bbn-green: #6f8f72;
+  --bbn-dark: #2c2c2c;
+  --bbn-light: #ffffff;
+}
+
+body {
+  margin: 0;
+  background: var(--bbn-bg);
+  color: var(--bbn-dark);
+  font-family: Inter, sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  background: var(--bbn-bg);
+  z-index: 100;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  position: relative;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--bbn-dark);
+}
+
+.underline {
+  position: absolute;
+  bottom: -5px;
+  height: 2px;
+  background: var(--bbn-green);
+}
+
+.hero {
+  text-align: center;
+}
+
+.hero img {
+  width: 100%;
+  max-width: 1180px;
+  height: auto;
+}
+
+.scripture-reference {
+  font-style: italic;
+}
+
+.button {
+  background: var(--bbn-green);
+  color: white;
+  text-decoration: none;
+  padding: 14px 30px;
+  border-radius: 30px;
+  display: inline-block;
+}
+
+.first,
+.second {
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+  padding: 30px;
+}
+
+.feature-image {
+  max-width: 408px;
+  width: 100%;
+  height: auto;
+  float: left;
+  margin-right: 50px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+  gap: 30px;
+}
+
+.card,
+.testimonial {
+  background: var(--bbn-light);
+  padding: 25px;
+  border-radius: 12px;
+}
+
+.card {
+  box-shadow: 0 10px 20px rgba(0,0,0,.15);
+}
+
+.testimonial {
+  border-left: 4px solid var(--bbn-green);
+  margin-bottom: 20px;
+}
+
+.cta,
+footer {
+  text-align: center;
+}
+
+.footer-note {
+  font-size: .9rem;
+  color: #777;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .feature-image {
+    float: none;
+    display: block;
+    margin: 0 auto 20px;
+  }
+}
