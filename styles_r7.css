@@ -1173,7 +1173,12 @@ footer{
     text-align:center;
     padding:25px 15px;
 }
-
+.banner-overlay{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    padding:12px 16px;
+}
 .banner-logo img{
     width:120px;
 }
@@ -1198,20 +1203,17 @@ footer{
 
 .bbn-menu-toggle{
     display:block;
-    position:absolute;
-    top:10px;
-    right:0px;
+    position:static;
+    margin-left:auto;
+
     background:#F8F3E7;
     color:#5B3D18;
     border:1px solid #C6B17A;
-    border-radius:12px;
-    padding:10px 14px;
-    font-size:1.8rem;
-    line-height:1;
-    cursor:pointer;
-    box-shadow:0 3px 10px rgba(0,0,0,.18);
-    z-index:9999;
+    border-radius:10px;
+    padding:8px 12px;
+    font-size:1.5rem;
 }
+
 /*
 .bbn-menu-toggle{
     display:block;
