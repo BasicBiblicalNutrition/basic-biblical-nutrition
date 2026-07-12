@@ -1199,8 +1199,8 @@ footer{
 .bbn-menu-toggle{
     display:block;
     position:absolute;
-    top:20px;
-    right:10px;
+    top:10px;
+    right:30px;
     background:#F8F3E7;
     color:#5B3D18;
     border:1px solid #C6B17A;
