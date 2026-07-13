@@ -84,7 +84,7 @@ body{
 
 .header-container{
     width:100%;
-    max-width:1180;   /* 1400px;  */
+    max-width:1180px;   /* 1400px;  */
     margin:0 auto;
 }
 
@@ -92,7 +92,7 @@ body{
     position:relative;
 
     width:100%;
-    max-width:1180;   /* 1400px;  */
+    max-width:1180px;   /* 1400px;  */
     margin:0 auto;
    transform: translateY(10px);
     display:flex;
