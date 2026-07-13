@@ -1224,7 +1224,7 @@ footer{
 /* Desktop Navigation */
 
 .banner-nav{
-    display:none;
+    display:none !important;
 }
 
 /* Hamburger */
