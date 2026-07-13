@@ -1234,8 +1234,8 @@ footer{
 
 .bbn-menu-toggle{
     position: absolute;
-    top: 16px;      /* adjust until it sits in the sun */
-    right: 18px;
+    top: 20px;      /* adjust until it sits in the sun */
+    right: 15px;
     z-index: 1000;
 
     display:flex;
