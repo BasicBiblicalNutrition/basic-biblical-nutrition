@@ -166,7 +166,7 @@ margin-left:150px;
     top:-70px;      /* Move navigation up */
 }
 
-.banner-nav > ul{
+.banner-nav ul{
     display:flex;
     flex-direction:row;
     justify-content:flex-start;
@@ -1172,7 +1172,7 @@ footer{
 /* Header */
 
 .banner-header{
-    height:160ox;
+    height:160px;
 }
 
 .header-container{
