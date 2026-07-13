@@ -102,9 +102,9 @@ body{
 }
 
 .banner-logo {
-    transform:none;
+    transform:translateY(-12px);
     margin:0;
-    padding-top:8px;
+    padding-top:0;
 }
 
 .banner-logo img{
