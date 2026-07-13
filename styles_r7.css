@@ -1179,12 +1179,22 @@ footer{
     align-items:flex-start;
     padding:12px 16px;
 }
-.banner-logo img{
-    width:120px;
+.banner-logo{
+    flex:0 0 auto;
 }
 
+.banner-logo img{
+    width:80px;
+}
+
+/*
 .banner-brand{
     margin:15px 0;
+}   */
+
+.banner-brand{
+    flex:1;
+    margin:15px 10px;
 }
 
 /* Hide normal navigation on phones */
@@ -1193,12 +1203,12 @@ footer{
 }
 
 .banner-brand h1{
-    font-size:2.3rem;
+    font-size:2rem;
 }
 
 .banner-brand h2{
-    font-size:1.8rem;
-    letter-spacing:4px;
+    font-size:1.5rem;
+    letter-spacing:2px;
 }
 
 .bbn-menu-toggle{
