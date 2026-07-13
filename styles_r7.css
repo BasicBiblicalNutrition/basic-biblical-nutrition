@@ -163,7 +163,7 @@ body{
 
 .banner-nav{
     position:relative;
-    top:-50px;      /* Move navigation up */
+    top:20px;      /* Move navigation up */
 }
 
 .banner-nav ul{
