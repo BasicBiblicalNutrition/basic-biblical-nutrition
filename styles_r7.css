@@ -1167,71 +1167,86 @@ footer{
 
 @media (max-width:700px){
 
-.banner{
-    display:flex;
-    flex-direction:column;
-    text-align:center;
-    padding:25px 15px;
+/* Header */
+
+.banner-header{
+    height:auto;
+    min-height:180px;
 }
+
+.header-container{
+    width:100%;
+}
+
 .banner-overlay{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    padding:12px 16px;
+    display:grid;
+    grid-template-columns:70px 1fr 52px;
+    align-items:start;
+
+    padding:16px;
+    transform:none;
 }
+
+/* Logo */
+
 .banner-logo{
-    flex:0 0 auto;
+    transform:none;
+    margin:0;
 }
 
 .banner-logo img{
-    width:80px;
+    width:65px;
 }
 
-/*
-.banner-brand{
-    margin:15px 0;
-}   */
+/* Site Title */
 
 .banner-brand{
-    flex:1;
-    margin:15px 10px;
-}
-
-/* Hide normal navigation on phones */
-.banner-nav{
-    display:none;
+    margin:0 12px;
 }
 
 .banner-brand h1{
     font-size:2rem;
+    line-height:.9;
 }
 
 .banner-brand h2{
-    font-size:1.5rem;
-    letter-spacing:2px;
+    font-size:1.45rem;
+    letter-spacing:3px;
 }
 
-.bbn-menu-toggle{
-    display:block;
-    position:static;
-    margin-left:auto;
+.banner-brand p{
+    margin-top:18px;
+    font-size:1rem;
+}
 
+/* Divider */
+
+.banner-divider{
+    display:none;
+}
+
+/* Desktop Navigation */
+
+.banner-nav{
+    display:none;
+}
+
+/* Hamburger */
+
+.bbn-menu-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:46px;
+    height:46px;
+    margin:0;
     background:#F8F3E7;
     color:#5B3D18;
     border:1px solid #C6B17A;
     border-radius:10px;
-    padding:8px 12px;
     font-size:1.5rem;
+    box-shadow:0 3px 10px rgba(0,0,0,.18);
+    cursor:pointer;
 }
 
-/*
-.bbn-menu-toggle{
-    display:block;
-    position:absolute;
-    top:18px;
-    right:18px;
-    z-index:9999;
-}  */
-
 }
-
