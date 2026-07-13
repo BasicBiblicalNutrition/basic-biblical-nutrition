@@ -102,7 +102,7 @@ body{
 }
 
 .banner-logo {
-    transform:translateY(-1px);
+    transform:translateY(-12px);
     margin:0;
     padding-top:0;
 }
@@ -1188,11 +1188,12 @@ footer{
 
 .banner-logo img{
     width:50px;
-}
+}  
 
+/*
 .banner-logo img{
     width:65px;
-}
+}  */
 
 /* Site Title */
 
