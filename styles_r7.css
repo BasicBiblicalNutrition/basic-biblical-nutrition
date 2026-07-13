@@ -1172,7 +1172,9 @@ footer{
 /* Header */
 
 .banner-header{
-    height:90px;    
+    height:110px;   
+    background-position: center;
+    background-size: cover; 
 }
 
 .header-container{
