@@ -1191,7 +1191,8 @@ footer{
 
 .banner-logo{
     transform:none;
-    margin:0;
+    /* margin:0; */
+    margin-top:12px;
 }
 
 .banner-logo img{
@@ -1201,7 +1202,8 @@ footer{
 /* Site Title */
 
 .banner-brand{
-    margin:0 12px;
+    /* margin:0 12px;  &/
+    margin-top:12px;
 }
 
 .banner-brand h1{
@@ -1225,6 +1227,11 @@ footer{
     display:none;
 }
 
+.banner-brand p{
+    font-size:.9rem;
+    text-align:center;
+}
+
 /* Desktop Navigation */
 
 .banner-nav{
@@ -1239,7 +1246,8 @@ footer{
     justify-content:center;
     width:46px;
     height:46px;
-    margin:0;
+    /*  margin:0;   */
+    margin-top:8px;
     background:#F8F3E7;
     color:#5B3D18;
     border:1px solid #C6B17A;
