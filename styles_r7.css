@@ -1272,13 +1272,19 @@ footer{
     flex-direction:column;
 }
 
+/* Guided by Faith image */
+.about-photo,
 .guided-image{
-    flex:none;
-    width:100%;
+    width:220px;
+    margin:0 auto;
 }
 
+.about-photo img,
 .guided-image img{
     width:100%;
+    height:auto;
+    display:block;
+    border-radius:16px;
 }
 
 .about-tracey-content{
@@ -1286,15 +1292,6 @@ footer{
     text-align:center;
 }
 
-.about-photo{
-    flex:none;
-    width:220px;
-    margin:0 auto;
-}
-
-.about-photo img{
-    width:100%;
-}
 
 .about-text{
     text-align:left;
