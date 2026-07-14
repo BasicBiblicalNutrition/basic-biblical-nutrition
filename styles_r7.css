@@ -1254,4 +1254,56 @@ footer{
     cursor:pointer;
 }
 
+/*=====================================================
+  Home Overview - Mobile
+=====================================================*/
+
+.home-overview{
+    grid-template-columns:1fr;
+    gap:28px;
+}
+
+.overview-left,
+.take2{
+    width:100%;
+}
+
+.guided-layout{
+    flex-direction:column;
+}
+
+.guided-image{
+    flex:none;
+    width:100%;
+}
+
+.guided-image img{
+    width:100%;
+}
+
+.about-tracey-content{
+    flex-direction:column;
+    text-align:center;
+}
+
+.about-photo{
+    flex:none;
+    width:220px;
+    margin:0 auto;
+}
+
+.about-photo img{
+    width:100%;
+}
+
+.about-text{
+    text-align:left;
+}
+
+.take2{
+    margin-top:10px;
+}
+
+
+
 }
