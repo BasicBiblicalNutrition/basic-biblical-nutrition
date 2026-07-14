@@ -1301,6 +1301,35 @@ footer{
     margin-top:10px;
 }
 
+/*=====================================================
+  Take 2 - Mobile
+=====================================================*/
 
+.take2-carousel{
+    height:auto;
+}
+
+.take2-list{
+    display:flex;
+    flex-direction:row;
+    gap:18px;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;
+
+    scrollbar-width:none;
+}
+
+.take2-list::-webkit-scrollbar{
+    display:none;
+}
+
+.take2-card{
+    flex:0 0 88%;
+    scroll-snap-align:start;
+}
 
 }
