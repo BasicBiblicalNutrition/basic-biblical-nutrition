@@ -29,6 +29,15 @@ body{
   line-height:1.7;
 }
 
+h2{
+    font-family:"Cormorant Garamond", serif;
+    font-size:3rem;
+    font-weight:600;
+    color:#5B4A1F;
+    line-height:1.15;
+    margin:0 0 20px;
+}
+
 .container{
   max-width:1200px;
   margin:0 auto;
@@ -412,6 +421,7 @@ body.reduce-motion *{
   Dyslexia-Friendly Font
 -----------------------------------------------------*/
 
+/*
 body.dyslexia-font{
     font-family: Arial, Verdana, Tahoma, sans-serif;
     letter-spacing: 0.06em;
@@ -423,7 +433,7 @@ body.dyslexia-font p,
 body.dyslexia-font li{
     max-width: 75ch;
 }
-
+*/
 
 
 
