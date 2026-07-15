@@ -1378,6 +1378,18 @@ footer{
     flex-direction:column;
 }
 
+.guided-text{
+    width:100%;
+}
+
+.guided-header{
+    text-align:center;
+}
+
+.guided-text p{
+    text-align:left;
+}
+
 /* Guided by Faith image */
 .about-photo,
 .guided-image{
