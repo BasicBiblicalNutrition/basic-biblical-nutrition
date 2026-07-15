@@ -383,7 +383,17 @@ body.high-contrast .services-card{
     border:2px solid #fff;
 }
 
+body.high-contrast .overview-panel{
+    background:#111;
+    border:2px solid #fff;
+    color:#fff;
+}
 
+body.high-contrast .overview-panel p,
+body.high-contrast .overview-panel h2,
+body.high-contrast .overview-panel a{
+    color:#fff;
+}
 
 
 
