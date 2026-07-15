@@ -1380,7 +1380,16 @@ footer{
 }
 
 .guided-layout{
+    display:flex;
     flex-direction:column;
+    align-items:center;
+}
+
+.guided-image,
+.guided-text{
+    flex:none;
+    width:100%;
+    max-width:100%;
 }
 
 .guided-text{
