@@ -77,8 +77,11 @@ window.onload = () => {
 const heroImages = document.querySelectorAll(".hero-image");
 
 let currentHero = 0;
+let heroTimer;
 
-setInterval(() => {
+if (heroImages.length > 0) {
+
+  heroTimer = setInterval(() => {
 
     heroImages[currentHero].classList.remove("active");
 
@@ -90,8 +93,8 @@ setInterval(() => {
 
     heroImages[currentHero].classList.add("active");
 
-}, 12000);      // change every 12 seconds
-
+  }, 12000);      // change every 12 seconds
+}
 
 
 
@@ -231,26 +234,40 @@ function toggleHighContrast() {
 }
 
 /*-----------------------------------------------------
-  Reduce Motion
+  start/stop Motion
 -----------------------------------------------------*/
 
 function toggleMotion() {
-
-    document.body.classList.toggle("stop-motion");
 
     const label = document.getElementById("motionLabel");
 
     if (document.body.classList.contains("stop-motion")) {
 
-        label.textContent = "Start Motion";
+        document.body.classList.remove("stop-motion");
 
-         // Stop the hero slideshow here
+        heroTimer = setInterval(() => {
 
-    } else {
+            heroImages[currentHero].classList.remove("active");
+
+            currentHero++;
+
+            if (currentHero >= heroImages.length) {
+                currentHero = 0;
+            }
+
+            heroImages[currentHero].classList.add("active");
+
+        }, 12000);
 
         label.textContent = "Stop Motion";
 
-         // Restart the hero slideshow here
+    } else {
+
+        document.body.classList.add("stop-motion");
+
+        clearInterval(heroTimer);
+
+        label.textContent = "Start Motion";
 
     }
 
