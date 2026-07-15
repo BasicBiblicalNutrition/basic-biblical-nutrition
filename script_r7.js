@@ -205,6 +205,29 @@ function toggleLargeText() {
 
 }
 
+/*-----------------------------------------------------
+  High Contrast
+-----------------------------------------------------*/
 
+function toggleHighContrast() {
+
+    document.body.classList.toggle("high-contrast");
+
+    const icon = document.getElementById("contrastIcon");
+    const label = document.getElementById("contrastLabel");
+
+    if (document.body.classList.contains("high-contrast")) {
+
+        icon.textContent = "◑";
+        label.textContent = "Normal Contrast";
+
+    } else {
+
+        icon.textContent = "◐";
+        label.textContent = "High Contrast";
+
+    }
+
+}
 
 
