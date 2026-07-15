@@ -186,7 +186,7 @@ setupCarousel(
 
 function toggleLargeText() {
 
-    document.body.dropdown-content.toggle("large-text");
+    document.body.classList.toggle("large-text");
 
 }
 
