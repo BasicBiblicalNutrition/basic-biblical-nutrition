@@ -1360,9 +1360,14 @@ footer{
     cursor:pointer;
 }
 
+.container{
+    padding:10px;
+}
+
 /*=====================================================
   Home Overview - Mobile
 =====================================================*/
+
 
 .home-overview{
     grid-template-columns:1fr;
