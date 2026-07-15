@@ -1367,6 +1367,10 @@ footer{
 /*=====================================================
   Home Overview - Mobile
   border:3px solid red;
+
+  .overview-left{
+    border:3px solid blue;
+}
 =====================================================*/
 
 
@@ -1377,31 +1381,30 @@ footer{
     width:100%;
 }
 
-.overview-left{
-    border:3px solid blue;
-}
+
 
 .overview-left,
 .take2{
     width:100%;
 }
 
+
 .guided-layout{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+    display:block;
 }
 
-.guided-image,
-.guided-text{
-    flex:none;
-    width:100%;
+.guided-image{
+    width:220px;
     max-width:100%;
+    margin:0 auto 20px;
 }
 
 .guided-text{
+    display:block;
     width:100%;
 }
+
+
 
 .guided-header{
     text-align:center;
