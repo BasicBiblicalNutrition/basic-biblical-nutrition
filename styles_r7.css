@@ -1411,12 +1411,15 @@ footer{
     margin:0 auto;
 }
 
-.about-photo img,
-.guided-image img{
+.about-photo{
+    width:220px;
+    margin:0 auto;
+}
+
+.guided-image{
     width:100%;
-    height:auto;
-    display:block;
-    border-radius:16px;
+    max-width:220px;
+    margin:0 auto;
 }
 
 .about-tracey-content{
