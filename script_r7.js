@@ -234,19 +234,23 @@ function toggleHighContrast() {
   Reduce Motion
 -----------------------------------------------------*/
 
-function toggleReduceMotion() {
+function toggleMotion() {
 
-    document.body.classList.toggle("reduce-motion");
+    document.body.classList.toggle("stop-motion");
 
     const label = document.getElementById("motionLabel");
 
-    if (document.body.classList.contains("reduce-motion")) {
+    if (document.body.classList.contains("stop-motion")) {
 
-        label.textContent = "Normal Motion";
+        label.textContent = "Start Motion";
+
+         // Stop the hero slideshow here
 
     } else {
 
-        label.textContent = "Reduce Motion";
+        label.textContent = "Stop Motion";
+
+         // Restart the hero slideshow here
 
     }
 
