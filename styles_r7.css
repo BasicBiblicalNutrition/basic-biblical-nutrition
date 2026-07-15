@@ -584,7 +584,7 @@ body.dyslexia-font li{
 
 .overview-panel p,
 .guided-text p{
-    margin-top:20;
+    margin-top:20px;
     text-align: left;
 }
 
@@ -1439,6 +1439,20 @@ footer{
     width:100%;
     box-sizing:border-box;
 }
+
+.overview-panel{
+    display:block;
+    width:100%;
+    max-width:none;
+}
+
+.overview-panel h2,
+.overview-panel p{
+    width:100%;
+}
+
+
+
 
 .about-text{
     text-align:center;
