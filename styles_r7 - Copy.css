@@ -324,38 +324,6 @@ body{
 }
 
 
-
-
-
-
-
-/*=====================================================
-  COMPONENT
-  Accessibility
-=====================================================*/
-
-body.large-text{
-    font-size:1.15rem;
-}
-
-body.large-text p,
-body.large-text li,
-body.large-text a{
-    font-size:1.1em;
-}
-
-body.large-text h1{
-    font-size:3.2rem;
-}
-
-body.large-text h2{
-    font-size:2.3rem;
-}
-
-body.large-text h3{
-    font-size:1.6rem;
-}
-
 /* HERO */
 
 .hero{

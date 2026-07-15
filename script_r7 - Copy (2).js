@@ -179,17 +179,5 @@ setupCarousel(
 );
 
 
-/*=====================================================
-  COMPONENT
-  Accessibility
-=====================================================*/
-
-function toggleLargeText() {
-
-    document.body.classList.toggle("large-text");
-
-}
-
-
 
 
