@@ -1418,10 +1418,16 @@ footer{
 }
 
 .about-tracey-content{
+    display:flex;
     flex-direction:column;
+    align-items:center;
     text-align:center;
 }
 
+.overview-panel{
+    width:100%;
+    box-sizing:border-box;
+}
 
 .about-text{
     text-align:center;
@@ -1450,8 +1456,7 @@ footer{
 }
 
 .take2-card{
-    flex:0 0 100%;
-    scroll-snap-align:start;
+    flex:0 0 95%;
 }
 
 .take2-arrow{
