@@ -1426,7 +1426,7 @@ footer{
 }
 
 .take2-card{
-    flex:0 0 88%;
+    flex:0 0 100%;
     scroll-snap-align:start;
 }
 
