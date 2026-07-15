@@ -395,6 +395,33 @@ body.high-contrast .overview-panel a{
     color:#fff;
 }
 
+/*-----------------------------------------------------
+  Reduce Motion
+-----------------------------------------------------*/
+
+body.reduce-motion *{
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+}
+
+
+/*-----------------------------------------------------
+  Dyslexia-Friendly Font
+-----------------------------------------------------*/
+
+body.dyslexia-font{
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    letter-spacing: 0.06em;
+    word-spacing: 0.12em;
+    line-height: 1.8;
+}
+
+body.dyslexia-font p,
+body.dyslexia-font li{
+    max-width: 75ch;
+}
+
 
 
 

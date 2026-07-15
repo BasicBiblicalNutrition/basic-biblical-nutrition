@@ -230,4 +230,49 @@ function toggleHighContrast() {
 
 }
 
+/*-----------------------------------------------------
+  Reduce Motion
+-----------------------------------------------------*/
+
+function toggleReduceMotion() {
+
+    document.body.classList.toggle("reduce-motion");
+
+    const label = document.getElementById("motionLabel");
+
+    if (document.body.classList.contains("reduce-motion")) {
+
+        label.textContent = "Normal Motion";
+
+    } else {
+
+        label.textContent = "Reduce Motion";
+
+    }
+
+}
+
+
+/*-----------------------------------------------------
+  Dyslexia-Friendly Font
+-----------------------------------------------------*/
+
+function toggleDyslexiaFont() {
+
+    document.body.classList.toggle("dyslexia-font");
+
+    const label = document.getElementById("dyslexiaLabel");
+
+    if (document.body.classList.contains("dyslexia-font")) {
+
+        label.textContent = "Normal Font";
+
+    } else {
+
+        label.textContent = "Dyslexia-Friendly Font";
+
+    }
+
+}
+
 
