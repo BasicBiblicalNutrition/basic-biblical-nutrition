@@ -1371,10 +1371,15 @@ footer{
 
 
 .home-overview{
+    display:grid;
     grid-template-columns:1fr;
     gap:28px;
+    width:100%;
 }
 
+.overview-left{
+    border:3px solid blue;
+}
 
 .overview-left,
 .take2{
