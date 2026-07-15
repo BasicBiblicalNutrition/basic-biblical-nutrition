@@ -1372,7 +1372,18 @@ footer{
 .home-overview{
     grid-template-columns:1fr;
     gap:28px;
+    border:3px solid red;
 }
+
+.overview-left{
+    border:3px solid blue;
+}
+
+.take2{
+    border:3px solid green;
+}
+
+
 
 .overview-left,
 .take2{
