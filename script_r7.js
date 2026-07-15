@@ -186,6 +186,8 @@ setupCarousel(
 
 function toggleLargeText() {
 
+   alert("I got here!");
+   
     document.body.classList.toggle("large-text");
 
 }
