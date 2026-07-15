@@ -186,9 +186,22 @@ setupCarousel(
 
 function toggleLargeText() {
 
-   alert("I got here!");
-   
     document.body.classList.toggle("large-text");
+
+    const icon = document.getElementById("textSizeIcon");
+    const label = document.getElementById("textSizeLabel");
+
+    if (document.body.classList.contains("large-text")) {
+
+        icon.textContent = "A-";
+        label.textContent = "Normal Text Size";
+
+    } else {
+
+        icon.textContent = "A+";
+        label.textContent = "Increase Text Size";
+
+    }
 
 }
 
