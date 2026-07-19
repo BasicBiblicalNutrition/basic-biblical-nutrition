@@ -1489,6 +1489,10 @@ footer{
     max-width:none;
 }
 
+.overview-panel{
+    background:yellow;
+}
+
 .overview-panel h2,
 .overview-panel p{
     width:100%;
