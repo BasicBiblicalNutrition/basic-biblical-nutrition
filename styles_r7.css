@@ -72,24 +72,35 @@ body{
 
 .banner-header{
     width:100%;
-    max-width:none;   /* 1400px;  */
+    max-width:1180px;
     height:290px;
-
     margin:0 auto;
 
-    background:url("images/Banner/bannerBackground_3.png") center center no-repeat;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size:cover;
+    position:relative;
+    overflow:hidden;
 
     display:flex;
     align-items:center;
+}
+
+.banner-bg{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+    object-fit:fill;
+
+    z-index:0;
 }
 
 .header-container{
     width:100%;
     max-width:1180px;   /* 1400px;  */
     margin:0 auto;
+
+    position:relative;
+    z-index:1;
 }
 
 .banner-overlay{
@@ -102,7 +113,7 @@ body{
     display:flex;
     align-items:flex-start;
     justify-content:flex-start;
-    padding:0 40px;
+    padding:0 20px;
 }
 
 .banner-logo {
@@ -156,18 +167,24 @@ body{
     margin-right:55px;
 }
 
+/*
 .banner-nav{
 
-    margin-left:60px;
+    margin-left:30px;
     align-items:center;
     gap:32px;
 
     white-space:nowrap;
 }
-
+*/
 .banner-nav{
+    flex:1;
+    margin-left:0;
     position:relative;
-    top:45px;      /* Move navigation up */
+    top:45px;
+
+    display:flex;
+    justify-content:center;
 }
 
 .banner-nav ul{
@@ -239,7 +256,7 @@ body{
 
 .accessibility-menu{
     position:relative;
-    margin-left:40px;      /* Extra space after Contact */
+    margin-left:18px;      /* Extra space after Contact */
 }
 
 .accessibility-menu .dropdown-content{
