@@ -359,23 +359,15 @@ body.large-text{
     font-size:1.15rem;
 }
 
+
 body.large-text p,
-body.large-text li,
-body.large-text a{
+body.large-text li{
     font-size:1.1em;
 }
 
-body.large-text h1{
-    font-size:3.2rem;
-}
 
-body.large-text h2{
-    font-size:2.3rem;
-}
 
-body.large-text h3{
-    font-size:1.6rem;
-}
+
 
 /*-----------------------------------------------------
   High Contrast
@@ -396,6 +388,17 @@ body.high-contrast a{
     color:#fff;
 }
 
+body.high-contrast .banner-brand h1{
+    color:#5b6528;
+}
+
+body.high-contrast .banner-brand h2{
+    color:#5b3d18;
+}
+
+body.high-contrast .banner-brand p{
+    color:#5b3d18;
+}
 body.high-contrast .feature-card,
 body.high-contrast .take2-card,
 body.high-contrast .guided-section,
@@ -458,6 +461,29 @@ body.dyslexia-font li{
   max-width:1180px;
   height:auto;
 }
+
+.hero-scripture{
+    margin-bottom: 4px;
+}
+
+.scripture-reference{
+    margin-top: 0;
+    margin-bottom: 24px;
+
+    position: relative;
+    top: -12px;           /* move it UP */
+
+    width: 100%;
+    max-width: 1180px;
+
+    text-align: right;
+    
+
+    padding-right: 445px;   /* fine tune */
+    font-size: 1.1rem;
+}
+
+
 
 /*=====================================================
   COMPONENT
@@ -1454,6 +1480,7 @@ footer{
 .overview-panel{
     width:100%;
     box-sizing:border-box;
+
 }
 
 .overview-panel{
@@ -1467,7 +1494,9 @@ footer{
     width:100%;
 }
 
-
+.overview-panel p{
+    padding-left: 12px;
+}
 
 
 .about-text{
