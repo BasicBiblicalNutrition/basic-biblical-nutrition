@@ -24,4 +24,7 @@ async function loadComponent(id, file) {
 }
 
 loadComponent("site-banner", "site_banner.html");
+loadComponent("hero", "hero.html");
+
+
 
