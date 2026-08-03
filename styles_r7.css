@@ -14,7 +14,7 @@ Desktop  > 1024px
 */
 
 :root{
-  --bbn-bg:#f4f2ea;
+  --bbn-bg: #E6D4AE;
   --bbn-green:#6f8f72;
   --bbn-dark:#2c2c2c;
   --bbn-white:#ffffff;
@@ -69,10 +69,11 @@ body{
 
     position:relative;
     z-index:1000;
-    overflow:hidden;
+    overflow:visible;
 
     display:flex;
     align-items:center;
+
 }
 
 .banner-bg{
@@ -101,7 +102,7 @@ body{
     width:100%;
     max-width:1180px;   /* 1400px;  */
     margin:0 auto;
-   transform: translateY(10px);
+   transform: translateY(15px);
     display:flex;
     align-items:flex-start;
     justify-content:flex-start;
@@ -148,7 +149,7 @@ body{
     font-family:"Lato", sans-serif;
     font-size:1.25rem;
     color:#6b4d23;
-    margin-top:90px;
+    margin-top:60px;
 }
 
 .banner-divider{
@@ -159,21 +160,12 @@ body{
     margin-right:55px;
 }
 
-/*
-.banner-nav{
 
-    margin-left:30px;
-    align-items:center;
-    gap:32px;
-
-    white-space:nowrap;
-}
-*/
 .banner-nav{
     flex:1;
     margin-left:0;
     position:relative;
-    top:45px;
+    top: 92px;
 
     display:flex;
     justify-content:center;
@@ -243,6 +235,15 @@ body{
     background:#6D8438;
     border-radius:4px;
 }
+
+.banner-header{
+    position:relative;
+    overflow:visible;
+}
+
+
+
+
 
 /* ---------- Accessibility Dropdown ---------- */
 
