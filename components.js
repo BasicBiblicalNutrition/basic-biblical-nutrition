@@ -23,8 +23,14 @@ async function loadComponent(id, file) {
 
 }
 
-loadComponent("site-banner", "site_banner.html");
-loadComponent("hero", "hero.html");
+async function initializePage() {
+
+    await loadComponent("site-banner", "site_banner.html");
+    await loadComponent("hero", "hero.html");
+
+}
+
+initializePage();
 
 
 

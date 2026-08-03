@@ -76,6 +76,8 @@ window.onload = () => {
 
 const heroImages = document.querySelectorAll(".hero-image");
 
+console.log(heroImages.length);
+
 let currentHero = 0;
 let heroTimer;
 
