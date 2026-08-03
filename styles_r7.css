@@ -68,6 +68,7 @@ body{
     margin:0 auto;
 
     position:relative;
+    z-index:1000;
     overflow:hidden;
 
     display:flex;
@@ -371,6 +372,11 @@ body.high-contrast a{
     color:#fff;
 }
 
+body.high-contrast .testimonial{
+    color:#151515;
+}
+
+
 body.high-contrast .banner-brand h1{
     color:#5b6528;
 }
@@ -441,6 +447,8 @@ body.dyslexia-font li{
 
 .hero{
   text-align:center;
+  position:relative;
+  z-index:1;
 }
 
 .hero img{
