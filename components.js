@@ -39,6 +39,9 @@ async function initializePage() {
     await loadComponent("home-overview", "home_overview.html");
     await initializeHomeOverview();
 
+    await loadComponent("feature-section", "feature_section.html");
+    
+    await loadComponent("journey-section", "journey_section.html");
 
     initializeHero();
     initializeCarousels();

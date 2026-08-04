@@ -1008,8 +1008,13 @@ background:
 /* CONTENT SECTIONS */
 
 .second{
-  padding:40px 20px;
-  clear:none;
+    padding:20px 20px;
+    clear:none;
+}
+
+.momma-title{
+    color:#7A5A1A;
+    text-align:center;
 }
 
 /* INSIGHT CARDS */
@@ -1048,6 +1053,11 @@ background:
 footer{
   text-align:center;
   padding:20px;
+  line-height:1.2;
+}
+
+footer p{
+    margin:4px 0;
 }
 
 /* MOBILE */
@@ -1109,12 +1119,13 @@ footer{
 =====================================================*/
 
 .feature-section{
-    overflow:hidden;
+    overflow:visible;
 }
 
 .section-intro{
-    max-width:700px;
-    margin-bottom:40px;
+    max-width:none;
+    margin:0 0 30px;
+    text-align:center;
     color:#555;
 }
 
@@ -1140,6 +1151,7 @@ footer{
 
 .carousel-wrapper{
     position:relative;
+    overflow: visible;
 }
 
 .carousel-arrow{
