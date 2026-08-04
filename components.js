@@ -27,10 +27,13 @@ async function initializePage() {
 
     await loadComponent("site-banner", "site_banner.html");
     await loadComponent("hero", "hero.html");
+    initializeHero();
 
 }
 
 initializePage();
+
+
 
 
 

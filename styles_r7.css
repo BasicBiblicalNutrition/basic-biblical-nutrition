@@ -452,6 +452,35 @@ body.dyslexia-font li{
   z-index:1;
 }
 
+.hero h1_a{
+    font-family:"Cormorant Garamond",serif;
+    font-size:4rem;
+    letter-spacing:8px;
+    color:#5b3d18;
+    margin:0;
+}
+
+.hero h1{
+    font-family: "Script MT", cursive;
+    font-size: 4rem;
+    font-weight: 400;
+    color: #7a5a12;
+    margin-top: 0;
+    margin-bottom: 12px;
+    line-height: 1.15;
+}
+
+/*     font-family: "Cormorant Garamond", serif;*/ 
+
+.hero h2{
+    font-family:"Lato", san-serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #7a5a12;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
 .hero img{
   width:100%;
   max-width:1180px;

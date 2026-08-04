@@ -74,12 +74,32 @@ window.onload = () => {
   Version 0.1
 =====================================================*/
 
-const heroImages = document.querySelectorAll(".hero-image");
-
-console.log(heroImages.length);
-
+let heroImages = [];
 let currentHero = 0;
 let heroTimer;
+
+function initializeHero() {
+
+    heroImages = document.querySelectorAll(".hero-image");
+
+    if (heroImages.length === 0) return;
+
+    heroTimer = setInterval(() => {
+
+        heroImages[currentHero].classList.remove("active");
+
+        currentHero++;
+
+        if (currentHero >= heroImages.length) {
+            currentHero = 0;
+        }
+
+        heroImages[currentHero].classList.add("active");
+
+    }, 12000);
+}
+
+
 
 if (heroImages.length > 0) {
 
