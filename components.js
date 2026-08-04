@@ -23,6 +23,13 @@ async function loadComponent(id, file) {
 
 }
 
+async function initializeHomeOverview() {
+
+    await loadComponent("home-overview-left", "home_overview_left.html");
+    await loadComponent("home-take2", "home_take2.html");
+
+}
+
 async function initializePage() {
 
     await loadComponent("site-banner", "site_banner.html");
@@ -30,12 +37,12 @@ async function initializePage() {
 
   
     await loadComponent("home-overview", "home_overview.html");
-    await loadComponent("home-overview-left", "home_overview_left.html");
-    await loadComponent("home-take2", "home_take2.html");
+    await initializeHomeOverview();
 
 
     initializeHero();
     initializeCarousels();
+    
 }
 
 initializePage();
