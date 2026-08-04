@@ -473,9 +473,9 @@ body.dyslexia-font li{
 /*     font-family: "Cormorant Garamond", serif;*/ 
 
 .hero h2{
-    font-family:"Lato", san-serif;
-    font-size: 2rem;
-    font-weight: 500;
+    font-family:"Cormorant Garamond",sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
     color: #7a5a12;
     margin-top: 0;
     margin-bottom: 12px;
@@ -488,7 +488,7 @@ body.dyslexia-font li{
 }
 
 .hero-scripture{
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .scripture-reference{
@@ -496,7 +496,7 @@ body.dyslexia-font li{
     margin-bottom: 24px;
 
     position: relative;
-    top: -12px;           /* move it UP */
+    top: -20px;           /* move it UP */
 
     width: 100%;
     max-width: 1180px;
@@ -505,7 +505,7 @@ body.dyslexia-font li{
     
 
     padding-right: 445px;   /* fine tune */
-    font-size: 1.1rem;
+    font-size: 1.0rem;
 }
 
 
@@ -569,6 +569,42 @@ body.dyslexia-font li{
   border-radius:30px;
 }
 
+
+.overview-panel h2,
+.guided-header h2,
+.about-tracey h2{
+    text-align:center;
+    margin:0;
+}
+
+.section-divider{
+    display:flex;
+    align-items:center;
+    gap:32px;
+
+    margin:6px 0 18px;
+}
+
+.section-divider::before,
+.section-divider::after{
+    content:"";
+    height:2px;
+    flex:1;                     /* Stretch to fill */
+    border-top:2px solid #6E7D32;
+
+}
+
+.section-divider::before{
+    margin-right:20px;
+}
+
+.section-divider::after{
+    margin-left:20px;
+}
+
+
+
+
 /* GUIDED BY FAITH SECTION
    Flexbox replaces floats entirely */
 /*=====================================================
@@ -580,7 +616,7 @@ body.dyslexia-font li{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:40px;
-    margin:40px 0; /* 25px */
+    margin: -15px 0; /* 25px */
     align-items:start;
 }
 
@@ -672,7 +708,7 @@ body.dyslexia-font li{
 =====================================================*/
 
 .about-tracey{
-    background:#f6f1e5;
+    background:  #E6D4AE;
     border-radius:0px;
     padding:17px;
     margin-top:20px;
@@ -707,6 +743,15 @@ body.dyslexia-font li{
     margin-bottom:14px;
 }
 
+.about-tracey h2{
+    text-align:center;
+    margin:0;
+}
+
+.about-tracey .section-divider{
+    width:100%;
+    margin:0 0 4px 0;   /* only 4px below the title */
+}
 
 /*=====================================================
   COMPONENT
@@ -737,13 +782,17 @@ body.dyslexia-font li{
 }
 
 .take2-caption{
-    margin:0 0 8px;
-    font-size:1.0rem;
-     color:#777; 
+    margin:0 0 20px;
+    font-size:1.2rem;
+     color:#555;   /* #777;   */
 }
 
 .take2-h2{
      color:#5B4A1F;   /* color:#556B2F */
+     font-weight:600;
+     
+    margin-top:16px;      /* space below image */
+    margin-bottom:6px;   /* space before divider */
 }
 
 .take2-list{
@@ -858,6 +907,14 @@ background:
         0 5px 14px rgba(0,0,0,.16);
 }
 
+
+.take2-footer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;          /* space between buttons */
+    margin-top:20px;
+}
 
 .overview-right{
     background:transparent;
