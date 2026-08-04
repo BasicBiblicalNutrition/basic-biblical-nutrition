@@ -187,22 +187,23 @@ function setupCarousel(trackSel, prevSel, nextSel, direction = "horizontal") {
 
 /* My Momma carousel */
 
-setupCarousel(
-    ".feature-carousel",
-    ".carousel-arrow.left",
-    ".carousel-arrow.right",
-    "horizontal"
-);
+function initializeCarousels() {
+    setupCarousel(
+        ".feature-carousel",
+        ".carousel-arrow.left",
+        ".carousel-arrow.right",
+        "horizontal"
+    );
 
-/* Take 2 carousel */
+    /* Take 2 carousel */
 
-setupCarousel(
-    ".take2-list",
-    ".take2-arrow.up",
-    ".take2-arrow.down",
-    "vertical"
-);
-
+    setupCarousel(
+        ".take2-list",
+        ".take2-arrow.up",
+        ".take2-arrow.down",
+        "vertical"
+    );
+}
 
 /*=====================================================
   COMPONENT
