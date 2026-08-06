@@ -1106,36 +1106,54 @@ background:
   margin-bottom:20px;
   background:rgba(255,255,255,.55);
 
-
-
   box-shadow:
     0 12px 28px rgba(0,0,0,.25),
     0 4px 10px rgba(0,0,0,.15);
 }
 
+
+
 /*  Journey Section */
-.journey-overlay{
-
-    padding-top:250px;      /* move everything down */
-
-}
-
 .journey-section{
     max-width:1200px;
-    min-height: 650px;   /* or 650px */
+    min-height:  0px;   /* or 650px */
 
     margin: 60px auto 0px;
 
     background-image:url("images/oliveTree_BG.png");
     background-size: 100% auto;
     background-repeat:no-repeat;
-    background-position:center bottom; /* was top */
+    background-position:center top; /* was top */
 
     display:flex;
     flex-direction:column;
     align-items:center;
  
     padding-bottom: 5px;   /* was much larger */
+
+    min-height: 650px;
+    position: relative;
+}
+
+
+.journey_scripture{
+     padding-top:20px;      /* move everything down */
+}
+
+.journey_scripture p{
+    margin-top:5px;
+    margin-bottom:0;
+    line-height:1.20;
+    text-align:right;
+}
+
+
+
+.journey-overlay{
+
+    top:230px;      /* move everything down */
+    right: 260px; 
+    position: absolute;
 }
 
 .journey-content{
