@@ -420,6 +420,11 @@ body.high-contrast .journey_scripture p{
     color:#000;
 }
 
+body.high-contrast .testimonial{
+
+  background:rgba(230,230,230,.9);
+}
+
 /*-----------------------------------------------------
   Reduce Motion
 -----------------------------------------------------*/
