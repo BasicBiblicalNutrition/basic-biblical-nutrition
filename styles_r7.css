@@ -413,6 +413,13 @@ body.high-contrast .take2-header-image img{
     background:#fff;
 }
 
+body.high-contrast .journey-overlay a,
+body.high-contrast .journey-content h2,
+body.high-contrast .journey-content p,
+body.high-contrast .journey_scripture p{
+    color:#000;
+}
+
 /*-----------------------------------------------------
   Reduce Motion
 -----------------------------------------------------*/
@@ -1138,6 +1145,8 @@ background:
 
 .journey_scripture{
      padding-top:20px;      /* move everything down */
+
+
 }
 
 .journey_scripture p{
@@ -1145,6 +1154,7 @@ background:
     margin-bottom:0;
     line-height:1.20;
     text-align:right;
+
 }
 
 
@@ -1154,6 +1164,7 @@ background:
     top:230px;      /* move everything down */
     right: 260px; 
     position: absolute;
+
 }
 
 .journey-content{
