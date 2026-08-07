@@ -1391,6 +1391,7 @@ footer p{
     scroll-snap-align:start;
 }
 
+
 .feature-card:hover{
 
     transform:translateY(-8px);
@@ -1398,6 +1399,20 @@ footer p{
     box-shadow:0 18px 40px rgba(0,0,0,.18);
 
 }
+
+/* Dimmed / Coming Soon card */
+.feature-card.dimmed{
+    opacity:.45;
+    filter:grayscale(.35);
+}
+
+.feature-card.dimmed:hover{
+    transform:none;
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.10),
+        0 2px 6px rgba(0,0,0,.05);
+}
+
 
 /*----------------------------------*/
 
