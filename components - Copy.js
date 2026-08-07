@@ -45,7 +45,6 @@ async function initializePage() {
 
     initializeHero();
     initializeCarousels();
-    initializeTooltips();
     
 }
 

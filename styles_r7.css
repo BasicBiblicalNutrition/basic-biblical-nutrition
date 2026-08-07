@@ -1816,3 +1816,16 @@ footer p{
 }
 
 }
+
+
+
+
+
+.bbn-hotspot {
+    pointer-events: auto !important;
+    z-index: 9999 !important;
+}
+
+.guided-image img {
+    pointer-events: none !important;
+}

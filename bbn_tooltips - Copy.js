@@ -26,9 +26,7 @@ const BBN_SCRIPTURES = {
     }
 };
 
-/*  document.addEventListener("DOMContentLoaded", () => {  */
-
-function initializeTooltips() {
+document.addEventListener("DOMContentLoaded", () => {
 
     const tooltip = document.createElement("div");
 
@@ -38,12 +36,7 @@ function initializeTooltips() {
 
     const hotspots = document.querySelectorAll(".bbn-hotspot");
 
-/*    hotspots.forEach(hotspot => {   */
-
     hotspots.forEach(hotspot => {
-
-        if (hotspot.dataset.initialized) return;
-              hotspot.dataset.initialized = "true";
 
         if (DEBUG) {
            hotspot.classList.add("debug");
@@ -86,6 +79,4 @@ function initializeTooltips() {
 
     });
 
-}
-
-/*  });  */
+});
