@@ -44,6 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         hotspot.addEventListener("mouseenter", () => {
 
+            console.log("ENTER", hotspot);
+
            const type = hotspot.dataset.bbnType;
            const id   = hotspot.dataset.bbnId;
 
