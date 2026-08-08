@@ -156,14 +156,20 @@ async function initializeTake2() {
 
         card.innerHTML = `
             <div class="take2-card-content">
-
-                <h3 class="take2-card-title">
+                
+                 <h3 class="take2-card-title ${article.querySelector("title").textContent.length > 34 ? "long-title" : ""}">
                     <a href="${article.querySelector("link").textContent}"
                        class="take2-card-link">
                         ${article.querySelector("title").textContent}
                         <span class="icon">🔗</span>
                     </a>
                 </h3>
+                
+
+
+
+
+                
 
                 <p class="take2-card-date">
                     ${article.querySelector("date").textContent}
@@ -203,7 +209,11 @@ async function initializeFeatureCarousel() {
     articles.forEach(article => {
 
         const card = document.createElement("article");
-        card.className = "feature-card";
+
+        const isComingSoon =
+                  article.querySelector("date").textContent.trim() === "Coming Soon";
+
+        card.className = `feature-card${isComingSoon ? " coming-soon" : ""}`;
 
         card.innerHTML = `
             <img src="${article.querySelector("image").textContent}"
