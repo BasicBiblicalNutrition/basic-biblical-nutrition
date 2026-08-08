@@ -370,10 +370,15 @@ function toggleHighContrast() {
 
     document.body.classList.toggle("high-contrast");
 
+    const isHighContrast =
+        document.body.classList.contains("high-contrast");
+
+    localStorage.setItem("highContrast", isHighContrast);
+
     const icon = document.getElementById("contrastIcon");
     const label = document.getElementById("contrastLabel");
 
-    if (document.body.classList.contains("high-contrast")) {
+    if (isHighContrast) {
 
         icon.textContent = "◑";
         label.textContent = "Normal Contrast";
@@ -382,10 +387,27 @@ function toggleHighContrast() {
 
         icon.textContent = "◐";
         label.textContent = "High Contrast";
-
     }
-
 }
+
+function restoreHighContrast() {
+
+    if (localStorage.getItem("highContrast") === "true") {
+
+        document.body.classList.add("high-contrast");
+
+        const icon = document.getElementById("contrastIcon");
+        const label = document.getElementById("contrastLabel");
+
+        if (icon) icon.textContent = "◑";
+        if (label) label.textContent = "Normal Contrast";
+    }
+}
+
+restoreHighContrast();
+
+
+
 
 /*-----------------------------------------------------
   start/stop Motion

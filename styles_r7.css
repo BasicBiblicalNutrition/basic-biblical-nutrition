@@ -393,7 +393,9 @@ body.high-contrast .banner-brand p{
     color:#ccc;    /*color:#5b3d18; */
 }
 
-
+body.high-contrast .accessibility-menu .dropdown-content a{
+    color:#111;
+}
 
 
 body.high-contrast .feature-card{
