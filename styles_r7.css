@@ -589,6 +589,7 @@ body.dyslexia-font li{
     margin:0;
 }
 
+/*
 .section-divider{
     display:flex;
     align-items:center;
@@ -596,6 +597,21 @@ body.dyslexia-font li{
 
     margin:6px 0 18px;
 }
+*/
+.section-divider {
+    display: flex;
+    align-items: center;
+    gap: 70px;
+    margin: 6px 0 18px;
+    background-image: url("images/oliveBranch_2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80px 35px;
+    min-height: 35px;
+    /*background-size: 150px 45px;*/
+}
+
+
 
 .section-divider::before,
 .section-divider::after{
@@ -613,6 +629,7 @@ body.dyslexia-font li{
 .section-divider::after{
     margin-left:20px;
 }
+
 
 
 
