@@ -14,7 +14,7 @@ Desktop  > 1024px
 */
 
 :root{
-  --bbn-bg:#f4f2ea;
+  --bbn-bg: #E6D4AE;
   --bbn-green:#6f8f72;
   --bbn-dark:#2c2c2c;
   --bbn-white:#ffffff;
@@ -24,8 +24,12 @@ body{
   margin:0;
   background:var(--bbn-bg);
   color:var(--bbn-dark);
-  font-family:Inter,sans-serif;
+  font-family:Inter, sans-serif;
+  font-size:18px;
+  line-height:1.7;
 }
+
+
 
 .container{
   max-width:1200px;
@@ -35,28 +39,19 @@ body{
 
 /* Tooltip */
 #bbnTooltip{
-
     display:none;
-
     position:absolute;
-
     max-width:320px;
-
     padding:16px;
-
     background:#fffbe9;
-
     border:1px solid #8b6f47;
-
     border-radius:8px;
-
     box-shadow:0 6px 18px rgba(0,0,0,.25);
-
     z-index:9999;
-
     font-size:.95rem;
-
     line-height:1.5;
+    color:#5B4A1F;
+    font-weight:600;  
 }
 
 
@@ -68,24 +63,37 @@ body{
 
 .banner-header{
     width:100%;
-    max-width:none;   /* 1400px;  */
+    max-width:1180px;
     height:290px;
-
     margin:0 auto;
 
-    background:url("images/Banner/bannerBackground_3.png") center center no-repeat;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size:cover;
+    position:relative;
+    z-index:1000;
+    overflow:visible;
 
     display:flex;
     align-items:center;
+
+}
+
+.banner-bg{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+    object-fit:fill;
+
+    z-index:0;
 }
 
 .header-container{
     width:100%;
     max-width:1180px;   /* 1400px;  */
     margin:0 auto;
+
+    position:relative;
+    z-index:1;
 }
 
 .banner-overlay{
@@ -94,11 +102,11 @@ body{
     width:100%;
     max-width:1180px;   /* 1400px;  */
     margin:0 auto;
-   transform: translateY(10px);
+   transform: translateY(15px);
     display:flex;
     align-items:flex-start;
     justify-content:flex-start;
-    padding:0 40px;
+    padding:0 20px;
 }
 
 .banner-logo {
@@ -138,10 +146,10 @@ body{
 
 /* Tagline */
 .banner-brand p{
-    font-family:"Lato",sans-serif;
+    font-family:"Lato", sans-serif;
     font-size:1.25rem;
     color:#6b4d23;
-    margin-top:90px;
+    margin-top:60px;
 }
 
 .banner-divider{
@@ -152,18 +160,15 @@ body{
     margin-right:55px;
 }
 
-.banner-nav{
-
-    margin-left:60px;
-    align-items:center;
-    gap:32px;
-
-    white-space:nowrap;
-}
 
 .banner-nav{
+    flex:1;
+    margin-left:0;
     position:relative;
-    top:45px;      /* Move navigation up */
+    top: 92px;
+
+    display:flex;
+    justify-content:center;
 }
 
 .banner-nav ul{
@@ -182,7 +187,7 @@ body{
 
 /* Navagation */
 .banner-nav a{
-    font-family:"Segoe UI", Arial, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     font-size:1.15rem;
     font-weight:600;
     color:#222;
@@ -231,11 +236,20 @@ body{
     border-radius:4px;
 }
 
+.banner-header{
+    position:relative;
+    overflow:visible;
+}
+
+
+
+
+
 /* ---------- Accessibility Dropdown ---------- */
 
 .accessibility-menu{
     position:relative;
-    margin-left:40px;      /* Extra space after Contact */
+    margin-left:18px;      /* Extra space after Contact */
 }
 
 .accessibility-menu .dropdown-content{
@@ -324,10 +338,147 @@ body{
 }
 
 
+/*=====================================================
+  COMPONENT
+  Accessibility
+=====================================================*/
+
+body.large-text{
+    font-size:1.15rem;
+}
+
+
+body.large-text p,
+body.large-text li{
+    font-size:1.1em;
+}
+
+
+/*-----------------------------------------------------
+  High Contrast
+-----------------------------------------------------*/
+
+body.high-contrast{
+    background:#151515; 
+    color:#fff;
+}
+
+body.high-contrast p,
+body.high-contrast li,
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast a{
+    color:#fff;
+}
+
+body.high-contrast .testimonial{
+    color:#151515;
+}
+
+
+body.high-contrast .banner-brand h1{
+    color:#5b6528;
+}
+
+body.high-contrast .banner-brand h2{
+    color:#5b3d18;
+}
+
+body.high-contrast .banner-brand p{
+    color:#5b3d18;
+}
+body.high-contrast .feature-card,
+body.high-contrast .take2-card,
+body.high-contrast .guided-section,
+body.high-contrast .services-card{
+    background:#111;
+    border:2px solid #fff;
+}
+
+body.high-contrast .overview-panel{
+    background:#111;
+    border:2px solid #fff;
+    color:#fff;
+}
+
+body.high-contrast .overview-panel p,
+body.high-contrast .overview-panel h2,
+body.high-contrast .overview-panel a{
+    color:#fff;
+}
+
+body.high-contrast .take2-header-image img{
+    background:#fff;
+}
+
+/*-----------------------------------------------------
+  Reduce Motion
+-----------------------------------------------------*/
+
+body.reduce-motion *{
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+}
+
+
+/*-----------------------------------------------------
+  Dyslexia-Friendly Font
+-----------------------------------------------------*/
+
+/*
+body.dyslexia-font{
+    font-family: Arial, Verdana, Tahoma, sans-serif;
+    letter-spacing: 0.06em;
+    word-spacing: 0.12em;
+    line-height: 1.8;
+}
+
+body.dyslexia-font p,
+body.dyslexia-font li{
+    max-width: 75ch;
+}
+*/
+
+
+
 /* HERO */
 
 .hero{
   text-align:center;
+  position:relative;
+  z-index:1;
+}
+
+.hero h1_a{
+    font-family:"Cormorant Garamond",serif;
+    font-size:4rem;
+    letter-spacing:8px;
+    color:#5b3d18;
+    margin:0;
+}
+
+.hero h1{
+    font-family: "Script MT", cursive;
+    font-size: 4rem;
+    font-weight: 400;
+    color: #7a5a12;
+    margin-top: 0;
+    margin-bottom: 12px;
+    line-height: 1.15;
+}
+
+/*     font-family: "Cormorant Garamond", serif;*/ 
+
+.hero h2{
+    font-family:"Cormorant Garamond",sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #7a5a12;
+    margin-top: 0;
+    margin-bottom: 12px;
 }
 
 .hero img{
@@ -335,6 +486,29 @@ body{
   max-width:1180px;
   height:auto;
 }
+
+.hero-scripture{
+    margin-bottom: 2px;
+}
+
+.scripture-reference{
+    margin-top: 0;
+    margin-bottom: 24px;
+
+    position: relative;
+    top: -20px;           /* move it UP */
+
+    width: 100%;
+    max-width: 1180px;
+
+    text-align: right;
+    
+
+    padding-right: 445px;   /* fine tune */
+    font-size: 1.0rem;
+}
+
+
 
 /*=====================================================
   COMPONENT
@@ -395,6 +569,42 @@ body{
   border-radius:30px;
 }
 
+
+.overview-panel h2,
+.guided-header h2,
+.about-tracey h2{
+    text-align:center;
+    margin:0;
+}
+
+.section-divider{
+    display:flex;
+    align-items:center;
+    gap:32px;
+
+    margin:6px 0 18px;
+}
+
+.section-divider::before,
+.section-divider::after{
+    content:"";
+    height:2px;
+    flex:1;                     /* Stretch to fill */
+    border-top:2px solid #6E7D32;
+
+}
+
+.section-divider::before{
+    margin-right:20px;
+}
+
+.section-divider::after{
+    margin-left:20px;
+}
+
+
+
+
 /* GUIDED BY FAITH SECTION
    Flexbox replaces floats entirely */
 /*=====================================================
@@ -406,9 +616,14 @@ body{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:40px;
-    margin:40px 0; /* 25px */
+    margin: -15px 0; /* 25px */
     align-items:start;
 }
+
+.overview-panel{
+    padding-left: 20px;
+}
+
 
 .overview-left{
     display:flex;
@@ -476,19 +691,25 @@ body{
     flex:1;
 }
 
-.overview-panel p,
-.guided-text p{
-    margin-top:20;
-    text-align: left;
+
+.overview-panel p{
+    margin-top:20px;
+    text-align:left;
 }
+
+.guided-text p{
+    margin-top:0;
+    text-align:left;
+}
+
 
 /*=====================================================
   ABOUT TRACEY
 =====================================================*/
 
 .about-tracey{
-    background:#f6f1e5;
-    border-radius:18px;
+    background:  #E6D4AE;
+    border-radius:0px;
     padding:17px;
     margin-top:20px;
 }
@@ -522,6 +743,15 @@ body{
     margin-bottom:14px;
 }
 
+.about-tracey h2{
+    text-align:center;
+    margin:0;
+}
+
+.about-tracey .section-divider{
+    width:100%;
+    margin:0 0 4px 0;   /* only 4px below the title */
+}
 
 /*=====================================================
   COMPONENT
@@ -552,13 +782,17 @@ body{
 }
 
 .take2-caption{
-    margin:0 0 8px;
-    font-size:1.0rem;
-     color:#777; 
+    margin:0 0 20px;
+    font-size:1.2rem;
+     color:#555;   /* #777;   */
 }
 
 .take2-h2{
      color:#5B4A1F;   /* color:#556B2F */
+     font-weight:600;
+     
+    margin-top:16px;      /* space below image */
+    margin-bottom:6px;   /* space before divider */
 }
 
 .take2-list{
@@ -590,7 +824,7 @@ body{
     align-items:flex-start;
     gap:18px;
     padding:10px 14px;
-    background:#ffffff;
+    background:rgba(255,255,255,.55);
     border-radius:18px;
     box-shadow:
         0 6px 18px rgba(0,0,0,.08);
@@ -648,7 +882,8 @@ body{
     text-decoration:underline;
 }
 
-.take2-button{
+/*
+.pill-button{
     border-radius:999px;
     padding:12px 34px;
 
@@ -672,7 +907,67 @@ background:
         inset 0 -4px 8px rgba(140,95,0,.18),
         0 5px 14px rgba(0,0,0,.16);
 }
+*/
 
+.pill-button{
+    display:inline-block;
+
+    padding:9px 22px;
+    min-width:145px;
+
+    font-size:.95rem;
+
+    text-align:center;
+    text-decoration:none;
+    font-weight:700;
+    color:  #000;  /* #5a4517;  */
+
+    border-radius:999px;
+
+    /* Translucent amber gradient */
+    background:linear-gradient(
+        to bottom,
+        rgba(255,250,225,.78) 0%,
+        rgba(244,229,180,.68) 50%,
+        rgba(218,190,115,.58) 100%
+    );
+
+    border:1px solid rgba(255,255,255,.45);
+
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,.55),
+        inset 0 -1px 2px rgba(170,130,40,.20),
+        0 2px 5px rgba(0,0,0,.18);
+
+    transition:all .25s ease;
+}
+
+.pill-button:hover{
+    background:linear-gradient(
+        to bottom,
+        rgba(255,252,235,.90) 0%,
+        rgba(248,236,190,.78) 50%,
+        rgba(226,198,120,.68) 100%
+    );
+
+    box-shadow:
+        inset 0 1px 3px rgba(255,255,255,.70),
+        0 4px 10px rgba(0,0,0,.22);
+
+    transform:translateY(-2px);
+}
+
+
+
+
+
+.take2-footer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;          /* space between buttons */
+    margin-top:20px;
+}
 
 .overview-right{
     background:transparent;
@@ -766,8 +1061,18 @@ background:
 /* CONTENT SECTIONS */
 
 .second{
-  padding:40px 20px;
-  clear:none;
+    padding:2px 2px;
+    clear:none;
+}
+
+.second h2{
+    margin-top:20;
+}
+
+
+.momma-title{
+    color:#7A5A1A;
+    text-align:center;
 }
 
 /* INSIGHT CARDS */
@@ -795,17 +1100,108 @@ background:
 /* TESTIMONIALS */
 
 .testimonial{
-  background:white;
-  padding:25px;
+  padding:18px 24px;
   border-left:4px solid var(--bbn-green);
+  border-right:4px solid var(--bbn-green);
   margin-bottom:20px;
+  background:rgba(255,255,255,.55);
+
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.25),
+    0 4px 10px rgba(0,0,0,.15);
 }
+
+
+
+/*  Journey Section */
+.journey-section{
+    max-width:1200px;
+   
+
+    margin: 60px auto 0px;
+
+    background-image:url("images/oliveTree_BG.png"); 
+    background-size: 100% auto;
+    background-repeat:no-repeat;
+    background-position:center top; /* was top */
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+ 
+    padding-bottom: 5px;   /* was much larger */
+
+    min-height: 660px;
+    position: relative;
+}
+
+
+.journey_scripture{
+     padding-top:20px;      /* move everything down */
+}
+
+.journey_scripture p{
+    margin-top:5px;
+    margin-bottom:0;
+    line-height:1.20;
+    text-align:right;
+}
+
+
+
+.journey-overlay{
+
+    top:230px;      /* move everything down */
+    right: 260px; 
+    position: absolute;
+}
+
+.journey-content{
+    display:inline-block;
+    width:540px; 
+    
+    padding:20px 28px;
+
+    background:rgba(248,244,232,.66);
+    border-radius:8px;
+
+    margin:70px auto 10px;
+    transform: translateX(170px);
+
+}
+
+.journey-content h2{
+    text-align:center;
+    margin:0;
+    padding-bottom:10px;
+  
+}
+
+.journey-content p{
+    margin-top:16px;
+    margin-bottom:0;
+    line-height:1.55;
+}
+
+.journey-buttons{
+    display:flex;
+    justify-content:center;
+    transform: translateX(125px);
+    gap:40px;
+    margin-top:10px;
+}
+
 
 /* FOOTER */
 
 footer{
   text-align:center;
-  padding:20px;
+  padding:2px;
+  line-height:1.2;
+}
+
+footer p{
+    margin:4px 0;
 }
 
 /* MOBILE */
@@ -867,12 +1263,13 @@ footer{
 =====================================================*/
 
 .feature-section{
-    overflow:hidden;
+    overflow:visible;
 }
 
 .section-intro{
-    max-width:700px;
-    margin-bottom:40px;
+    max-width:none;
+    margin:0 0 30px;
+    text-align:center;
     color:#555;
 }
 
@@ -898,6 +1295,7 @@ footer{
 
 .carousel-wrapper{
     position:relative;
+    overflow: visible;
 }
 
 .carousel-arrow{
@@ -957,14 +1355,14 @@ footer{
 
     flex:0 0 340px;
 
-    background:#ffffff;
+    background:rgba(255,255,255,.55);
 
     border-radius:24px;
     overflow:hidden;
 
 /**    box-shadow:0 12px 30px rgba(0,0,0,.12);
 **/
-    background: #fff;
+    
     box-shadow:
         0 8px 24px rgba(0,0,0,.10),
         0 2px 6px rgba(0,0,0,.05);
@@ -1254,42 +1652,101 @@ footer{
     cursor:pointer;
 }
 
+.container{
+    padding:10px;
+}
+
 /*=====================================================
   Home Overview - Mobile
+  border:3px solid red;
+
+  .overview-left{
+    border:3px solid blue;
+}
 =====================================================*/
 
+
 .home-overview{
+    display:grid;
     grid-template-columns:1fr;
     gap:28px;
+    width:100%;
 }
+
+
 
 .overview-left,
 .take2{
     width:100%;
 }
 
+
 .guided-layout{
-    flex-direction:column;
+    display:block;
+}
+
+.guided-image{
+    width:220px;
+    max-width:100%;
+    margin:0 auto 20px;
+}
+
+.guided-text{
+    display:block;
+    width:100%;
+}
+
+
+
+.guided-header{
+    text-align:center;
+}
+
+.guided-text p{
+    text-align:left;
 }
 
 /* Guided by Faith image */
-.about-photo,
-.guided-image{
+
+.about-photo{
     width:220px;
     margin:0 auto;
 }
 
-.about-photo img,
-.guided-image img{
+.guided-image{
     width:100%;
-    height:auto;
-    display:block;
-    border-radius:16px;
+    max-width:220px;
+    margin:0 auto;
 }
 
 .about-tracey-content{
+    display:flex;
     flex-direction:column;
+    align-items:center;
     text-align:center;
+}
+
+.overview-panel{
+    width:100%;
+    box-sizing:border-box;
+
+}
+
+.overview-panel{
+    display:block;
+    width:100%;
+    max-width:none;
+}
+
+
+.overview-panel h2,
+.overview-panel p{
+    width:100%;
+    margin-left:20px;
+}
+
+.overview-panel p{
+    padding-left: 12px;
 }
 
 
@@ -1297,10 +1754,34 @@ footer{
     text-align:center;
 }
 
-.take2{
-    margin-top:10px;
+.take2-list{
+    display:flex;
+    flex-direction:row;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+
+    gap:16px;
+
+    height:auto;
+    padding:10px 0;
+
+    scrollbar-width:none;
 }
 
+.take2-list::-webkit-scrollbar{
+    display:none;
+}
 
+.take2-card{
+    flex:0 0 95%;
+}
+
+.take2-arrow{
+    display:none;
+}
 
 }

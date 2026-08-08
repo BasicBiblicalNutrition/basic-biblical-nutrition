@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<hero>
+
+    <title>Functional Nutrition Through a Biblical Lens</title>
+
+    <slides>
+
+        <slide>
+            <image>images/TopImages/oliveTrees_9.png</image>
+            <alt>Olive Trees</alt>
+
+            <scriptures>
+                <scripture>
+                    <text>Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.</text>
+                    <reference>1 Cor 10:31 KJV</reference>
+                </scripture>
+            </scriptures>
+        </slide>
+
+        <slide>
+            <image>images/TopImages/lighthouseSunset.png</image>
+            <alt>Lighthouse Sunset</alt>
+
+            <scriptures>
+                <!-- Scriptures for this image -->
+            </scriptures>
+        </slide>
+
+        <slide>
+            <image>images/TopImages/Fall_Leaves_3.png</image>
+            <alt>Fall Leaves</alt>
+
+            <scriptures>
+                <!-- Scriptures for this image -->
+            </scriptures>
+        </slide>
+
+        <slide>
+            <image>images/TopImages/WinterPainting_7.png</image>
+            <alt>Winter Painting</alt>
+
+            <scriptures>
+                <!-- Scriptures for this image -->
+            </scriptures>
+        </slide>
+
+        <slide>
+            <image>images/TopImages/TexasSpring_5.png</image>
+            <alt>Texas Spring</alt>
+
+            <scriptures>
+                <!-- Scriptures for this image -->
+            </scriptures>
+        </slide>
+
+    </slides>
+
+</hero>

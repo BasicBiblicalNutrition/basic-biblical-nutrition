@@ -78,11 +78,48 @@ let heroImages = [];
 let currentHero = 0;
 let heroTimer;
 
-function initializeHero() {
+async function initializeHero() {
+
+    const response = await fetch("xml/hero.xml");
+    const xmlText = await response.text();
+
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlText, "application/xml");
+
+    const slides = xml.querySelectorAll("slide");
+
+    const imageContainer = document.getElementById("hero-images");
+    const scripture = document.getElementById("hero-scripture");
+    const reference = document.getElementById("scripture-reference");
+
+    if (!imageContainer || slides.length === 0) return;
+
+    slides.forEach((slide, index) => {
+
+        const image = document.createElement("img");
+
+        image.className = "hero-image";
+        if (index === 0) {
+            image.classList.add("active");
+        }
+
+        image.src = slide.querySelector("image").textContent;
+        image.alt = slide.querySelector("alt").textContent;
+
+        imageContainer.appendChild(image);
+    });
 
     heroImages = document.querySelectorAll(".hero-image");
 
-    if (heroImages.length === 0) return;
+    const firstScripture = slides[0].querySelector("scripture");
+
+    if (firstScripture) {
+        scripture.textContent =
+            `"${firstScripture.querySelector("text").textContent}"`;
+
+        reference.textContent =
+            firstScripture.querySelector("reference").textContent;
+    }
 
     heroTimer = setInterval(() => {
 
@@ -97,26 +134,7 @@ function initializeHero() {
         heroImages[currentHero].classList.add("active");
 
     }, 12000);
-}
-
-
-
-if (heroImages.length > 0) {
-
-  heroTimer = setInterval(() => {
-
-    heroImages[currentHero].classList.remove("active");
-
-    currentHero++;
-
-    if (currentHero >= heroImages.length) {
-        currentHero = 0;
-    }
-
-    heroImages[currentHero].classList.add("active");
-
-  }, 12000);      // change every 12 seconds
-}
+}   
 
 
 
