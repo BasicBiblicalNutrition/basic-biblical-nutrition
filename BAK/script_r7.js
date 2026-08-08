@@ -136,55 +136,6 @@ async function initializeHero() {
     }, 12000);
 }   
 
-async function initializeTake2() {
-
-    const response = await fetch("xml/take2.xml");
-    const xmlText = await response.text();
-
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(xmlText, "application/xml");
-
-    const articles = xml.querySelectorAll("article");
-    const list = document.getElementById("take2-content");
-
-    if (!list || articles.length === 0) return;
-
-    articles.forEach(article => {
-
-        const card = document.createElement("article");
-        card.className = "take2-card";
-
-        card.innerHTML = `
-            <div class="take2-card-content">
-
-                <h3 class="take2-card-title">
-                    <a href="${article.querySelector("link").textContent}"
-                       class="take2-card-link">
-                        ${article.querySelector("title").textContent}
-                        <span class="icon">🔗</span>
-                    </a>
-                </h3>
-
-                <p class="take2-card-date">
-                    ${article.querySelector("date").textContent}
-                </p>
-
-                <p class="take2-card-summary">
-                    ${article.querySelector("summary").textContent}
-                </p>
-
-            </div>
-
-            <div class="take2-card-image">
-                <img src="${article.querySelector("image").textContent}"
-                     alt="${article.querySelector("alt").textContent}">
-            </div>
-        `;
-
-        list.appendChild(card);
-    });
-}
-
 
 
 /*=====================================================

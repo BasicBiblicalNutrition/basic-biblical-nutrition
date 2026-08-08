@@ -39,14 +39,18 @@ async function initializePage() {
     await loadComponent("home-overview", "home_overview.html");
     await initializeHomeOverview();
 
+    await initializeTake2();
+
     await loadComponent("feature-section", "feature_section.html");
 
     await loadComponent("journey-container", "journey_section.html");
 
     initializeHero();
+
     initializeCarousels();
     initializeTooltips();
-    
+ 
+
 }
 
 initializePage();
