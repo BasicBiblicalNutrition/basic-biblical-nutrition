@@ -185,6 +185,60 @@ async function initializeTake2() {
     });
 }
 
+async function initializeFeatureCarousel() {
+
+    const response = await fetch("xml/feature.xml");
+    const xmlText = await response.text();
+
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlText, "application/xml");
+
+    const articles = xml.querySelectorAll("article");
+    const carousel = document.querySelector(".feature-carousel");
+
+    if (!carousel || articles.length === 0) return;
+
+    carousel.innerHTML = "";
+
+    articles.forEach(article => {
+
+        const card = document.createElement("article");
+        card.className = "feature-card";
+
+        card.innerHTML = `
+            <img src="${article.querySelector("image").textContent}"
+                 alt="${article.querySelector("alt").textContent}"
+                 class="feature-image">
+
+            <p class="feature-category">
+                ${article.querySelector("category").textContent}
+            </p>
+
+            <h3>
+                ${article.querySelector("title").textContent}
+            </h3>
+
+            <p class="feature-meta">
+                ${article.querySelector("date").textContent}
+                •
+                ${article.querySelector("author").textContent}
+            </p>
+
+            <p class="feature-summary">
+                ${article.querySelector("summary").textContent}
+            </p>
+
+            <a href="${article.querySelector("document").textContent}"
+               class="read-more">
+                Read More
+            </a>
+        `;
+
+        carousel.appendChild(card);
+    });
+}
+
+
 
 
 /*=====================================================

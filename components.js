@@ -38,10 +38,10 @@ async function initializePage() {
   
     await loadComponent("home-overview", "home_overview.html");
     await initializeHomeOverview();
-
     await initializeTake2();
 
     await loadComponent("feature-section", "feature_section.html");
+    await initializeFeatureCarousel();
 
     await loadComponent("journey-container", "journey_section.html");
 
