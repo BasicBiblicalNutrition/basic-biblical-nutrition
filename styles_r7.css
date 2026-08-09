@@ -836,10 +836,39 @@ body.dyslexia-font li{
     margin:0;
 }
 
+.second p:last-child {
+    margin-bottom: 0;
+}
+
 .about-tracey .section-divider{
     width:100%;
     margin:0 0 4px 0;   /* only 4px below the title */
 }
+
+.ai-note {
+    margin-top: 0px;
+    padding-top: 4px;
+}
+
+.ai-note .section-divider {
+    margin-bottom: 2px;
+}
+
+.ai-note h2 {
+    margin-bottom: 0px;
+}
+
+.ai-note h3 {
+    margin-top: 0px;
+}
+
+.ai-note p {
+    margin-bottom: 22px;
+    line-height: 1.6;
+}
+
+
+
 
 /*=====================================================
   COMPONENT
