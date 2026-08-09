@@ -51,6 +51,7 @@ async function initializePage() {
     initializeTooltips();
  
 
+    await loadComponent("site-footer", "site_footer.html");
 }
 
 initializePage();
