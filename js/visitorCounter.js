@@ -8,6 +8,7 @@ import {
     increment
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
+
 async function countVisit() {
 
     const ref = doc(db, "statistics", "site");
@@ -18,8 +19,15 @@ async function countVisit() {
 
     const snap = await getDoc(ref);
 
-    console.log("Site Visits:", snap.data().count);
+    const count = snap.data().count;
+
+    console.log("Site Visits:", count);
+
+    const counter = document.getElementById("site-visit-count");
+
+    if (counter) {
+        counter.textContent = count;
+    }
 }
 
 countVisit();
-
