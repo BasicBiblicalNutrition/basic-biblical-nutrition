@@ -5,18 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Home</title>
 <link rel="stylesheet" href="styles_r7.css">
+<link rel="stylesheet" href="contact.css">
 </head>
 
 <body>
 
 <div id="site-banner"></div>
-<center>
-<section>
-<h2>Contact</h2>
-<p>Email: your@email.com</p>
-<a href="#" class="button">Schedule a Call</a>
+
+
+<<section class="contact-section">
+
+    <h2>Contact</h2>
+
+    <form id="contact-form" class="contact-form">
+
+        <label for="contact-from">From:</label>
+        <input
+            type="email"
+            id="contact-from"
+            name="from"
+            required
+        >
+
+        <label for="contact-subject">Subject:</label>
+        <input
+            type="text"
+            id="contact-subject"
+            name="subject"
+            required
+        >
+
+        <label for="contact-body">Body:</label>
+        <textarea
+            id="contact-body"
+            name="body"
+            rows="8"
+            required
+        ></textarea>
+
+        <button type="submit" class="pill-button">
+            Send
+        </button>
+
+    </form>
+
 </section>
-</center>
 
 
 <div id="site-footer"></div>
@@ -24,5 +57,8 @@
 <script src="script_r7.js"></script>
 <script src="bbn_tooltips.js"></script>
 <script src="components.js"></script>
+
+<script type="module" src="./js/contact.js"></script>
+
 </body>
 </html>

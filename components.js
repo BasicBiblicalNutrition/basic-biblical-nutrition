@@ -54,6 +54,17 @@ async function initializePage() {
  
 
     await loadComponent("site-footer", "site_footer.html");
+    
+    // Show visitor counter only on the home page
+    const currentPage =
+        window.location.pathname.split("/").pop() || "index.html";
+
+    if (currentPage !== "index.html") {
+        const visitorLine = document.getElementById("site-visit-count");
+        if (visitorLine) {
+            visitorLine.parentElement.style.display = "none";
+        }
+    }
 }
 
 initializePage();

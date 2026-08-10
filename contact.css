@@ -1,0 +1,46 @@
+/*=====================================================
+  Basic Biblical Nutrition
+  Contact Page Styles
+=====================================================*/
+
+.contact-section {
+    max-width: 850px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.contact-section h2 {
+    margin-bottom: 30px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-form label {
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    border: 1px solid #6E7D32;
+    border-radius: 6px;
+    background: #FFFDF7;
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.contact-form .pill-button {
+    align-self: center;
+    margin-top: 15px;
+}
