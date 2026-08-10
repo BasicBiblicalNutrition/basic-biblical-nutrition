@@ -74,13 +74,46 @@
                           <img src="images/Banner/snail_3.png" id="motionIcon"  class="menu-icon" alt="">
                          <span id="motionLabel">Stop Motion</span></a></li>
 
-                      <li><a href="#"><span class="icon">📖</span> Accessibility Statement</a></li>
+                      <li><a href="#" onclick="showAccessibilityStatement(); return false;">
+                          <span class="icon">📖</span> Accessibility Statement</a></li>
+
                      <li><a href="#"><span class="icon">✉</span> Contact for Assistance</a></li>
                   </ul>
                </li>
             </ul>
 
         </nav>
+
+        <div id="accessibility-modal" class="accessibility-modal" role="dialog"
+            aria-modal="true" aria-labelledby="accessibility-modal-title" hidden>
+
+            <div class="accessibility-modal-content">
+                <button type="button"
+                        class="accessibility-modal-close"
+                        onclick="closeAccessibilityStatement()"
+                        aria-label="Close Accessibility Statement">
+                    ×
+                </button>
+
+                <h2 id="accessibility-modal-title">Accessibility Statement</h2>
+
+                <p>
+                    Basic Biblical Nutrition is committed to providing a website
+                    that is accessible and usable for as many people as possible.
+                    We strive to follow recognized accessibility practices and
+                    continually improve the site's usability.
+                </p>
+
+                <p>
+                    If you encounter an accessibility barrier or have difficulty
+                    accessing any content or feature, please contact us. We welcome
+                    your feedback and will make reasonable efforts to improve your
+                    experience.
+                </p>
+
+            </div>
+        </div>  
+
 
     </div>
 

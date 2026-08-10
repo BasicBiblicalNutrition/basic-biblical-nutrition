@@ -472,4 +472,19 @@ function toggleDyslexiaFont() {
 
 }
 
+function showAccessibilityStatement() {
+    const modal = document.getElementById("accessibility-modal");
+
+    if (modal) {
+        modal.hidden = false;
+    }
+}
+
+function closeAccessibilityStatement() {
+    const modal = document.getElementById("accessibility-modal");
+
+    if (modal) {
+        modal.hidden = true;
+    }
+}
 
