@@ -302,7 +302,7 @@ h3{color:var(--olive);line-height:1.05}
 
   <div class="dropdown more-menu">
   <a href="#" aria-haspopup="true" aria-expanded="false">
-    <span class="burger-icon">🍔 </span>
+    🍔 More
   </a>
 
   <div id="moreMenu" class="dropdown-content" hidden>
@@ -310,7 +310,7 @@ h3{color:var(--olive);line-height:1.05}
     <ul>
 
       <li>
-        <a href="#" id="print">
+        <a href="#">
           <span class="print-icon">🖨️</span> Print
         </a>
       </li>
@@ -517,52 +517,11 @@ document.querySelectorAll('.toc-item').forEach(btn=>{
   });
 });
 
-if(fontSize){
-  fontSize.addEventListener('change',e=>{
-    document.documentElement.style.setProperty('--font-scale',e.target.value);
-  });
-}
+fontSize.addEventListener('change',e=>{
+  document.documentElement.style.setProperty('--font-scale',e.target.value);
+});
 
-const printButton=document.getElementById('print');
-if(printButton){
-  printButton.addEventListener('click',e=>{
-    e.preventDefault();
-    window.print();
-  });
-}
-
-/* More / burger menu */
-const moreMenu=document.getElementById('moreMenu');
-const moreTrigger=document.querySelector('.more-menu > a');
-
-if(moreMenu && moreTrigger){
-  moreTrigger.addEventListener('click',e=>{
-    e.preventDefault();
-    const isOpen=!moreMenu.hasAttribute('hidden');
-
-    if(isOpen){
-      moreMenu.setAttribute('hidden','');
-      moreTrigger.setAttribute('aria-expanded','false');
-    }else{
-      moreMenu.removeAttribute('hidden');
-      moreTrigger.setAttribute('aria-expanded','true');
-    }
-  });
-
-  document.addEventListener('click',e=>{
-    if(!e.target.closest('.more-menu')){
-      moreMenu.setAttribute('hidden','');
-      moreTrigger.setAttribute('aria-expanded','false');
-    }
-  });
-
-  document.addEventListener('keydown',e=>{
-    if(e.key==='Escape'){
-      moreMenu.setAttribute('hidden','');
-      moreTrigger.setAttribute('aria-expanded','false');
-    }
-  });
-}
+document.getElementById('print').addEventListener('click',()=>window.print());
 
 window.addEventListener('resize',()=>{
   render(index,"",false);

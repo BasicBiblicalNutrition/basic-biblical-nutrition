@@ -1,11 +1,14 @@
 /*
+=====================================================
 Basic Biblical Nutrition - Cookbook
 Stylesheet R 1
 
 BREAKPOINTS
+
 Mobile   <= 768px
 Tablet   769px - 1024px
 Desktop  > 1024px
+
 =====================================================
 */
 
@@ -31,29 +34,29 @@ Desktop  > 1024px
     justify-content: center;
 }
 
-.banner-kicker {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    font-family: "Cormorant Garamond", serif;
-    font-size: 1.65rem;
-    line-height: .9;
-    letter-spacing: 2px;
-    color: #5b6528;
-    margin: 0;
-    white-space: nowrap;
-    font-weight: 700;
+.banner-kicker{
+    grid-column:1;
+    grid-row:1 / span 2;
+    font-family:"Cormorant Garamond",serif;
+    font-size:1.65rem;
+    line-height:.9;
+    letter-spacing:2px;
+    color:#5b6528;
+    margin:0;
+    white-space:nowrap;
+    font-weight:700;
 }
 
-.banner-kicker-green {
-    color: #5b6528;
-    font-family: "Cormorant Garamond", serif;
-    letter-spacing: 2px;
+.banner-kicker-green{
+    color:#5b6528;
+    font-family:"Cormorant Garamond",serif;
+    letter-spacing:2px;
 }
 
-.banner-kicker-brown {
-    color: #5b3d18;
-    font-family: "Cormorant Garamond", serif;
-    letter-spacing: 8px;
+.banner-kicker-brown{
+    color:#5b3d18;
+    font-family:"Cormorant Garamond",serif;
+    letter-spacing:8px;
 }
 
 .banner-text h1 {
@@ -68,8 +71,10 @@ Desktop  > 1024px
     font-style: italic;
 }
 
+
 /* ==================================================
    BANNER TOOLBAR
+   Matches the compact one-row reference banner.
    ================================================== */
 
 .banner-controls,
@@ -135,7 +140,6 @@ Desktop  > 1024px
 }
 
 /* Cookbook title */
-
 .banner-brand-text {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -162,6 +166,7 @@ Desktop  > 1024px
 
 /* High Contrast is intentionally omitted from the cookbook. */
 
+
 .recipe-header {
     display: flex;
     align-items: center;
@@ -175,83 +180,57 @@ Desktop  > 1024px
     margin-left: 18px;
 }
 
-/* Print icon */
-
-.print-icon,
-.burger-icon,
-.icon{
-    font-size: 1.25rem;
+.print-icon {
+    font-size: 1.75rem;
 }
 
-/* ==================================================
-   MORE / BURGER MENU
-   ================================================== */
-
-.more-menu {
-    position: relative;
-    margin-left: 18px;
+.more-menu{
+    position:relative;
+    margin-left:18px;      /* Extra space after Contact */
 }
 
-.more-menu .dropdown-content {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
+.more-menu .dropdown-content{
 
-    min-width: 260px;
+    display:none;
 
-    margin: 0;
-    padding: 8px 0;
+    position:absolute;
+    top:120%;
+    right:0;
 
-    background: linear-gradient(
+    min-width:340px;
+
+    background:#F8F3E7;    /* Warm parchment */
+    border:1px #B79A5A;    /* Soft gold */
+    border-radius:12px;
+
+    padding:8px 0;
+    margin-top:12px;
+    margin:0;
+    list-style:none;
+
+    box-shadow:0 10px 25px rgba(60,45,20,.20);
+    padding:12px 0;
+
+    background:linear-gradient(
         to bottom,
         #FFFDF7,
         #F6F0E1
     );
 
-    border: 1px solid #C6B17A;
-    border-radius: 14px;
-
-    box-shadow: 0 12px 28px rgba(0, 0, 0, .18);
-
-    list-style: none;
-    z-index: 9999;
+    border:1px solid #C6B17A;
+    border-radius:14px;
+    box-shadow:0 12px 28px rgba(0,0,0,.18);
+    overflow:hidden;
+    z-index:9999;
 }
 
-.more-menu .dropdown-content[hidden] {
-    display: none;
-}
 
-.more-menu .dropdown-content:not([hidden]) {
-    display: block;
-}
 
-/* Menu links */
 
-.more-menu .dropdown-content ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
 
-.more-menu .dropdown-content li {
-    margin: 0;
-    padding: 0;
-}
 
-.more-menu .dropdown-content li a {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 16px;
 
-    color: #302c22;
-    text-decoration: none;
-    white-space: nowrap;
-}
 
-.more-menu .dropdown-content li a:hover {
-    background: #eee8cc;
-}
 
 @media (max-width: 768px) {
     .banner-controls,
@@ -274,106 +253,101 @@ Desktop  > 1024px
     }
 }
 
-/* Move the entire cookbook banner down */
 
+
+/* Move the entire cookbook banner down */
 .header {
     margin-top: 18px !important;
 }
 
+/* removed stray HTML style tag */
 /* V24 — keep all cookbook banner controls on one line */
-
-.header {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 18px !important;
+.header{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:18px !important;
 }
-
-.header > .banner-brand {
-    flex: 1 1 auto;
+.header > .banner-brand{
+  flex:1 1 auto;
 }
-
-.header > .controls {
-    transform: none !important;
-    flex: 0 0 auto;
-    display: flex !important;
-    align-items: center !important;
-    flex-wrap: nowrap !important;
-    gap: 8px !important;
+.header > .controls{
+  transform:none !important;
+  flex:0 0 auto;
+  display:flex !important;
+  align-items:center !important;
+  flex-wrap:nowrap !important;
+  gap:8px !important;
 }
-
-.reader-tools {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
+.reader-tools{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:nowrap;
+  white-space:nowrap;
 }
-
-.reader-tools label {
-    font-weight: bold;
-    white-space: nowrap;
+.reader-tools label{
+  font-weight:bold;
+  white-space:nowrap;
 }
-
 .header .controls button,
-.header .controls select {
-    white-space: nowrap;
+.header .controls select{
+  white-space:nowrap;
 }
-
-@media (max-width: 1000px) {
-    .header {
-        display: flex !important;
-        flex-wrap: wrap !important;
-    }
-
-    .header > .controls {
-        width: 100%;
-        justify-content: flex-end;
-    }
+@media(max-width:1000px){
+  .header{
+    display:flex !important;
+    flex-wrap:wrap !important;
+  }
+  .header > .controls{
+    width:100%;
+    justify-content:flex-end;
+  }
 }
+/* removed stray HTML style tag */
+
 
 /* V26 — header title layout fix
    Basic / Biblical / Nutrition stays stacked at left.
    Healthy Recipes... sits to its right.
-   The subtitle remains beneath the title.
-*/
+   The subtitle remains beneath the title. */
 
 .header > .banner-brand {
-    display: flex !important;
-    align-items: center !important;
-    gap: 12px !important;
-    min-width: 0 !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:12px !important;
+    min-width:0 !important;
 }
 
 .banner-brand-text {
-    display: grid !important;
-    grid-template-columns: auto minmax(0, 1fr) !important;
-    grid-template-rows: auto auto !important;
-    column-gap: 14px !important;
-    align-items: center !important;
-    min-width: 0 !important;
+    display:grid !important;
+    grid-template-columns:auto minmax(0,1fr) !important;
+    grid-template-rows:auto auto !important;
+    column-gap:14px !important;
+    align-items:center !important;
+    min-width:0 !important;
 }
 
 .banner-brand-text .banner-kicker {
-    grid-column: 1 !important;
-    grid-row: 1 / span 2 !important;
-    align-self: center !important;
-    margin: 0 !important;
+    grid-column:1 !important;
+    grid-row:1 / span 2 !important;
+    align-self:center !important;
+    margin:0 !important;
 }
 
 .banner-brand-text h1 {
-    grid-column: 2 !important;
-    grid-row: 1 !important;
-    margin: 0 !important;
-    white-space: nowrap !important;
-    font-family: "Alex Brush", cursive !important;
-    font-weight: 600 !important;
-    font-size: 2.15rem !important;
+    grid-column:2 !important;
+    grid-row:1 !important;
+    margin:0 !important;
+    white-space:nowrap !important;
+    font-family:"Alex Brush", cursive !important;
+    font-weight:600 !important;
+    font-size:2.15rem !important;
 }
 
 .banner-brand-text > div:not(.banner-kicker) {
-    grid-column: 2 !important;
-    grid-row: 2 !important;
-    margin: 2px 0 0 !important;
-    white-space: nowrap !important;
+    grid-column:2 !important;
+    grid-row:2 !important;
+    margin:2px 0 0 !important;
+    white-space:nowrap !important;
 }
