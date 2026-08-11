@@ -299,40 +299,33 @@ h3{color:var(--olive);line-height:1.05}
   <button id="next" type="button">Next →</button>
 
 
-  <button id="more" type="button"
-          aria-expanded="false"
-          aria-controls="moreMenu"
-          aria-label="Open menu"
-          title="Menu">
-    🍔
-  </button>
+<button id="more" type="button"
+        aria-expanded="false"
+        aria-controls="moreMenu"
+        aria-label="Open menu"
+        title="Menu">
+  🍔
+</button>
 
 
   <div id="moreMenu" class="more-menu" hidden>
 
+    <div class="font-size-control">
+      <label for="fontSize">Text Size:</label>
+      <select id="fontSize">
+        <option value="0.9">Small</option>
+        <option value="1" selected>Medium</option>
+        <option value="1.15">Large</option>
+      </select>
+    </div>
 
-                <li class="more-dropdown">
-                  <a href="#" aria-haspopup="true" aria-expanded="false">
-                  🍔 More
-                </a>
+    <button id="print" type="button">Print</button>
 
-                  <ul class="dropdown-content">
-                       
-                      <li><a href="#"><span class="icon">✉</span> Print</a></li>
-
-                      <li><a href="#" onclick="toggleLargeText(); return false;">
-                            <span id="textSizeIcon" class="icon">A+</span>
-                            <span id="textSizeLabel">Increase Text Size</span></a></li>
-
-                     <li><a href="#"><span class="icon">✉</span> Contact Us</a></li>
+    <button id="contact" type="button">Contact Us</button>
 
     <!-- Future additions -->
     <!-- Restaurant Favorite Makeovers -->
     <!-- Client Favorite Makeovers -->
-                  </ul>
-               </li>
-
-
 
   </div>
 
