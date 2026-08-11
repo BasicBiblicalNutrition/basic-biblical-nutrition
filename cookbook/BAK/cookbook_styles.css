@@ -1,0 +1,172 @@
+/*
+=====================================================
+Basic Biblical Nutrition - Cookbook
+Stylesheet R 1
+
+BREAKPOINTS
+
+Mobile   <= 768px
+Tablet   769px - 1024px
+Desktop  > 1024px
+
+=====================================================
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap');
+
+.banner-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.banner-logo {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.banner-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.banner-kicker {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 0.95rem;
+    line-height: 0.88;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    color: #52652b;
+    margin-bottom: 5px;
+    position: relative;
+    top: 8px;
+}
+
+.banner-text h1 {
+    margin: 0;
+    font-size: 2.45rem;
+    line-height: 1;
+}
+
+.banner-text p {
+    margin: 4px 0 0;
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+
+/* ==================================================
+   BANNER TOOLBAR
+   Matches the compact one-row reference banner.
+   ================================================== */
+
+.banner-controls,
+.banner-toolbar,
+.cookbook-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.banner-controls button,
+.banner-controls select,
+.banner-toolbar button,
+.banner-toolbar select,
+.cookbook-controls button,
+.cookbook-controls select {
+    box-sizing: border-box;
+    min-height: 38px;
+    padding: 7px 14px;
+    border: 1px solid #7d8757;
+    border-radius: 6px;
+    background: #f8f3df;
+    color: #302c22;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.95rem;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.banner-controls button,
+.banner-toolbar button,
+.cookbook-controls button {
+    cursor: pointer;
+}
+
+.banner-controls button:hover,
+.banner-toolbar button:hover,
+.cookbook-controls button:hover,
+.banner-controls select:hover,
+.banner-toolbar select:hover,
+.cookbook-controls select:hover {
+    background: #eee8cc;
+}
+
+.banner-controls label,
+.banner-toolbar label,
+.cookbook-controls label {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.banner-controls .page-indicator,
+.banner-toolbar .page-indicator,
+.cookbook-controls .page-indicator {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+/* Cookbook title */
+.banner-brand-text h1 {
+    font-family: "Alex Brush", "Brush Script MT", cursive;
+    font-size: 2.6rem;
+    line-height: 1;
+    font-weight: 700;
+    font-style: normal;
+    margin: 0;
+}
+
+/* High Contrast is intentionally omitted from the cookbook. */
+
+
+
+
+
+
+@media (max-width: 768px) {
+    .banner-controls,
+    .banner-toolbar,
+    .cookbook-controls {
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .banner-controls button,
+    .banner-controls select,
+    .banner-toolbar button,
+    .banner-toolbar select,
+    .cookbook-controls button,
+    .cookbook-controls select {
+        min-height: 34px;
+        padding: 6px 10px;
+        font-size: 0.88rem;
+    }
+}
+
+
+
+/* Move the entire cookbook banner down */
+.header {
+    margin-top: 18px !important;
+}

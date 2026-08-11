@@ -1,0 +1,303 @@
+/*
+=====================================================
+Basic Biblical Nutrition - Cookbook
+Stylesheet R 1
+
+BREAKPOINTS
+
+Mobile   <= 768px
+Tablet   769px - 1024px
+Desktop  > 1024px
+
+=====================================================
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap');
+
+.banner-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.banner-logo {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.banner-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.banner-kicker{
+    grid-column:1;
+    grid-row:1 / span 2;
+    font-family:"Cormorant Garamond",serif;
+    font-size:1.65rem;
+    line-height:.9;
+    letter-spacing:2px;
+    color:#5b6528;
+    margin:0;
+    white-space:nowrap;
+    font-weight:700;
+}
+
+.banner-kicker-green{
+    color:#5b6528;
+    font-family:"Cormorant Garamond",serif;
+    letter-spacing:2px;
+}
+
+.banner-kicker-brown{
+    color:#5b3d18;
+    font-family:"Cormorant Garamond",serif;
+    letter-spacing:8px;
+}
+
+.banner-text h1 {
+    margin: 0;
+    font-size: 2.15rem;
+    line-height: 1;
+}
+
+.banner-text p {
+    margin: 4px 0 0;
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+
+/* ==================================================
+   BANNER TOOLBAR
+   Matches the compact one-row reference banner.
+   ================================================== */
+
+.banner-controls,
+.banner-toolbar,
+.cookbook-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.banner-controls button,
+.banner-controls select,
+.banner-toolbar button,
+.banner-toolbar select,
+.cookbook-controls button,
+.cookbook-controls select {
+    box-sizing: border-box;
+    min-height: 38px;
+    padding: 7px 14px;
+    border: 1px solid #7d8757;
+    border-radius: 6px;
+    background: #f8f3df;
+    color: #302c22;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.95rem;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.banner-controls button,
+.banner-toolbar button,
+.cookbook-controls button {
+    cursor: pointer;
+}
+
+.banner-controls button:hover,
+.banner-toolbar button:hover,
+.cookbook-controls button:hover,
+.banner-controls select:hover,
+.banner-toolbar select:hover,
+.cookbook-controls select:hover {
+    background: #eee8cc;
+}
+
+.banner-controls label,
+.banner-toolbar label,
+.cookbook-controls label {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.banner-controls .page-indicator,
+.banner-toolbar .page-indicator,
+.cookbook-controls .page-indicator {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+/* Cookbook title */
+.banner-brand-text {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 14px;
+    align-items: center;
+}
+
+.banner-kicker {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+}
+
+.banner-brand-text h1 {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+}
+
+.banner-brand-text > div:not(.banner-kicker) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* High Contrast is intentionally omitted from the cookbook. */
+
+
+.recipe-header {
+    display: flex;
+    align-items: center;
+}
+
+.recipe-header-logo {
+    flex-shrink: 0;
+}
+
+.recipe-header-title {
+    margin-left: 18px;
+}
+
+
+
+@media (max-width: 768px) {
+    .banner-controls,
+    .banner-toolbar,
+    .cookbook-controls {
+        gap: 6px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .banner-controls button,
+    .banner-controls select,
+    .banner-toolbar button,
+    .banner-toolbar select,
+    .cookbook-controls button,
+    .cookbook-controls select {
+        min-height: 34px;
+        padding: 6px 10px;
+        font-size: 0.88rem;
+    }
+}
+
+
+
+/* Move the entire cookbook banner down */
+.header {
+    margin-top: 18px !important;
+}
+
+/* removed stray HTML style tag */
+/* V24 — keep all cookbook banner controls on one line */
+.header{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:18px !important;
+}
+.header > .banner-brand{
+  flex:1 1 auto;
+}
+.header > .controls{
+  transform:none !important;
+  flex:0 0 auto;
+  display:flex !important;
+  align-items:center !important;
+  flex-wrap:nowrap !important;
+  gap:8px !important;
+}
+.reader-tools{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:nowrap;
+  white-space:nowrap;
+}
+.reader-tools label{
+  font-weight:bold;
+  white-space:nowrap;
+}
+.header .controls button,
+.header .controls select{
+  white-space:nowrap;
+}
+@media(max-width:1000px){
+  .header{
+    display:flex !important;
+    flex-wrap:wrap !important;
+  }
+  .header > .controls{
+    width:100%;
+    justify-content:flex-end;
+  }
+}
+/* removed stray HTML style tag */
+
+
+/* V26 — header title layout fix
+   Basic / Biblical / Nutrition stays stacked at left.
+   Healthy Recipes... sits to its right.
+   The subtitle remains beneath the title. */
+
+.header > .banner-brand {
+    display:flex !important;
+    align-items:center !important;
+    gap:12px !important;
+    min-width:0 !important;
+}
+
+.banner-brand-text {
+    display:grid !important;
+    grid-template-columns:auto minmax(0,1fr) !important;
+    grid-template-rows:auto auto !important;
+    column-gap:14px !important;
+    align-items:center !important;
+    min-width:0 !important;
+}
+
+.banner-brand-text .banner-kicker {
+    grid-column:1 !important;
+    grid-row:1 / span 2 !important;
+    align-self:center !important;
+    margin:0 !important;
+}
+
+.banner-brand-text h1 {
+    grid-column:2 !important;
+    grid-row:1 !important;
+    margin:0 !important;
+    white-space:nowrap !important;
+    font-family:"Alex Brush", cursive !important;
+    font-weight:600 !important;
+    font-size:2.15rem !important;
+}
+
+.banner-brand-text > div:not(.banner-kicker) {
+    grid-column:2 !important;
+    grid-row:2 !important;
+    margin:2px 0 0 !important;
+    white-space:nowrap !important;
+}
