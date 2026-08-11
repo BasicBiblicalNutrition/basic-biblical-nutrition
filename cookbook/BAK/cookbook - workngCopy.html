@@ -263,8 +263,9 @@ h3{color:var(--olive);line-height:1.05}
 <body>
 <a class="skip" href="#book">Skip to recipe</a>
 <div class="shell">
-
 <header class="header">
+    
+
   <div class="banner-brand">
 
     <img src="../images/Banner/logoOnly_2.png"
@@ -284,59 +285,45 @@ h3{color:var(--olive);line-height:1.05}
   </div>
 
 
-
   <div class="controls" aria-label="Flipbook controls">
 
-  <button id="home" type="button">Home</button>
+    <button id="home" type="button">Home</button>
 
-  <button id="prev" type="button">← Previous</button>
+    <button id="prev" type="button">← Previous</button>
 
-  <span id="status" class="status" aria-live="polite">
-    Pages 1–2 of 5
-  </span>
+    <span id="status" class="status" aria-live="polite">
+      Pages 1–2 of 5
+    </span>
 
-  <button id="next" type="button">Next →</button>
+    <button id="next" type="button">Next →</button>
+    <button id="more" type="button"
+            aria-expanded="false"
+            aria-controls="moreMenu">
+      More ▾
+    </button>
 
+    <div id="moreMenu" class="more-menu" hidden>
+      <div class="font-size-control">
+        <label for="fontSize">Text Size:</label>
+        <select id="fontSize">
+          <option value="0.9">Small</option>
+          <option value="1" selected>Medium</option>
+          <option value="1.15">Large</option>
+        </select>
+      </div>
 
-<button id="more" type="button"
-        aria-expanded="false"
-        aria-controls="moreMenu"
-        aria-label="Open menu"
-        title="Menu">
-  🍔
-</button>
+      <button id="print" type="button">Print</button>
+      <button id="contact" type="button">Contact Us</button>
 
+      <!-- Future additions -->
+      <!-- Restaurant Favorite Makeovers -->
+      <!-- Client Favorite Makeovers -->
 
-  <div id="moreMenu" class="more-menu" hidden>
-
-    <div class="font-size-control">
-      <label for="fontSize">Text Size:</label>
-      <select id="fontSize">
-        <option value="0.9">Small</option>
-        <option value="1" selected>Medium</option>
-        <option value="1.15">Large</option>
-      </select>
     </div>
-
-    <button id="print" type="button">Print</button>
-
-    <button id="contact" type="button">Contact Us</button>
-
-    <!-- Future additions -->
-    <!-- Restaurant Favorite Makeovers -->
-    <!-- Client Favorite Makeovers -->
-
   </div>
-
-</div>
-
-
 
 
 </header>
-
-
-
 
 <div class="reading-layout">
   <aside class="toc-panel" aria-label="Table of Contents">
@@ -542,5 +529,6 @@ render(0,"",false);
 </script>
 
 <script src="flipbook.js"></script>
+
 </body>
 </html>
