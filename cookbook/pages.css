@@ -1,0 +1,144 @@
+/*
+  Basic Biblical Nutrition — Cookbook Pages
+  pages.css — V1
+
+  ==========================================================
+  RECIPE PAGE CAPACITY TEST — EASY TO FIND
+  ==========================================================
+
+  Change ONLY --page-height while we tune the physical book.
+  The red dashed box is the usable text area.
+  The bottom strip is reserved for the page number.
+
+  IMPORTANT:
+  This is a TEST layer. The PDF line-flow engine comes later.
+*/
+
+:root{
+  --page-height: 740px;
+  --page-number-space: 38px;
+  --page-guide-top: 24px;
+  --page-guide-side: 24px;
+}
+
+/* The physical book and every page are the same fixed height. */
+.notebook{
+  height:var(--page-height);
+  min-height:var(--page-height);
+}
+
+.page{
+  height:var(--page-height);
+  min-height:var(--page-height);
+  box-sizing:border-box;
+  overflow:hidden;
+  position:relative;
+
+  /* Reserve space at the bottom for the future page number. */
+  padding-bottom:calc(42px + var(--page-number-space));
+}
+
+.title{
+    font-size: 24px;
+    line-height: 1.25;
+    font-weight:600;
+}
+
+.title.soup-title {
+    font-size: 20px !important;
+}
+
+/* ----------------------------------------------------------
+   TEMPORARY RED TEXT-CAPACITY GUIDE
+   ---------------------------------------------------------- */
+
+.temp-page-guide{
+  position:absolute;
+  top:var(--page-guide-top);
+  left:var(--page-guide-side);
+  right:var(--page-guide-side);
+  bottom:calc(var(--page-number-space) + 8px);
+
+  border:2px dashed rgba(190,0,0,.75);
+  box-sizing:border-box;
+  pointer-events:none;
+  z-index:100;
+}
+
+.temp-overflow-flag{
+  position:absolute;
+  right:8px;
+  bottom:8px;
+
+  padding:4px 8px;
+  background:#fff;
+  color:#b00000;
+  border:2px solid #b00000;
+  border-radius:4px;
+
+  font:800 11px/1 Arial,sans-serif;
+  letter-spacing:.06em;
+}
+
+
+
+/* ----------------------------------------------------------
+   TEMPORARY PAGE NUMBER SPACE
+   ---------------------------------------------------------- */
+
+.temp-page-number{
+  position:absolute;
+  left:var(--page-guide-side);
+  right:var(--page-guide-side);
+  bottom:5px;
+  height:var(--page-number-space);
+
+  border-top:1px dashed rgba(89,107,40,.55);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:#5b3d18;
+  font: .82rem Georgia,"Times New Roman",serif;
+  z-index:101;
+  pointer-events:none;
+}
+
+/* First page: the rating is the last intended content before the
+   reserved page-number area. */
+.page[data-page="0"] .recipe-rating{
+  margin-bottom:8px;
+}
+
+.book-page {
+    font-size: 14px;
+    line-height: 1.25;
+}
+
+
+/* Mobile gets its own later tuning; don't force the desktop test box. */
+@media(max-width:780px){
+  .notebook{
+    height:auto;
+    min-height:0;
+  }
+
+  .page{
+    height:auto;
+    min-height:0;
+    overflow:hidden;
+  }
+
+  .temp-page-guide{
+    display:none;
+  }
+}
+
+/* Print: temporary test marks should not print. */
+@media print{
+  .temp-page-guide,
+  .temp-page-number{
+    display:none!important;
+  }
+}

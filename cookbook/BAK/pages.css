@@ -1,0 +1,112 @@
+/*
+  Basic Biblical Nutrition — Cookbook Pages
+  pages.css — V1
+
+  ==========================================================
+  RECIPE PAGE LAYOUT — V1
+  EASY TO FIND / EASY TO ADJUST
+  ==========================================================
+
+  FIRST RECIPE PAGE:
+    picture -> title -> short fun description -> rating
+
+  The banner owns the "Healthy Recipes..." and
+  "Incredibly yummy..." messages. They are intentionally
+  hidden on the recipe page.
+*/
+
+/* ==========================================================
+   RECIPE PAGE LAYOUT — V1
+   EASY TO FIND / EASY TO ADJUST
+   First recipe page: picture -> title -> fun description -> rating
+   ========================================================== */
+.notebook{
+  min-height:650px;
+}
+.page{
+  min-height:650px;
+}
+.recipe-photo{
+  width:min(100%,460px);
+  max-height:350px;
+  object-fit:cover;
+  margin:0 auto 14px;
+}
+.left-page{
+  padding-top:28px;
+  padding-bottom:28px;
+}
+.left-page .title{
+  margin:.15em 0 .4em;
+}
+.left-page .story{
+  max-width:560px;
+  margin:.65em auto 1em;
+}
+.recipe-rating{
+  margin:12px auto 0;
+  max-width:420px;
+  padding:8px 12px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:#e8e6bf;
+  text-align:center;
+  color:var(--olive-dark);
+  font-weight:bold;
+}
+/* The banner carries these messages; do not repeat them on the recipe page. */
+.left-page .kicker,
+.left-page .meta,
+.left-page .byline{
+  display:none;
+}
+
+@media(max-width:780px){
+  .notebook,.page{min-height:0;}
+  .recipe-photo{max-height:none;}
+}
+
+/* ----------------------------------------------------------
+   PAGE COMPONENT BASICS
+   These rules keep the component's page surfaces predictable
+   when pages.html is loaded into cookbook.html.
+   ---------------------------------------------------------- */
+
+.page {
+  box-sizing: border-box;
+}
+
+.left-page {
+  box-sizing: border-box;
+}
+
+.recipe-photo {
+  display: block;
+}
+
+.recipe-rating {
+  box-sizing: border-box;
+}
+
+/* ----------------------------------------------------------
+   EASY HEIGHT CONTROL
+   Change ONLY this value when adjusting the physical
+   height of the cookbook pages.
+   ---------------------------------------------------------- */
+
+.notebook {
+  min-height: 650px;
+}
+
+.page {
+  min-height: 650px;
+}
+
+/* Mobile: let the page grow naturally instead of forcing
+   a desktop book height onto a narrow screen. */
+@media (max-width: 780px) {
+  .notebook,
+  .page {
+    min-height: 0;
+  }
+}
