@@ -143,7 +143,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
 .eyebrow{position:relative;color:var(--olive);font-weight:bold;letter-spacing:.1em;text-transform:uppercase;font-size:.8em}
 .rule{position:relative;height:2px;background:var(--olive);width:72px;margin:10px 0 18px}
 .recipe-photo{
-  position:relative;display:block;width:min(100%,500px);height:auto;max-height:none;object-fit:contain;
+  position:relative;display:block;width:min(100%,460px);height:auto;max-height:none;object-fit:contain;
   margin:0 auto 16px;border:1px solid var(--line);border-radius:8px;
   box-shadow:0 8px 14px rgba(38,29,15,.18)
 }
@@ -185,6 +185,19 @@ h3{color:var(--olive);line-height:1.05;margin:8px 0 3px}
   margin: 0 0 8px;
 }
 
+/* Recipe rating banner */
+.recipe-rating{
+  display:block;
+  width:100%;
+  margin:10px 0 8px;
+  padding:6px 10px;
+  text-align:center;
+  background:#e6e9c9;
+  border:1px solid #c7ce9a;
+  border-radius:5px;
+  color:var(--olive-dark);
+  font-weight:600;
+}
 .stars{letter-spacing:.12em}
 .purpose{font-size:1.2em;font-style:italic;text-align:center;margin:1.5em 0}
 .page.hidden{display:none}

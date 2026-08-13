@@ -256,6 +256,22 @@ h3{color:var(--olive);line-height:1.05}
 }
 </style>
 
+<style>
+/* Page numbers */
+.temp-page-number{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:14px;
+  text-align:center;
+  color:var(--muted);
+  font-size:.78em;
+  line-height:1.2;
+  pointer-events:none;
+  z-index:3;
+}
+</style>
+
 <link rel="stylesheet" href="cookbook_styles.css">
 
 </head>
@@ -297,7 +313,7 @@ h3{color:var(--olive);line-height:1.05}
   <button id="prev" type="button">← Previous</button>
 
   <span id="status" class="status" aria-live="polite">
-    Pages 1–2 of 5
+    Pages 1–2 of 4
   </span>
 
   <button id="next" type="button">Next →</button>
@@ -380,7 +396,11 @@ fetch('pages.html')
 
     const container = document.getElementById('recipePages');
 
-    sourcePages.forEach(page => {
+    sourcePages.forEach((page, pageIndex) => {
+      const number = page.querySelector('.temp-page-number-value');
+      if(number){
+        number.textContent = pageIndex + 1;
+      }
       container.appendChild(page);
     });
 

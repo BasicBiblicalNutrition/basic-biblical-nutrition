@@ -3,110 +3,142 @@
   pages.css — V1
 
   ==========================================================
-  RECIPE PAGE LAYOUT — V1
-  EASY TO FIND / EASY TO ADJUST
+  RECIPE PAGE CAPACITY TEST — EASY TO FIND
   ==========================================================
 
-  FIRST RECIPE PAGE:
-    picture -> title -> short fun description -> rating
+  Change ONLY --page-height while we tune the physical book.
+  The red dashed box is the usable text area.
+  The bottom strip is reserved for the page number.
 
-  The banner owns the "Healthy Recipes..." and
-  "Incredibly yummy..." messages. They are intentionally
-  hidden on the recipe page.
+  IMPORTANT:
+  This is a TEST layer. The PDF line-flow engine comes later.
 */
 
-/* ==========================================================
-   RECIPE PAGE LAYOUT — V1
-   EASY TO FIND / EASY TO ADJUST
-   First recipe page: picture -> title -> fun description -> rating
-   ========================================================== */
+:root{
+  --page-height: 740px;
+  --page-number-space: 38px;
+  --page-guide-top: 24px;
+  --page-guide-side: 24px;
+}
+
+/* The physical book and every page are the same fixed height. */
 .notebook{
-  min-height:650px;
+  height:var(--page-height);
+  min-height:var(--page-height);
 }
+
 .page{
-  min-height:650px;
-}
-.recipe-photo{
-  width:min(100%,460px);
-  max-height:350px;
-  object-fit:cover;
-  margin:0 auto 14px;
-}
-.left-page{
-  padding-top:28px;
-  padding-bottom:28px;
-}
-.left-page .title{
-  margin:.15em 0 .4em;
-}
-.left-page .story{
-  max-width:560px;
-  margin:.65em auto 1em;
-}
-.recipe-rating{
-  margin:12px auto 0;
-  max-width:420px;
-  padding:8px 12px;
-  border:1px solid var(--line);
-  border-radius:8px;
-  background:#e8e6bf;
-  text-align:center;
-  color:var(--olive-dark);
-  font-weight:bold;
-}
-/* The banner carries these messages; do not repeat them on the recipe page. */
-.left-page .kicker,
-.left-page .meta,
-.left-page .byline{
-  display:none;
+  height:var(--page-height);
+  min-height:var(--page-height);
+  box-sizing:border-box;
+  overflow:hidden;
+  position:relative;
+
+  /* Reserve space at the bottom for the future page number. */
+  padding-bottom:calc(42px + var(--page-number-space));
 }
 
+.title{
+    font-size: 24px;
+    line-height: 1.25;
+    font-weight:600;
+}
+
+.title.soup-title {
+    font-size: 20px !important;
+}
+
+/* ----------------------------------------------------------
+   TEMPORARY RED TEXT-CAPACITY GUIDE
+   ---------------------------------------------------------- */
+
+.temp-page-guide{
+  position:absolute;
+  top:var(--page-guide-top);
+  left:var(--page-guide-side);
+  right:var(--page-guide-side);
+  bottom:calc(var(--page-number-space) + 8px);
+
+  border:2px dashed rgba(190,0,0,.75);
+  box-sizing:border-box;
+  pointer-events:none;
+  z-index:100;
+}
+
+.temp-overflow-flag{
+  position:absolute;
+  right:8px;
+  bottom:8px;
+
+  padding:4px 8px;
+  background:#fff;
+  color:#b00000;
+  border:2px solid #b00000;
+  border-radius:4px;
+
+  font:800 11px/1 Arial,sans-serif;
+  letter-spacing:.06em;
+}
+
+
+
+/* ----------------------------------------------------------
+   TEMPORARY PAGE NUMBER SPACE
+   ---------------------------------------------------------- */
+
+.temp-page-number{
+  position:absolute;
+  left:var(--page-guide-side);
+  right:var(--page-guide-side);
+  bottom:5px;
+  height:var(--page-number-space);
+
+  border-top:1px dashed rgba(89,107,40,.55);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:#5b3d18;
+  font: .82rem Georgia,"Times New Roman",serif;
+  z-index:101;
+  pointer-events:none;
+}
+
+/* First page: the rating is the last intended content before the
+   reserved page-number area. */
+.page[data-page="0"] .recipe-rating{
+  margin-bottom:8px;
+}
+
+.book-page {
+    font-size: 14px;
+    line-height: 1.25;
+}
+
+
+/* Mobile gets its own later tuning; don't force the desktop test box. */
 @media(max-width:780px){
-  .notebook,.page{min-height:0;}
-  .recipe-photo{max-height:none;}
+  .notebook{
+    height:auto;
+    min-height:0;
+  }
+
+  .page{
+    height:auto;
+    min-height:0;
+    overflow:hidden;
+  }
+
+  .temp-page-guide{
+    display:none;
+  }
 }
 
-/* ----------------------------------------------------------
-   PAGE COMPONENT BASICS
-   These rules keep the component's page surfaces predictable
-   when pages.html is loaded into cookbook.html.
-   ---------------------------------------------------------- */
-
-.page {
-  box-sizing: border-box;
-}
-
-.left-page {
-  box-sizing: border-box;
-}
-
-.recipe-photo {
-  display: block;
-}
-
-.recipe-rating {
-  box-sizing: border-box;
-}
-
-/* ----------------------------------------------------------
-   EASY HEIGHT CONTROL
-   Change ONLY this value when adjusting the physical
-   height of the cookbook pages.
-   ---------------------------------------------------------- */
-
-.notebook {
-  min-height: 650px;
-}
-
-.page {
-  min-height: 650px;
-}
-
-/* Mobile: let the page grow naturally instead of forcing
-   a desktop book height onto a narrow screen. */
-@media (max-width: 780px) {
-  .notebook,
-  .page {
-    min-height: 0;
+/* Print: temporary test marks should not print. */
+@media print{
+  .temp-page-guide,
+  .temp-page-number{
+    display:none!important;
   }
 }
