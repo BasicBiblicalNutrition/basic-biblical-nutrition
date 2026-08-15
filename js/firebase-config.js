@@ -5,12 +5,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebas
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "YOUR API KEY",
-    authDomain: "basicbiblicalnutrition.firebaseapp.com",
-    projectId: "basicbiblicalnutrition",
-    storageBucket: "basicbiblicalnutrition.firebasestorage.app",
-    messagingSenderId: "YOUR MESSAGING ID",
-    appId: "YOUR APP ID"
+  apiKey: "AIzaSyDAA6LKcrcJo7M8X4SK8ziaXGaWB1xzMGs",
+  authDomain: "basicbiblicalnutrition.firebaseapp.com",
+  projectId: "basicbiblicalnutrition",
+  storageBucket: "basicbiblicalnutrition.firebasestorage.app",
+  messagingSenderId: "496922675962",
+  appId: "1:496922675962:web:a5d7dd85643b79ab2e5743",
+  measurementId: "G-8JJ5VBM1J2"
 };
 
 const app = initializeApp(firebaseConfig);
