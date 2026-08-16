@@ -509,6 +509,7 @@ if (printButton) {
     });
 }
 */
+/*
 function printPDF(pdfUrl) {
     const iframe = document.createElement("iframe");
 
@@ -530,6 +531,37 @@ function printPDF(pdfUrl) {
         }
 
         setTimeout(() => iframe.remove(), 1000);
+    };
+
+    document.body.appendChild(iframe);
+}
+*/
+
+
+function printPDF(pdfUrl) {
+    const iframe = document.createElement("iframe");
+
+    iframe.style.position = "fixed";
+    iframe.style.right = "0";
+    iframe.style.bottom = "0";
+    iframe.style.width = "0";
+    iframe.style.height = "0";
+    iframe.style.border = "none";
+
+    iframe.src = pdfUrl;
+
+    iframe.onload = function () {
+        try {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+        } catch (error) {
+            console.error("Failed to print PDF:", error);
+        }
+
+        // Keep iframe alive for Edge
+        setTimeout(() => {
+            iframe.remove();
+        }, 60000);
     };
 
     document.body.appendChild(iframe);
