@@ -608,25 +608,20 @@ body.dyslexia-font li{
     content: "Microsoft Edge may print PDF documents in black and white. For color printing, use Chrome.";
     position: absolute;
     left: 50%;
-    top: calc(100% + 10px);
+    top: calc(100% + 8px);
     transform: translateX(-50%);
-
     width: 260px;
-    padding: 10px 12px;
-
+    padding: 10px;
     background: #fff8dc;
     color: #333;
     border: 1px solid #6E7D32;
     border-radius: 6px;
     box-shadow: 0 3px 8px rgba(0,0,0,.25);
-
     font-size: 13px;
     line-height: 1.35;
     text-align: center;
-
     z-index: 10000;
     pointer-events: none;
-
     opacity: 0;
     visibility: hidden;
 }

@@ -581,7 +581,7 @@ const printButton = document.getElementById("print");
 
 const isEdge = navigator.userAgent.includes("Edg/");
 
-if (printButton && isEdge) {
+if (printButton && navigator.userAgent.includes("Edg/")) {
     printButton.classList.add("edge-browser");
 }
 
