@@ -579,12 +579,10 @@ if (printButton && /Edg\//.test(navigator.userAgent)) {
 
 const printButton = document.getElementById("print");
 
-if (printButton && /Edg\//.test(navigator.userAgent)) {
-    const warning = printButton.querySelector(".edge-print-warning");
+const isEdge = navigator.userAgent.includes("Edg/");
 
-    if (warning) {
-        warning.style.display = "";
-    }
+if (printButton && isEdge) {
+    printButton.classList.add("edge-browser");
 }
 
 
