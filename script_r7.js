@@ -567,6 +567,7 @@ function printPDF(pdfUrl) {
     document.body.appendChild(iframe);
 }
 
+/*
 const printButton = document.getElementById("print");
 
 if (printButton && /Edg\//.test(navigator.userAgent)) {
@@ -574,3 +575,16 @@ if (printButton && /Edg\//.test(navigator.userAgent)) {
         "Microsoft Edge may print PDF documents in black and white. " +
         "For color printing, use Chrome.";
 }
+*/
+
+const printButton = document.getElementById("print");
+
+if (printButton && /Edg\//.test(navigator.userAgent)) {
+    const warning = printButton.querySelector(".edge-print-warning");
+
+    if (warning) {
+        warning.style.display = "";
+    }
+}
+
+

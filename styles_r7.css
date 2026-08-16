@@ -574,6 +574,31 @@ body.dyslexia-font li{
 }
 */
 
+.edge-print-warning {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    background: #fff8dc;
+    border: 1px solid #6E7D32;
+    border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.2);
+    font-size: 0.85rem;
+    line-height: 1.35;
+    color: #333;
+    text-align: left;
+    z-index: 9999;
+    display: none;
+}
+
+#print:hover .edge-print-warning {
+    display: block;
+}
+
+
 
 
 /* HERO */
