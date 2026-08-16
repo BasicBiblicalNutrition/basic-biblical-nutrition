@@ -566,3 +566,11 @@ function printPDF(pdfUrl) {
 
     document.body.appendChild(iframe);
 }
+
+const printButton = document.getElementById("print");
+
+if (printButton && /Edg\//.test(navigator.userAgent)) {
+    printButton.title =
+        "Microsoft Edge may print PDF documents in black and white. " +
+        "For color printing, use Chrome.";
+}
