@@ -488,3 +488,49 @@ function closeAccessibilityStatement() {
     }
 }
 
+
+/*  print function  -- prints a PDF file */
+/*
+function printPDF(pdfUrl) {
+    window.open(pdfUrl, "_blank");
+}
+
+const printButton = document.getElementById("print");
+
+if (printButton) {
+    printButton.addEventListener("click", e => {
+        e.preventDefault();
+
+        const pdfUrl = printButton.dataset.pdf;
+
+        if (pdfUrl) {
+            printPDF(pdfUrl);
+        }
+    });
+}
+*/
+function printPDF(pdfUrl) {
+    const iframe = document.createElement("iframe");
+
+    iframe.style.position = "fixed";
+    iframe.style.right = "0";
+    iframe.style.bottom = "0";
+    iframe.style.width = "0";
+    iframe.style.height = "0";
+    iframe.style.border = "none";
+
+    iframe.src = pdfUrl;
+
+    iframe.onload = function () {
+        try {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+        } catch (error) {
+            console.error("Failed to print PDF:", error);
+        }
+
+        setTimeout(() => iframe.remove(), 1000);
+    };
+
+    document.body.appendChild(iframe);
+}
