@@ -144,7 +144,7 @@ if(fontSize){
 // Temporary hard-coded PDF for testing
 // =====================================================
 const PRINT_PDF =
-  "recipes/BBN_Sweet_Gypsy_Golden_Pepper_Soup_Final.pdf";
+  "recipes/soup/BBN_Sweet_Gypsy_Golden_Pepper_Soup_Final.pdf";
 
 
   /*
