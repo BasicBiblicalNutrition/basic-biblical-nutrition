@@ -47,6 +47,13 @@
 
 
 .thank-you-section {
+    background-image: url("images/Banner/logoOnly_2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 300px auto;
+}
+
+.thank-you-section {
     min-height: 420px;
     display: flex;
     align-items: center;
