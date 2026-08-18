@@ -44,3 +44,46 @@
     align-self: center;
     margin-top: 15px;
 }
+
+
+.thank-you-section {
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thank-you-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    max-width: 850px;
+    width: 90%;
+}
+
+.thank-you-message {
+    text-align: left;
+}
+
+.thank-you-message h2 {
+    margin-bottom: 25px;
+}
+
+.thank-you-message p {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 10px 0;
+}
+
+.cowgirl {
+    width: 160px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.thank-you-button {
+    display: inline-block;
+    margin-top: 25px;
+    text-decoration: none;
+}
