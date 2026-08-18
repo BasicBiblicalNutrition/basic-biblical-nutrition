@@ -50,7 +50,8 @@
     background-image: url("images/Banner/logoOnly_2.png");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 300px auto;
+    background-size: 550px auto;
+    opacity: 0.10;
 }
 
 .thank-you-section {
@@ -84,7 +85,7 @@
 }
 
 .cowgirl {
-    width: 160px;
+    width: 70px;
     height: auto;
     flex-shrink: 0;
 }
