@@ -158,18 +158,15 @@ async function initializeTake2() {
             <div class="take2-card-content">
                 
                  <h3 class="take2-card-title ${article.querySelector("title").textContent.length > 34 ? "long-title" : ""}">
-                    <a href="${article.querySelector("link").textContent}"
-                       class="take2-card-link">
+ 
+                 <a href="${article.querySelector("pdf").textContent.trim()}"
+                        target="_blank"
+                        class="take2-card-link">
                         ${article.querySelector("title").textContent}
                         <span class="icon">🔗</span>
                     </a>
                 </h3>
-                
-
-
-
-
-                
+        
 
                 <p class="take2-card-date">
                     ${article.querySelector("date").textContent}
@@ -215,7 +212,15 @@ async function initializeFeatureCarousel() {
 
         card.className = `feature-card${isComingSoon ? " coming-soon" : ""}`;
 
+        const pdfFilename =
+            article.querySelector("pdf").textContent.trim();
+
+       const readMore = pdfFilename
+            ? `<a href="${pdfFilename}" target="_blank" class="read-more">Read More</a>`
+            : "";
+        
         card.innerHTML = `
+            
             <img src="${article.querySelector("image").textContent}"
                  alt="${article.querySelector("alt").textContent}"
                  class="feature-image">
@@ -238,10 +243,7 @@ async function initializeFeatureCarousel() {
                 ${article.querySelector("summary").textContent}
             </p>
 
-            <a href="${article.querySelector("document").textContent}"
-               class="read-more">
-                Read More
-            </a>
+            ${readMore}
         `;
 
         carousel.appendChild(card);
@@ -487,102 +489,4 @@ function closeAccessibilityStatement() {
         modal.hidden = true;
     }
 }
-
-
-/*  print function  -- prints a PDF file */
-/*
-function printPDF(pdfUrl) {
-    window.open(pdfUrl, "_blank");
-}
-
-const printButton = document.getElementById("print");
-
-if (printButton) {
-    printButton.addEventListener("click", e => {
-        e.preventDefault();
-
-        const pdfUrl = printButton.dataset.pdf;
-
-        if (pdfUrl) {
-            printPDF(pdfUrl);
-        }
-    });
-}
-*/
-/*
-function printPDF(pdfUrl) {
-    const iframe = document.createElement("iframe");
-
-    iframe.style.position = "fixed";
-    iframe.style.right = "0";
-    iframe.style.bottom = "0";
-    iframe.style.width = "0";
-    iframe.style.height = "0";
-    iframe.style.border = "none";
-
-    iframe.src = pdfUrl;
-
-    iframe.onload = function () {
-        try {
-            iframe.contentWindow.focus();
-            iframe.contentWindow.print();
-        } catch (error) {
-            console.error("Failed to print PDF:", error);
-        }
-
-        setTimeout(() => iframe.remove(), 1000);
-    };
-
-    document.body.appendChild(iframe);
-}
-*/
-
-
-function printPDF(pdfUrl) {
-    const iframe = document.createElement("iframe");
-
-    iframe.style.position = "fixed";
-    iframe.style.right = "0";
-    iframe.style.bottom = "0";
-    iframe.style.width = "0";
-    iframe.style.height = "0";
-    iframe.style.border = "none";
-
-    iframe.src = pdfUrl;
-
-    iframe.onload = function () {
-        try {
-            iframe.contentWindow.focus();
-            iframe.contentWindow.print();
-        } catch (error) {
-            console.error("Failed to print PDF:", error);
-        }
-
-        // Keep iframe alive for Edge
-        setTimeout(() => {
-            iframe.remove();
-        }, 60000);
-    };
-
-    document.body.appendChild(iframe);
-}
-
-/*
-const printButton = document.getElementById("print");
-
-if (printButton && /Edg\//.test(navigator.userAgent)) {
-    printButton.title =
-        "Microsoft Edge may print PDF documents in black and white. " +
-        "For color printing, use Chrome.";
-}
-*/
-
-const printButton = document.getElementById("print");
-
-const isEdge = navigator.userAgent.includes("Edg/");
-
-if (printButton && navigator.userAgent.includes("Edg/")) {
-    printButton.classList.add("edge-browser");
-}
-
 

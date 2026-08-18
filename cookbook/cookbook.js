@@ -147,7 +147,7 @@ const PRINT_PDF =
   "recipes/soup/BBN_Sweet_Gypsy_Golden_Pepper_Soup_Final.pdf";
 
 
-  /*
+ 
 function printPDF(pdfPath){
   const printWindow = window.open(pdfPath, "_blank");
 
@@ -162,7 +162,7 @@ function printPDF(pdfPath){
   });
 }
 
-
+ /*
 const printButton = document.getElementById('print');
 
 if (printButton) {
