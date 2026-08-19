@@ -59,7 +59,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url("images/Banner/logoOnly_2.png");
+    background-image: url("images/waterMark_2.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 550px auto;
@@ -67,7 +67,7 @@
     z-index: 0;
 }
 
-/*
+
 .thank-you-content {
     display: flex;
     align-items: center;
@@ -76,12 +76,12 @@
     max-width: 850px;
     width: 90%;
 }
-*/
+/*
 .thank-you-content {
     position: relative;
     z-index: 1;
 }
-
+*/
 .thank-you-message {
     text-align: left;
 }
