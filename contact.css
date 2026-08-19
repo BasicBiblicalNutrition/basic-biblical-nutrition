@@ -48,12 +48,19 @@
 
 
 
+/* =========================
+   Thank You Page
+   ========================= */
+
 .thank-you-content {
     position: relative;
     min-height: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    max-width: 850px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 50px 20px;
+    box-sizing: border-box;
+    text-align: center;
     overflow: hidden;
 }
 
@@ -69,28 +76,15 @@
     z-index: 0;
 }
 
-
-.thank-you-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 50px;
-    max-width: 850px;
-    width: 90%;
-}
-/*
-.thank-you-content {
+.thank-you-content > * {
     position: relative;
     z-index: 1;
-}
-*/
-.thank-you-content {
-    text-align: left;
 }
 
 .thank-you-content h2 {
     margin-bottom: 25px;
 }
+
 
 .thank-you-content p {
     font-size: 18px;
@@ -101,7 +95,8 @@
 .cowgirl {
     width: 70px;
     height: auto;
-    flex-shrink: 0;
+    vertical-align: middle;
+    margin-left: 8px;
 }
 
 .thank-you-button {
