@@ -48,7 +48,7 @@
 
 
 
-.ty_container {
+.ty-container {
     position: relative;
     min-height: 420px;
     display: flex;
@@ -57,7 +57,7 @@
     overflow: hidden;
 }
 
-.ty_container::before {
+.ty-container::before {
     content: "";
     position: absolute;
     inset: 0;
