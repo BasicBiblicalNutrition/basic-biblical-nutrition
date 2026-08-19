@@ -48,7 +48,7 @@
 
 
 
-.ty-container {
+.thank-you-content {
     position: relative;
     min-height: 420px;
     display: flex;
@@ -57,7 +57,7 @@
     overflow: hidden;
 }
 
-.ty-container::before {
+.thank-you-content::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -92,7 +92,7 @@
     margin-bottom: 25px;
 }
 
-.come-back p {
+.thank-you-content p {
     font-size: 18px;
     line-height: 1.7;
     margin: 10px 0;
