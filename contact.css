@@ -46,7 +46,9 @@
 }
 
 
-.thank-you-section {
+
+
+.ty_container {
     position: relative;
     min-height: 420px;
     display: flex;
@@ -55,7 +57,7 @@
     overflow: hidden;
 }
 
-.thank-you-section::before {
+.ty_container::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -82,15 +84,15 @@
     z-index: 1;
 }
 */
-.thank-you-message {
+.thank-you-content {
     text-align: left;
 }
 
-.thank-you-message h2 {
+.thank-you-content h2 {
     margin-bottom: 25px;
 }
 
-.thank-you-message p {
+.come-back p {
     font-size: 18px;
     line-height: 1.7;
     margin: 10px 0;
