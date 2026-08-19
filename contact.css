@@ -47,20 +47,27 @@
 
 
 .thank-you-section {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.thank-you-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
     background-image: url("images/Banner/logoOnly_2.png");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 550px auto;
     opacity: 0.10;
+    z-index: 0;
 }
 
-.thank-you-section {
-    min-height: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
+/*
 .thank-you-content {
     display: flex;
     align-items: center;
@@ -68,6 +75,11 @@
     gap: 50px;
     max-width: 850px;
     width: 90%;
+}
+*/
+.thank-you-content {
+    position: relative;
+    z-index: 1;
 }
 
 .thank-you-message {
