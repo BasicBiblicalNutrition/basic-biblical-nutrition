@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<content>
+
+  <maincourse>
+    <recipe>
+        <title>Crispy & Honeyed Hemp Heart Chicken</title>
+        <type>poultry</type>
+        <pdf>./recipes/maincourse/BBN_Crispy_Tuscan_Herb_Hemp_Chicken_FINAL.pdf</pdf>
+    </recipe>
+
+    <recipe>
+        <title>Baked Salmon w/ Lemon Tahini Tarator </title>
+        <type>seafood</type>
+        <pdf>./recipes/maincourse/BBN_Salmon_w_TahiniSauce_FINAL.pdf</pdf>
+    </recipe>
+
+    <recipe>
+        <title>Eggplant Lasagna </title>
+        <type>vegetarian</type>
+        <pdf>./recipes/maincourse/BBN_Eggplant_Lasagna_FINAL.pdf</pdf>
+    </recipe>
+  </maincourse>
+
+  <sauces>
+    <recipe>
+        <title>Basil Walnut Pesto</title>
+        <type>vegetarian</type>
+        <pdf>./recipes/sauces/BBN_BasilWalnutPesto_FINAL.pdf</pdf>
+    </recipe>
+
+    <recipe>
+        <title>Roasted Cherry Tomato Sauce</title>
+        <type>vegetarian</type>
+        <pdf>./recipes/sauces/BBN_Roasted_Cherry_Tomato_Sauce_Final.pdf</pdf>
+    </recipe>
+  </sauces>
+
+  <soup>
+    <recipe>
+        <title>Sweet Gypsy Pepper and Chicken Soup</title>
+        <type>poultry</type>
+        <pdf>./recipes/soup/BBN_Sweet_Gypsy_Golden_Pepper_Soup_Final.pdf</pdf>
+    </recipe>
+
+    <recipe>
+        <title>Tuscan Vegetable Soup</title>
+        <type>vegetarian</type>
+        <pdf>./recipes/soup/BBN_Tuscan_Vegetable_Soup_Final.pdf</pdf>
+    </recipe>
+  </soup>
+</content>
