@@ -416,7 +416,7 @@ button:disabled{opacity:.45;cursor:not-allowed}
   box-shadow:0 8px 14px rgba(38,29,15,.18)
 }
 .title{
-  font-size:clamp(1.55rem,2.7vw,2.35rem);
+  font-size:clamp(1.05rem,2.2vw,2rem);
   line-height:1.02;
   margin:.18em 0 .35em;
   text-align:center;
@@ -467,6 +467,24 @@ h3{color:var(--olive);line-height:1.05;margin:8px 0 3px}
   font-weight:600;
 }
 .stars{letter-spacing:.12em}
+
+#bbnNutritionButton {
+    display: block;
+    margin: 8px 0 0 auto;
+    padding: 6px 14px;
+    background-color: #6E7D32;
+    color: #FFFFFF;
+    border: 1px solid #6E7D32;
+    border-radius: 0;
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+
+
+
 .purpose{font-size:1.2em;font-style:italic;text-align:center;margin:1.5em 0}
 .page.hidden{display:none}
 .page.turning-next{animation:turnNext .48s ease}
@@ -993,4 +1011,89 @@ body {
 
   font:800 11px/1 Arial,sans-serif;
   letter-spacing:.06em;
+}
+
+
+
+/* ======================================================
+   BBN NUTRITION POPUP
+
+   NOTE:  This is not where I want these rules to reside permanently!!!
+   ====================================================== */
+
+.bbn-nutrition-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.45);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.bbn-nutrition-modal.open {
+    display: flex;
+}
+
+.bbn-nutrition-popup {
+    position: relative;
+    width: min(560px, 90vw);
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 28px 32px;
+    background: #fffdf3;
+    border: 2px solid #6E7D32;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    color: #2f2f24;
+}
+
+.bbn-nutrition-popup h2 {
+    margin: 0 40px 18px 0;
+    color: #6E7D32;
+}
+
+.bbn-nutrition-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    color: #6E7D32;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.bbn-nutrition-serving {
+    margin-bottom: 18px;
+}
+
+.bbn-nutrition-table {
+    border-top: 1px solid #c9c5aa;
+    margin-bottom: 22px;
+}
+
+.bbn-nutrition-table > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 7px 0;
+    border-bottom: 1px solid #c9c5aa;
+}
+
+.bbn-nutrition-highlights,
+.bbn-nutrition-snapshot {
+    margin-top: 20px;
+}
+
+.bbn-nutrition-highlights h3,
+.bbn-nutrition-snapshot h3 {
+    color: #6E7D32;
+    margin-bottom: 10px;
+}
+
+.bbn-nutrition-highlights p,
+.bbn-nutrition-snapshot p {
+    margin: 7px 0;
 }

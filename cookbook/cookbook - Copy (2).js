@@ -18,10 +18,8 @@ fetch('pages.html')
     });
 
     pages = [...container.querySelectorAll('.page')];
-/*
+
     render(0,"",false);
-    */
-   
   });
 
 
@@ -224,6 +222,4 @@ window.addEventListener('keydown',e=>{
   }
 });
 
-window.addEventListener("BBN_PAGES_READY", () => {
-  render(0,"",false);
-});
+render(0,"",false);

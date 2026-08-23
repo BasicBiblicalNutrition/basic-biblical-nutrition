@@ -16,7 +16,6 @@ document.getElementById("home").addEventListener("click", () => {
   window.location.href = "../index.html";
 });
 
-/*
 const moreButton = document.getElementById("more");
 const moreMenu = document.getElementById("moreMenu");
 
@@ -26,4 +25,3 @@ moreButton.addEventListener("click", () => {
   moreMenu.hidden = isOpen;
   moreButton.setAttribute("aria-expanded", String(!isOpen));
 });
-*/

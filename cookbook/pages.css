@@ -38,14 +38,120 @@
   padding-bottom:calc(42px + var(--page-number-space));
 }
 
+/* BBN Nutritional Information button */
+/*
+#bbnNutritionButton {
+    display: block;
+    margin: 8px 0 0 auto;
+    padding: 6px 14px;
+
+    background-color: #6E7D32 !important;
+    color: #FFFFFF !important;
+
+    border: 1px solid #6E7D32 !important;
+    border-radius: 0 !important;
+
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    cursor: pointer;
+}
+*/
+
+/* ======================================================
+   BBN NUTRITION POPUP
+   ====================================================== */
+
+.bbn-nutrition-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.45);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.bbn-nutrition-modal.open {
+    display: flex;
+}
+
+.bbn-nutrition-popup {
+    position: relative;
+    width: min(560px, 90vw);
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 28px 32px;
+    background: #fffdf3;
+    border: 2px solid #6E7D32;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    color: #2f2f24;
+}
+
+.bbn-nutrition-popup h2 {
+    margin: 0 40px 18px 0;
+    color: #6E7D32;
+}
+
+.bbn-nutrition-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: 0;
+    background: transparent;
+    color: #6E7D32;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.bbn-nutrition-serving {
+    margin-bottom: 18px;
+}
+
+.bbn-nutrition-table {
+    border-top: 1px solid #c9c5aa;
+    margin-bottom: 22px;
+}
+
+.bbn-nutrition-table > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 7px 0;
+    border-bottom: 1px solid #c9c5aa;
+}
+
+.bbn-nutrition-highlights,
+.bbn-nutrition-snapshot {
+    margin-top: 20px;
+}
+
+.bbn-nutrition-highlights h3,
+.bbn-nutrition-snapshot h3 {
+    color: #6E7D32;
+    margin-bottom: 10px;
+}
+
+.bbn-nutrition-highlights p,
+.bbn-nutrition-snapshot p {
+    margin: 7px 0;
+}
+
+
+
+
+
+
 .title{
-    font-size: 24px;
+    font-size: 20px;
     line-height: 1.25;
     font-weight:600;
 }
 
 .title.soup-title {
-    font-size: 18px !important;
+    font-size: 14px !important;
 }
 
 /* ----------------------------------------------------------
@@ -103,6 +209,11 @@
   font: .82rem Georgia,"Times New Roman",serif;
   z-index:101;
   pointer-events:none;
+}
+
+.stars {
+    text-shadow:
+        1px 1px 1px rgba(0, 0, 0, 0.35);
 }
 
 /* First page: the rating is the last intended content before the

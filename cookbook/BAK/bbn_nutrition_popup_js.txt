@@ -1,0 +1,160 @@
+/* ======================================================
+   BBN NUTRITION POPUP
+   Add this function to pages.js
+   ====================================================== */
+
+function setupNutritionPopup(page1Data) {
+
+    const button = document.getElementById("bbnNutritionButton");
+
+    if (!button) {
+        console.warn("BBN Nutrition button not found.");
+        return;
+    }
+
+    /* Prevent duplicate popup setup */
+    if (document.getElementById("bbnNutritionModal")) {
+        return;
+    }
+
+    const nutrition = page1Data.nutrition || {};
+
+    const modal = document.createElement("div");
+    modal.id = "bbnNutritionModal";
+    modal.className = "bbn-nutrition-modal";
+    modal.setAttribute("aria-hidden", "true");
+
+    modal.innerHTML = `
+        <div class="bbn-nutrition-popup"
+             role="dialog"
+             aria-modal="true"
+             aria-labelledby="bbnNutritionTitle">
+
+            <button
+                type="button"
+                class="bbn-nutrition-close"
+                aria-label="Close nutritional information">
+                ×
+            </button>
+
+            <h2 id="bbnNutritionTitle">BBN Nutritional Information</h2>
+
+            <p class="bbn-nutrition-serving">
+                <strong>Serving Size:</strong>
+                <span id="bbnNutritionServing"></span>
+            </p>
+
+            <div class="bbn-nutrition-table">
+
+                <div><strong>Calories</strong><span id="bbnCalories"></span></div>
+                <div><strong>Protein</strong><span id="bbnProtein"></span></div>
+                <div><strong>Carbohydrates</strong><span id="bbnCarbohydrates"></span></div>
+                <div><strong>Fiber</strong><span id="bbnFiber"></span></div>
+                <div><strong>Net Carbohydrates</strong><span id="bbnNetCarbs"></span></div>
+                <div><strong>Healthy Fat</strong><span id="bbnHealthyFat"></span></div>
+
+            </div>
+
+            <div class="bbn-nutrition-highlights">
+                <h3>Nutrition Highlights</h3>
+
+                <p><strong>Excellent Source:</strong>
+                    <span id="bbnExcellentSource"></span>
+                </p>
+
+                <p><strong>High In:</strong>
+                    <span id="bbnHighIn"></span>
+                </p>
+
+                <p><strong>Good Source:</strong>
+                    <span id="bbnGoodSource"></span>
+                </p>
+
+                <p><strong>Live Probiotics:</strong>
+                    <span id="bbnLiveProbiotics"></span>
+                </p>
+            </div>
+
+            <div class="bbn-nutrition-snapshot">
+                <h3>Functional Nutrition Snapshot</h3>
+
+                <p id="bbnFunctionalFocus"></p>
+                <p id="bbnNutritionPillars"></p>
+                <p id="bbnFreezerFriendly"></p>
+                <p id="bbnGlutenFree"></p>
+                <p id="bbnNonGMO"></p>
+            </div>
+
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    /* Safely place PDF-reader data into the popup */
+    const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = value || "";
+        }
+    };
+
+    setText("bbnNutritionServing", nutrition.servingSize);
+    setText("bbnCalories", nutrition.calories);
+    setText("bbnProtein", nutrition.protein);
+    setText("bbnCarbohydrates", nutrition.carbohydrates);
+    setText("bbnFiber", nutrition.fiber);
+    setText("bbnNetCarbs", nutrition.netCarbohydrates);
+    setText("bbnHealthyFat", nutrition.healthyFat);
+
+    setText("bbnExcellentSource", nutrition.excellentSource);
+    setText("bbnHighIn", nutrition.highIn);
+    setText("bbnGoodSource", nutrition.goodSource);
+    setText("bbnLiveProbiotics", nutrition.liveProbiotics);
+
+    setText("bbnFunctionalFocus", nutrition.functionalNutritionFocus);
+    setText("bbnNutritionPillars", nutrition.bbnNutritionPillars);
+    setText("bbnFreezerFriendly", nutrition.freezerFriendly);
+    setText("bbnGlutenFree", nutrition.glutenFree);
+    setText("bbnNonGMO", nutrition.nonGmoFriendly);
+
+    const closeButton =
+        modal.querySelector(".bbn-nutrition-close");
+
+    function closeNutritionPopup() {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        button.focus();
+    }
+
+    function openNutritionPopup() {
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        closeButton.focus();
+    }
+
+    button.addEventListener("click", openNutritionPopup);
+
+    closeButton.addEventListener("click", closeNutritionPopup);
+
+    modal.addEventListener("click", event => {
+        if (event.target === modal) {
+            closeNutritionPopup();
+        }
+    });
+
+    document.addEventListener("keydown", event => {
+        if (
+            event.key === "Escape" &&
+            modal.classList.contains("open")
+        ) {
+            closeNutritionPopup();
+        }
+    });
+}
+
+
+/* ======================================================
+   CONNECT THE NUTRITION BUTTON TO THE POPUP
+   ====================================================== */
+
+setupNutritionPopup(page1Data);
