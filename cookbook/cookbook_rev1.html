@@ -3,13 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BBN Recipes — Sweet Gypsy Pepper & Chicken Soup</title>
-
-
+<title>BBN Recipes - Cookbook</title>
 
 <link rel="stylesheet" href="cookbook_styles.css">
-
-
 </head>
 
 <body>
@@ -24,37 +20,31 @@
      class="banner-logo">
 
     <div class="banner-brand-text">
-      <div class="banner-kicker">
+        <div class="banner-kicker">
             <span class="banner-kicker-green">BASIC<br>
             BIBLICAL</span><br>
             <span class="banner-kicker-brown">NUTRITION</span>
         </div>
 
-      <h1>Healthy Recipes from the Heart</h1>
-      <div style="font-style:italic;color:var(--olive-dark);font-size:1.05rem">Incredibly yummy health-conscious recipes from the BBN kitchen … Southern Style.</div>
+        <h1>Healthy Recipes from the Heart</h1>
+        <div style="font-style:italic;color:var(--olive-dark);font-size:1.05rem">Incredibly yummy health-conscious recipes from the BBN kitchen … Southern Style.</div>
+        </div>
     </div>
-  </div>
-
-
 
   <div class="controls" aria-label="Flipbook controls">
 
-<button id="home" type="button" aria-label="Home" title="Home"
-        onclick="window.location.href='../index.html'">
-  <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
-    <path fill="#5b3d18" d="M12 3 3 10.5V21h6v-6h6v6h6V10.5L12 3z"/>
-  </svg>
-</button>
+  <button id="home" type="button" aria-label="Home" title="Home"
+          onclick="window.location.href='../index.html'">
+    <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
+      <path fill="#5b3d18" d="M12 3 3 10.5V21h6v-6h6v6h6V10.5L12 3z"/>
+    </svg>
+  </button>
 
   <button id="prev" type="button">← Previous</button>
-
-  <span id="status" class="status" aria-live="polite">
-    Pages 1–2 of 4
-  </span>
-
+    <span id="status" class="status" aria-live="polite">
+      Pages 1–2 of 4
+    </span>
   <button id="next" type="button">Next →</button>
-
-
 
   <div class="dropdown more-menu">
   <a href="#" aria-haspopup="true" aria-expanded="false">
@@ -62,38 +52,35 @@
   </a>
 
   <div id="moreMenu" class="dropdown-content" hidden>
-
     <ul>
+        <li>
+          <a href="#" id="print" onclick="printPDF(PRINT_PDF); return false;" 
+            title="If running on MS Edge, PDF documents 
+            may print in black and white. 
+            Use Chrome for optimal printing.">
+            <span class="print-icon">🖨️</span> Print
+          </a>
+        </li>
 
-    <li>
-      <a href="#" id="print" onclick="printPDF(PRINT_PDF); return false;" 
-         title="If running on MS Edge, PDF documents 
-         may print in black and white. 
-         Use Chrome for optimal printing.">
-        <span class="print-icon">🖨️</span> Print
-      </a>
-    </li>
+        <li>
+          <a href="#" onclick="toggleLargeText(); return false;">
+            <span id="textSizeIcon" class="icon">A+</span>
+            <span id="textSizeLabel">Increase Text Size</span>
+          </a>
+        </li>
 
-      <li>
-        <a href="#" onclick="toggleLargeText(); return false;">
-          <span id="textSizeIcon" class="icon">A+</span>
-          <span id="textSizeLabel">Increase Text Size</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="../contact.html">
-          <span class="icon">✉</span> Contact Us
-        </a>
-      </li>
-
+        <li>
+          <a href="../contact.html">
+            <span class="icon">✉</span> Contact Us
+          </a>
+        </li>
     </ul>
   </div>
 </div>
 
-   </div>
+</div>
 
-  </header>
+</header>
 
 
 

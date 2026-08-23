@@ -261,16 +261,10 @@ if (pdf.numPages >= 2) {
         }
 
 
-        if (cleanLine === "" && textItem.hasEOL) {
-            finishCurrentLine();
-            return;
-        }
 
         if (cleanLine === "") {
             return;
         }
-
-
 
         if (cleanLine === "Ingredients") {
             finishCurrentLine();
@@ -295,26 +289,53 @@ if (pdf.numPages >= 2) {
             return;
         }
 
-        if (readingIngredients || readingDirections) {
+        if (readingIngredients) {
 
-            console.log(
-                "PDF ITEM:",
-                JSON.stringify(textItem),
-                "hasEOL:",
-                textItem.hasEOL
-            );
+            /*
+               Rev 1 Ingredients rule:
+               A bullet begins a new ingredient.
+               Wrapped PDF text is accumulated until
+               the next bullet is encountered.
+            */
+            if (cleanLine.startsWith("•")) {
 
+                if (currentLine !== "") {
+                    ingredients.push(currentLine);
+                }
 
-
-            if (currentLine === "") {
                 currentLine = cleanLine;
-            } else {
+
+            } else if (currentLine !== "") {
+
+                currentLine += " " + cleanLine;
+
+            }
+
+            return;
+        }
+
+        if (readingDirections) {
+
+            /*
+               Rev 1 Directions rule:
+               A numbered step begins a new direction.
+               Wrapped PDF text is accumulated until
+               the next numbered step is encountered.
+            */
+            if (/^\d+\.\s*/.test(cleanLine)) {
+
+                if (currentLine !== "") {
+                    directions.push(currentLine);
+                }
+
+                currentLine = cleanLine;
+
+            } else if (currentLine !== "") {
+
                 currentLine += " " + cleanLine;
             }
 
-            if (textItem.hasEOL) {
-                finishCurrentLine();
-            }
+            return;
         }
 
     };
@@ -353,7 +374,7 @@ if (pdf.numPages >= 2) {
 
     console.log("");
     console.log("=================================");
-    console.log("DIRECTIONS — CONCATENATED TEST");
+    console.log("DIRECTIONS — REV 1 NUMBERED-STEP TEST");
     console.log("=================================");
     console.log(directions);
 
