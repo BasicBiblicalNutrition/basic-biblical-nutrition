@@ -11,14 +11,18 @@ STEP 2:
     Read only the information needed for Page 1
     Inspect PDF images
 
-NO PAGE BUILDING YET.
+STEP 3:
+    Cookbook Page building in progress...
+    -- Page 1 --  DONE
+    -- Nutrition Data Popup -- DONE
+    -- Ingredients -- HARDCODED
+    -- Directions -- HARDCODED
+
 NO FLIPBOOK CHANGES.
 =========================================================
 */
 
-
 const XML_FILE = "./xml/recipes.xml";
-
 
 /* ======================================================
    STEP 1 — READ XML
@@ -27,7 +31,6 @@ const XML_FILE = "./xml/recipes.xml";
 async function readRecipesXML() {
 
     const response = await fetch(XML_FILE);
-
     if (!response.ok) {
         throw new Error(
             `Unable to read ${XML_FILE} — HTTP ${response.status}`
@@ -35,16 +38,13 @@ async function readRecipesXML() {
     }
 
     const xmlText = await response.text();
-
     const parser = new DOMParser();
-
     const xml = parser.parseFromString(
         xmlText,
         "application/xml"
     );
 
     const parserError = xml.querySelector("parsererror");
-
     if (parserError) {
         throw new Error(
             "XML parsing error:\n" +
@@ -53,20 +53,14 @@ async function readRecipesXML() {
     }
 
     const recipeNodes = xml.querySelectorAll("recipe");
-
     const recipes = [];
-
     recipeNodes.forEach((recipe, index) => {
-
         const title =
             recipe.querySelector("title")?.textContent.trim() || "";
-
         const type =
             recipe.querySelector("type")?.textContent.trim() || "";
-
         const pdf =
             recipe.querySelector("pdf")?.textContent.trim() || "";
-
         recipes.push({
             number: index + 1,
             title,
@@ -92,52 +86,42 @@ async function readRecipePDF(pdfPath, recipeTitle) {
     console.log("PDF:", pdfPath);
     console.log("");
 
-
     /*
        Load PDF.js.
 
        We load it here rather than changing the HTML yet.
     */
-
     const pdfjsLib = await import(
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs"
     );
 
-
     /*
        Tell PDF.js where its worker lives.
     */
-
     pdfjsLib.GlobalWorkerOptions.workerSrc =
         "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
-
 
     /*
        Open the PDF.
     */
-
     const pdf = await pdfjsLib.getDocument(pdfPath).promise;
 
     console.log("PDF opened successfully.");
     console.log("Number of pages:", pdf.numPages);
     console.log("");
 
-
     /* ==================================================
        PAGE 1 — GET TEXT
     ================================================== */
 
     const page1 = await pdf.getPage(1);
-
     const page1TextContent =
         await page1.getTextContent();
-
     const page1Text = page1TextContent.items
         .map(item => item.str)
         .join(" ")
         .replace(/\s+/g, " ")
         .trim();
-
 
     console.log("=================================");
     console.log("PAGE 1 TEXT");
@@ -145,11 +129,9 @@ async function readRecipePDF(pdfPath, recipeTitle) {
     console.log(page1Text);
     console.log("");
 
-
     /* ==================================================
        EXTRACT PAGE 1 FIELDS
     ================================================== */
-
     const page1Data = {
         image: "",
         title: "BBN " + recipeTitle,
@@ -157,7 +139,6 @@ async function readRecipePDF(pdfPath, recipeTitle) {
             page1Text,
             "BBN " + recipeTitle
         ),
-
 
         yield: extractLabeledValue(
             page1Text,
@@ -190,12 +171,9 @@ async function readRecipePDF(pdfPath, recipeTitle) {
         )
     };
 
-
-
     console.log("=================================");
     console.log("PAGE 1 DATA");
     console.log("=================================");
-
     console.log("Title:", page1Data.title);
     console.log("Description:", page1Data.description);
     console.log("Yield:", page1Data.yield);
@@ -205,15 +183,12 @@ async function readRecipePDF(pdfPath, recipeTitle) {
     console.log("Total Time:", page1Data.totalTime);
     console.log("");
 
-
 /* ==================================================
    PAGE 2 — FIND BBN NUTRIENT DENSITY SCORE
 ================================================== */
 
 if (pdf.numPages >= 2) {
-
     const page2 = await pdf.getPage(2);
-
     const page2TextContent =
         await page2.getTextContent();
 
@@ -222,48 +197,11 @@ if (pdf.numPages >= 2) {
        This is important because PDF.js may split
        the label and stars into separate items.
     */
-
     const page2Items =
         page2TextContent.items.map(item => item.str);
 
     const page2Text =
         page2Items.join(" ").replace(/\s+/g, " ").trim();
-
-
-    console.log("=================================");
-    console.log("PAGE 2 — NUTRIENT SCORE");
-    console.log("=================================");
-
-    /*
-       Count the actual star characters in the PDF.
-    */
-    const nutrientScoreLabel =
-        extractNutrientScoreLabel(page2Text);
-
-    const starCount =
-        (page2Text.match(/★/g) || []).length;
-
-    /*
-       Convert the count to cookbook emojis.
-    */
-
-    page1Data.nutrientScoreLabel =
-        nutrientScoreLabel;
-
-    page1Data.nutrientScore =
-        "⭐".repeat(starCount);
-
-    console.log(
-        "Stars found in PDF:",
-        starCount
-    );
-
-    console.log(
-        "Cookbook display:",
-        page1Data.nutrientScore
-    );
-
-    console.log("");
 
     /* ==================================================
        PAGE 2 — EXTRACT NUTRITION INFORMATION
@@ -272,7 +210,6 @@ if (pdf.numPages >= 2) {
        information and Functional Nutrition Snapshot
        used by the final cookbook page.
     ================================================== */
-
     page1Data.nutrition = extractNutritionData(page2Text);
 
     console.log("=================================");
@@ -281,13 +218,150 @@ if (pdf.numPages >= 2) {
     console.log(page1Data.nutrition);
 
 }
+    /* ==================================================
+       INGREDIENTS + DIRECTIONS — SECOND PASS TEST
+
+       Find sections by their markers, not page number.
+       Remove blank lines.
+       Concatenate wrapped text.
+
+       Still no screen formatting.
+    ================================================== */
+
+    const ingredients = [];
+    const directions = [];
+
+    let readingIngredients = false;
+    let readingDirections = false;
+    let currentLine = "";
+
+    const finishCurrentLine = () => {
+        if (currentLine !== "") {
+            if (readingIngredients) {
+                ingredients.push(currentLine);
+            } else if (readingDirections) {
+                directions.push(currentLine);
+            }
+        }
+
+        currentLine = "";
+    };
+
+    const processTextItem = (textItem) => {
+
+        const cleanLine = textItem.str.trim();
+
+        if (readingIngredients || readingDirections) {
+            console.log(
+                "SECTION ITEM:",
+                JSON.stringify(textItem.str),
+                "hasEOL:",
+                textItem.hasEOL
+            );
+        }
 
 
+        if (cleanLine === "" && textItem.hasEOL) {
+            finishCurrentLine();
+            return;
+        }
+
+        if (cleanLine === "") {
+            return;
+        }
+
+
+
+        if (cleanLine === "Ingredients") {
+            finishCurrentLine();
+            readingIngredients = true;
+            readingDirections = false;
+            return;
+        }
+
+        if (cleanLine === "Directions") {
+            finishCurrentLine();
+            readingIngredients = false;
+            readingDirections = true;
+            return;
+        }
+
+        if (
+            readingDirections &&
+            cleanLine === "Approximate Nutrition"
+        ) {
+            finishCurrentLine();
+            readingDirections = false;
+            return;
+        }
+
+        if (readingIngredients || readingDirections) {
+
+            console.log(
+                "PDF ITEM:",
+                JSON.stringify(textItem),
+                "hasEOL:",
+                textItem.hasEOL
+            );
+
+
+
+            if (currentLine === "") {
+                currentLine = cleanLine;
+            } else {
+                currentLine += " " + cleanLine;
+            }
+
+            if (textItem.hasEOL) {
+                finishCurrentLine();
+            }
+        }
+
+    };
+
+    /*
+       Scan every PDF page so section locations are not
+       tied to Page 1 or Page 2.
+    */
+    for (
+        let pageNumber = 1;
+        pageNumber <= pdf.numPages;
+        pageNumber++
+    ) {
+
+        const recipePage =
+            await pdf.getPage(pageNumber);
+
+        const recipeTextContent =
+            await recipePage.getTextContent();
+
+        const recipeTextItems =
+            recipeTextContent.items;
+
+        for (const textItem of recipeTextItems) {
+            processTextItem(textItem);
+        }
+    }
+
+    finishCurrentLine();
+
+    console.log("");
+    console.log("=================================");
+    console.log("INGREDIENTS — CONCATENATED TEST");
+    console.log("=================================");
+    console.log(ingredients);
+
+    console.log("");
+    console.log("=================================");
+    console.log("DIRECTIONS — CONCATENATED TEST");
+    console.log("=================================");
+    console.log(directions);
+
+    console.log("");
 
     /* ==================================================
        INSPECT PDF IMAGES
     ================================================== */
-
     console.log("=================================");
     console.log("PDF IMAGE INSPECTION");
     console.log("=================================");
@@ -301,11 +375,9 @@ if (pdf.numPages >= 2) {
     /* ==================================================
        FINAL RESULT
     ================================================== */
-
     console.log("=================================");
     console.log("BBN PDF READER — COMPLETE");
     console.log("=================================");
-
     console.log("Final Page 1 data:");
     console.log(page1Data);
 
@@ -492,8 +564,27 @@ function extractRecipeDescription(text, recipeTitle) {
     return description;
 }
 
+function normalizeNutritionText(text) {
+    return text
+        .replace(/Good\s+Source\s*:/gi, "Good Source:")
+        .replace(/High\s+In\s*:/gi, "High In:")
+        .replace(/Excellent\s+Source\s*:/gi, "Excellent Source:")
+        .replace(/Live\s+Probiotics\s*:/gi, "Live Probiotics:")
+        .replace(/Functional\s+Nutrition\s+Snapshot/gi, "Functional Nutrition Snapshot")
+
+        .replace(/Functional\s+Nutrition\s+Focus\s*:/gi, "Functional Nutrition Focus:")
+        .replace(/BBN\s+Nutrition\s+Pillars\s*:/gi, "BBN Nutrition Pillars:")
+        .replace(/Freezer\s+Friendly\s*:/gi, "Freezer Friendly:")
+        .replace(/Gluten\s+Free\s*:/gi, "Gluten Free:")
+        .replace(/Non\s*-\s*GMO\s+Friendly\s*:/gi, "Non-GMO Friendly:")    
+        .replace(/BBN\s+Nutrient\s+Density\s+Score\s*:/gi, "BBN Nutrient Density Score:");
+}
+
+
 
 function extractNutritionData(text) {
+
+    text = normalizeNutritionText(text);
 
     const nutrition = {
         servingSize: extractLabelValue(text, "Serving Size:", ["Calories"]),
@@ -510,13 +601,14 @@ function extractNutritionData(text) {
         excellentSource: extractLabelValue(text, "Excellent Source:", ["High In:"]),
         highIn: extractLabelValue(text, "High In:", ["Good Source:"]),
         goodSource: extractLabelValue(text, "Good Source:", ["Live Probiotics:"]),
+
         liveProbiotics: extractLabelValue(text, "Live Probiotics:", ["Functional Nutrition Snapshot"]),
 
         functionalNutritionFocus: extractLabelValue(text, "Functional Nutrition Focus:", ["BBN Nutrition Pillars:"]),
         bbnNutritionPillars: extractLabelValue(text, "BBN Nutrition Pillars:", ["Freezer Friendly:"]),
         freezerFriendly: extractLabelValue(text, "Freezer Friendly:", ["Gluten Free:"]),
         glutenFree: extractLabelValue(text, "Gluten Free:", ["Non-GMO Friendly:"]),
-        nonGmoFriendly: extractLabelValue(text, "Non-GMO Friendly:", ["Every ingredient has a purpose."])
+        nonGmoFriendly: extractLabelValue(text, "Non-GMO Friendly:", ["BBN Nutrient Density Score:"])
     };
 
     return nutrition;
@@ -530,6 +622,10 @@ function extractNutritionData(text) {
 function setupNutritionPopup(page1Data) {
 
     const button = document.getElementById("bbnNutritionButton");
+
+console.log("===== setupNutritionPopup CALLED =====");
+console.log("Nutrition button found:", button);
+console.log("Nutrition data:", page1Data.nutrition);
 
     if (!button) {
         console.warn("BBN Nutrition button not found.");
@@ -562,19 +658,20 @@ function setupNutritionPopup(page1Data) {
                 <div><strong>Healthy Fat</strong><span id="bbnHealthyFat"></span></div>
             </div>
             <div class="bbn-nutrition-highlights">
-                <h3>Nutrition Highlights</h3>
-                <p><strong>Excellent Source:</strong> <span id="bbnExcellentSource"></span></p>
-                <p><strong>High In:</strong> <span id="bbnHighIn"></span></p>
-                <p><strong>Good Source:</strong> <span id="bbnGoodSource"></span></p>
-                <p><strong>Live Probiotics:</strong> <span id="bbnLiveProbiotics"></span></p>
+
+                <p><strong>Excellent Source:</strong> <span id="bbnExcellentSource"></span><br /></p>
+                
+                <p><strong>High In:</strong> <span id="bbnHighIn"></span><br /></p>
+                <p><strong>Good Source:</strong> <span id="bbnGoodSource"></span><br /></p>
+                <p><strong>Live Probiotics:</strong> <span id="bbnLiveProbiotics"></span><br /></p>
             </div>
             <div class="bbn-nutrition-snapshot">
                 <h3>Functional Nutrition Snapshot</h3>
-                <p id="bbnFunctionalFocus"></p>
-                <p id="bbnNutritionPillars"></p>
-                <p id="bbnFreezerFriendly"></p>
-                <p id="bbnGlutenFree"></p>
-                <p id="bbnNonGMO"></p>
+                <p><strong>Functional Nutrition Focus:  </strong> <span id="bbnFunctionalFocus"></span><br /></p>
+                <p><strong>BBN Nutrition Pillars:  </strong> <span id="bbnNutritionPillars"></span><br /></p>
+                <p><strong>Freezer Friendly:  </strong> <span id="bbnFreezerFriendly"></span><br /></p>
+                <p><strong>Gluten Free:  </strong> <span id="bbnGlutenFree"></span><br /></p>
+                <p><strong>Non-GMO Friendly:  </strong> <span id="bbnNonGMO"></span><br /></p>
             </div>
         </div>`;
 
@@ -605,8 +702,11 @@ function setupNutritionPopup(page1Data) {
     button.setAttribute("onclick", "showNutritionPopup(); return false;");
 }
 
+
+
 function showNutritionPopup() {
     const modal = document.getElementById("bbnNutritionModal");
+    modal.classList.add("open");
     if (modal) {
         modal.hidden = false;
         modal.setAttribute("aria-hidden", "false");
@@ -616,10 +716,14 @@ function showNutritionPopup() {
 function closeNutritionPopup() {
     const modal = document.getElementById("bbnNutritionModal");
     if (modal) {
+        modal.classList.remove("open");
         modal.hidden = true;
         modal.setAttribute("aria-hidden", "true");
     }
 }
+
+
+
 
 
 function extractLabelValue(text, label, possibleEnds) {
@@ -939,3 +1043,10 @@ console.log(dynamicPage1);
 ====================================================== */
 
 runCookbookReaderTest();
+
+
+console.log("===== BBN PAGES.JS LOADED =====");
+console.log("pages.js timestamp test: 2026-08-22");
+console.log("Nutrition button at script end:",
+    document.getElementById("bbnNutritionButton")
+);
