@@ -199,41 +199,21 @@ if (pdf.numPages >= 2) {
     */
     const page2Items =
         page2TextContent.items.map(item => item.str);
+
     const page2Text =
         page2Items.join(" ").replace(/\s+/g, " ").trim();
 
-    console.log("=================================");
-    console.log("PAGE 2 — NUTRIENT SCORE");
-    console.log("=================================");
-    /*
-       Count the actual star characters in the PDF.
-    */
-    const nutrientScoreLabel =
+     const nutrientScoreLabel =
         extractNutrientScoreLabel(page2Text);
 
     const starCount =
         (page2Text.match(/★/g) || []).length;
 
-    /*
-       Convert the count to cookbook emojis.
-    */
     page1Data.nutrientScoreLabel =
         nutrientScoreLabel;
 
     page1Data.nutrientScore =
-        "⭐".repeat(starCount);
-
-    console.log(
-        "Stars found in PDF:",
-        starCount
-    );
-
-    console.log(
-        "Cookbook display:",
-        page1Data.nutrientScore
-    );
-
-    console.log("");
+        "⭐".repeat(starCount);   
 
     /* ==================================================
        PAGE 2 — EXTRACT NUTRITION INFORMATION
@@ -251,70 +231,208 @@ if (pdf.numPages >= 2) {
 
 }
     /* ==================================================
-       INGREDIENTS + DIRECTIONS — FIRST PASS TEST
+       INGREDIENTS + DIRECTIONS — SECOND PASS TEST
 
-       Preserve the PDF text items for this test.
-       No screen formatting yet.
+       Find sections by their markers, not page number.
+       Remove blank lines.
+       Concatenate wrapped text.
+
+       Still no screen formatting.
     ================================================== */
-
-    const recipeTextContent = page2TextContent;
-
-    const recipeLines =
-        recipeTextContent.items.map(item => item.str);
 
     const ingredients = [];
     const directions = [];
 
     let readingIngredients = false;
     let readingDirections = false;
+    let currentLine = "";
+    let waitingForDirectionStep = false;
 
-    for (const line of recipeLines) {
 
-        const cleanLine = line.trim();
+    const finishCurrentLine = () => {
+        if (currentLine !== "") {
+            if (readingIngredients) {
+                ingredients.push(currentLine);
+            } else if (readingDirections) {
+                directions.push(currentLine);
+            }
+        }
+
+        currentLine = "";
+    };
+
+    const processTextItem = (textItem) => {
+
+        const cleanLine = textItem.str.trim();
+
+        if (readingIngredients || readingDirections) {
+            console.log(
+                "SECTION ITEM:",
+                JSON.stringify(textItem.str),
+                "hasEOL:",
+                textItem.hasEOL
+            );
+        }
+
+
+
+        if (cleanLine === "") {
+            return;
+        }
 
         if (cleanLine === "Ingredients") {
+            finishCurrentLine();
             readingIngredients = true;
             readingDirections = false;
-            continue;
+            return;
         }
 
         if (cleanLine === "Directions") {
+            finishCurrentLine();
             readingIngredients = false;
             readingDirections = true;
-            continue;
+            return;
         }
 
         if (
             readingDirections &&
             cleanLine === "Approximate Nutrition"
         ) {
+            finishCurrentLine();
             readingDirections = false;
-            break;
-        }
-
-        if (cleanLine === "") {
-            continue;
+            return;
         }
 
         if (readingIngredients) {
-            ingredients.push(cleanLine);
-            continue;
+
+            /*
+               Rev 1 Ingredients rule:
+               A bullet begins a new ingredient.
+               Wrapped PDF text is accumulated until
+               the next bullet is encountered.
+            */
+            if (cleanLine.startsWith("•")) {
+
+                if (currentLine !== "") {
+                    ingredients.push(currentLine);
+                }
+
+                currentLine = cleanLine;
+
+            } else if (currentLine !== "") {
+
+                currentLine += " " + cleanLine;
+
+            }
+
+            return;
         }
 
-        if (readingDirections) {
-            directions.push(cleanLine);
+if (readingDirections) {
+
+    const isNumberedStep =
+        /^\d+\.\s*/.test(cleanLine);
+
+    /*
+       When Directions continue onto a new PDF page,
+       ignore page-header text until the next numbered step.
+    */
+    if (waitingForDirectionStep) {
+
+        if (!isNumberedStep) {
+            return;
+        }
+
+        waitingForDirectionStep = false;
+    }
+
+    if (isNumberedStep) {
+
+        if (currentLine !== "") {
+            directions.push(currentLine);
+        }
+
+        currentLine = cleanLine;
+        return;
+    }
+
+    const nutritionIndex =
+        cleanLine.indexOf("Approximate Nutrition");
+
+    if (nutritionIndex !== -1) {
+
+        const directionText =
+            cleanLine
+                .substring(0, nutritionIndex)
+                .trim();
+
+        if (directionText !== "") {
+            currentLine +=
+                (currentLine === "" ? "" : " ") +
+                directionText;
+        }
+
+        finishCurrentLine();
+        readingDirections = false;
+        return;
+    }
+
+    if (currentLine !== "") {
+        currentLine += " " + cleanLine;
+    }
+
+    return;
+}
+
+
+    };
+
+    /*
+       Scan every PDF page so section locations are not
+       tied to Page 1 or Page 2.
+    */
+    for (
+        let pageNumber = 1;
+        pageNumber <= pdf.numPages;
+        pageNumber++
+    ) {
+
+
+
+
+        
+        const recipePage =
+            await pdf.getPage(pageNumber);
+
+        const recipeTextContent =
+            await recipePage.getTextContent();
+
+        const recipeTextItems =
+            recipeTextContent.items;
+
+        for (const textItem of recipeTextItems) {
+            processTextItem(textItem);
         }
     }
 
+    finishCurrentLine();
+
+    /*
+       Preserve the parsed recipe sections for the
+       dynamic cookbook page builders.
+    */
+    page1Data.ingredients = ingredients;
+    page1Data.directions = directions;
+
     console.log("");
     console.log("=================================");
-    console.log("INGREDIENTS — RAW PDF LINES");
+    console.log("INGREDIENTS — CONCATENATED TEST");
     console.log("=================================");
     console.log(ingredients);
 
     console.log("");
     console.log("=================================");
-    console.log("DIRECTIONS — RAW PDF LINES");
+    console.log("DIRECTIONS — REV 1 NUMBERED-STEP TEST");
     console.log("=================================");
     console.log(directions);
 
@@ -530,14 +648,13 @@ function normalizeNutritionText(text) {
         .replace(/Good\s+Source\s*:/gi, "Good Source:")
         .replace(/High\s+In\s*:/gi, "High In:")
         .replace(/Excellent\s+Source\s*:/gi, "Excellent Source:")
-        .replace(/Live\s+Probiotics\s*:/gi, "Live Probiotics:")
+        .replace(/Also\s+Provides\s*:/gi, "Also Provides:")
         .replace(/Functional\s+Nutrition\s+Snapshot/gi, "Functional Nutrition Snapshot")
 
         .replace(/Functional\s+Nutrition\s+Focus\s*:/gi, "Functional Nutrition Focus:")
         .replace(/BBN\s+Nutrition\s+Pillars\s*:/gi, "BBN Nutrition Pillars:")
         .replace(/Freezer\s+Friendly\s*:/gi, "Freezer Friendly:")
         .replace(/Gluten\s+Free\s*:/gi, "Gluten Free:")
-        .replace(/Non\s*-\s*GMO\s+Friendly\s*:/gi, "Non-GMO Friendly:")    
         .replace(/BBN\s+Nutrient\s+Density\s+Score\s*:/gi, "BBN Nutrient Density Score:");
 }
 
@@ -556,20 +673,19 @@ function extractNutritionData(text) {
         netCarbohydrates: extractLabelValue(text, "Net Carbohydrates", ["Healthy Fat"]),
         healthyFat: extractLabelValue(text, "Healthy Fat", [
             "Excellent Source:", "High In:", "Good Source:",
-            "Live Probiotics:", "Functional Nutrition Snapshot"
+            "Also Provides:", "Functional Nutrition Snapshot"
         ]),
 
         excellentSource: extractLabelValue(text, "Excellent Source:", ["High In:"]),
         highIn: extractLabelValue(text, "High In:", ["Good Source:"]),
-        goodSource: extractLabelValue(text, "Good Source:", ["Live Probiotics:"]),
+        goodSource: extractLabelValue(text, "Good Source:", ["Also Provides:"]),
 
-        liveProbiotics: extractLabelValue(text, "Live Probiotics:", ["Functional Nutrition Snapshot"]),
+        alsoProvides: extractLabelValue(text, "Also Provides:", ["Functional Nutrition Snapshot"]),
 
         functionalNutritionFocus: extractLabelValue(text, "Functional Nutrition Focus:", ["BBN Nutrition Pillars:"]),
         bbnNutritionPillars: extractLabelValue(text, "BBN Nutrition Pillars:", ["Freezer Friendly:"]),
         freezerFriendly: extractLabelValue(text, "Freezer Friendly:", ["Gluten Free:"]),
-        glutenFree: extractLabelValue(text, "Gluten Free:", ["Non-GMO Friendly:"]),
-        nonGmoFriendly: extractLabelValue(text, "Non-GMO Friendly:", ["BBN Nutrient Density Score:"])
+        glutenFree: extractLabelValue(text, "Gluten Free:", ["BBN Nutrient Density Score:"])
     };
 
     return nutrition;
@@ -624,7 +740,7 @@ console.log("Nutrition data:", page1Data.nutrition);
                 
                 <p><strong>High In:</strong> <span id="bbnHighIn"></span><br /></p>
                 <p><strong>Good Source:</strong> <span id="bbnGoodSource"></span><br /></p>
-                <p><strong>Live Probiotics:</strong> <span id="bbnLiveProbiotics"></span><br /></p>
+                <p><strong>Also Provides:</strong> <span id="bbnAlsoProvides"></span><br /></p>
             </div>
             <div class="bbn-nutrition-snapshot">
                 <h3>Functional Nutrition Snapshot</h3>
@@ -632,8 +748,7 @@ console.log("Nutrition data:", page1Data.nutrition);
                 <p><strong>BBN Nutrition Pillars:  </strong> <span id="bbnNutritionPillars"></span><br /></p>
                 <p><strong>Freezer Friendly:  </strong> <span id="bbnFreezerFriendly"></span><br /></p>
                 <p><strong>Gluten Free:  </strong> <span id="bbnGlutenFree"></span><br /></p>
-                <p><strong>Non-GMO Friendly:  </strong> <span id="bbnNonGMO"></span><br /></p>
-            </div>
+                            </div>
         </div>`;
 
     document.body.appendChild(modal);
@@ -653,12 +768,11 @@ console.log("Nutrition data:", page1Data.nutrition);
     setText("bbnExcellentSource", nutrition.excellentSource);
     setText("bbnHighIn", nutrition.highIn);
     setText("bbnGoodSource", nutrition.goodSource);
-    setText("bbnLiveProbiotics", nutrition.liveProbiotics);
+    setText("bbnAlsoProvides", nutrition.alsoProvides);
     setText("bbnFunctionalFocus", nutrition.functionalNutritionFocus);
     setText("bbnNutritionPillars", nutrition.bbnNutritionPillars);
     setText("bbnFreezerFriendly", nutrition.freezerFriendly);
     setText("bbnGlutenFree", nutrition.glutenFree);
-    setText("bbnNonGMO", nutrition.nonGmoFriendly);
 
     button.setAttribute("onclick", "showNutritionPopup(); return false;");
 }
@@ -708,6 +822,8 @@ function extractLabelValue(text, label, possibleEnds) {
     return text
         .substring(valueStart, valueEnd)
         .replace(/\s+/g, " ")
+        .trim()
+        .replace(/\s*BBN\s*$/i, "")
         .trim();
 }
 
@@ -870,6 +986,149 @@ function buildPage1HTML(page1Data) {
 
 
 
+
+/* ======================================================
+   BUILD PAGE 2 — INGREDIENTS
+====================================================== */
+
+function buildIngredientsPageHTML(page1Data) {
+
+    const ingredientsHTML =
+        (page1Data.ingredients || [])
+            .map(ingredient => {
+                const cleanIngredient =
+                    ingredient.replace(/^•\s*/, "");
+
+                return `<li>${cleanIngredient}</li>`;
+            })
+            .join("");
+
+    return `
+<section class="page right-page" data-page="1" aria-label="Ingredients">
+    <div class="temp-page-guide" aria-hidden="true">
+        <span class="temp-overflow-flag">OVERFLOWED</span>
+    </div>
+
+    <div class="eyebrow">${page1Data.title}</div>
+    <h2>Ingredients</h2>
+
+    <ul class="ingredients">
+        ${ingredientsHTML}
+    </ul>
+
+    <div class="temp-page-number" aria-hidden="true">
+        Page <span class="temp-page-number-value"></span>
+    </div>
+</section>
+`;
+}
+
+
+/* ======================================================
+   BUILD PAGE 3 — DIRECTIONS
+====================================================== */
+
+function buildDirectionsPageHTML(page1Data) {
+
+    const directionsHTML =
+        (page1Data.directions || [])
+            .map(direction => {
+
+                const match =
+                    direction.match(/^(\d+)\.\s*(.*)$/);
+
+                if (match) {
+                    return `<li value="${match[1]}">${match[2]}</li>`;
+                }
+
+                return `<li>${direction}</li>`;
+            })
+            .join("");
+
+    return `
+<section class="page" data-page="2" aria-label="Directions">
+    <div class="temp-page-guide" aria-hidden="true">
+        <span class="temp-overflow-flag">OVERFLOWED</span>
+    </div>
+
+    <div class="eyebrow">${page1Data.title}</div>
+    <h2>Directions</h2>
+
+    <ol class="directions">
+        ${directionsHTML}
+    </ol>
+
+    <div class="temp-page-number" aria-hidden="true">
+        Page <span class="temp-page-number-value"></span>
+    </div>
+</section>
+`;
+}
+
+
+/* ======================================================
+   BUILD ALL DYNAMIC RECIPE PAGES
+
+   cookbook.js loads the legacy page markup
+   asynchronously. Once those source pages exist,
+   replace them with the three dynamic recipe pages.
+====================================================== */
+
+function buildDynamicRecipePages(page1Data) {
+
+    const container =
+        document.querySelector("#recipePages");
+
+    if (!container) {
+        console.error(
+            "Dynamic recipe page container #recipePages was not found."
+        );
+        return;
+    }
+
+
+
+    const dynamicPage1 =
+        buildPage1HTML(page1Data);
+
+    const dynamicPage2 =
+        buildIngredientsPageHTML(page1Data);
+
+    const dynamicPage3 =
+        buildDirectionsPageHTML(page1Data);
+
+    container.innerHTML =
+        dynamicPage1 +
+        dynamicPage2 +
+        dynamicPage3;
+
+    pages = [
+        ...container.querySelectorAll(".page")
+    ];
+
+    pages.forEach((page, index) => {
+        const number =
+            page.querySelector(".temp-page-number-value");
+
+        if (number) {
+            number.textContent = index + 1;
+        }
+    });
+
+    setupNutritionPopup(page1Data);
+
+    if (typeof render === "function") {
+        render(0, "", false);
+    }
+
+    console.log("");
+    console.log("=================================");
+    console.log("DYNAMIC RECIPE PAGES COMPLETE");
+    console.log("=================================");
+    console.log("Dynamic pages:", pages.length);
+}
+
+
 /* ======================================================
    START
 ====================================================== */
@@ -936,47 +1195,15 @@ async function runCookbookReaderTest() {
 
         console.log("");
         console.log("#################################");
-        console.log("DYNAMIC PAGE 1 HTML BUILD");
+        console.log("DYNAMIC RECIPE PAGE BUILD");
         console.log("#################################");
 
-        /* ======================================================
-        INSERT DYNAMIC PAGE 1 INTO EXISTING PAGE 1 SHELL
-        ====================================================== */
-        const dynamicPage1 =
-            buildPage1HTML(page1Data);
+        window.BBN_RECIPE_TEST = {
+            recipe: pepperSoup,
+            page1: page1Data
+        };
 
-console.log("DYNAMIC PAGE 1 HTML:");
-console.log(dynamicPage1);
-
-        document
-            .querySelector("#recipePages")
-            .insertAdjacentHTML("afterbegin", dynamicPage1);
-
-            setupNutritionPopup(page1Data);
-
-
-            // ======================================================
-            // rebuild pages[] after dynamic Page 1
-            // is inserted. Remove/rework when all dynamic pages
-            // are being built.
-            // ======================================================
-
-
-
-                pages = [
-                    ...document.querySelectorAll("#recipePages .page")
-                ];
-                window.dispatchEvent(new Event("BBN_PAGES_READY"));
-                    /*
-                    Make the result available in the console
-                    for us to inspect later.
-                    */
-
-                    window.BBN_RECIPE_TEST = {
-                        recipe: pepperSoup,
-                        page1: page1Data
-                    };
-
+        buildDynamicRecipePages(page1Data);
 
                 }
 

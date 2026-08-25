@@ -702,7 +702,6 @@ function normalizeNutritionText(text) {
         .replace(/BBN\s+Nutrition\s+Pillars\s*:/gi, "BBN Nutrition Pillars:")
         .replace(/Freezer\s+Friendly\s*:/gi, "Freezer Friendly:")
         .replace(/Gluten\s+Free\s*:/gi, "Gluten Free:")
-        .replace(/Non\s*-\s*GMO\s+Friendly\s*:/gi, "Non-GMO Friendly:")    
         .replace(/BBN\s+Nutrient\s+Density\s+Score\s*:/gi, "BBN Nutrient Density Score:");
 }
 
@@ -779,7 +778,7 @@ console.log("Nutrition data:", page1Data.nutrition);
         <div class="bbn-nutrition-popup" role="dialog" aria-modal="true" aria-labelledby="bbnNutritionTitle">
             <button type="button" class="bbn-nutrition-close" aria-label="Close nutritional information" onclick="closeNutritionPopup(); return false;">×</button>
             <h2 id="bbnNutritionTitle">BBN Nutritional Information</h2>
-            <p class="bbn-nutrition-serving"><strong>Serving Size:</strong> <span id="bbnNutritionServing"></span></p>
+            <p class="bbn-nutrition-serving"><strong>Serving Size</strong><span id="bbnNutritionServing"></span></p>
             <div class="bbn-nutrition-table">
                 <div><strong>Calories</strong><span id="bbnCalories"></span></div>
                 <div><strong>Protein</strong><span id="bbnProtein"></span></div>
@@ -795,19 +794,17 @@ console.log("Nutrition data:", page1Data.nutrition);
             </div>` : ""}
 
             <div class="bbn-nutrition-highlights">
-
-                <p><strong>Excellent Source:</strong> <span id="bbnExcellentSource"></span><br /></p>
-                
-                <p><strong>High In:</strong> <span id="bbnHighIn"></span><br /></p>
-                <p><strong>Good Source:</strong> <span id="bbnGoodSource"></span><br /></p>
-                <p><strong>Also Provides:</strong> <span id="bbnAlsoProvides"></span><br /></p>
+                ${nutrition.excellentSource ? `<p><strong>Excellent Source:</strong> ${nutrition.excellentSource}</p>` : ""}
+                ${nutrition.highIn ? `<p><strong>High In:</strong> ${nutrition.highIn}</p>` : ""}
+                ${nutrition.goodSource ? `<p><strong>Good Source:</strong> ${nutrition.goodSource}</p>` : ""}
+                ${nutrition.alsoProvides ? `<p><strong>Also Provides:</strong> ${nutrition.alsoProvides}</p>` : ""}
             </div>
             <div class="bbn-nutrition-snapshot">
                 <h3>Functional Nutrition Snapshot</h3>
-                <p><strong>Functional Nutrition Focus:  </strong> <span id="bbnFunctionalFocus"></span><br /></p>
-                <p><strong>BBN Nutrition Pillars:  </strong> <span id="bbnNutritionPillars"></span><br /></p>
-                <p><strong>Freezer Friendly:  </strong> <span id="bbnFreezerFriendly"></span><br /></p>
-                <p><strong>Gluten Free:  </strong> <span id="bbnGlutenFree"></span><br /></p>
+                <p><strong>Functional Nutrition Focus</strong>: <span id="bbnFunctionalFocus"></span><br /></p>
+                <p><strong>BBN Nutrition Pillars</strong>: <span id="bbnNutritionPillars"></span><br /></p>
+                <p><strong>Freezer Friendly</strong>: <span id="bbnFreezerFriendly"></span><br /></p>
+                <p><strong>Gluten Free</strong>: <span id="bbnGlutenFree"></span><br /></p>
             </div>
 
             ${nutrition.scoreExplanation?.heading ? `
@@ -831,10 +828,6 @@ console.log("Nutrition data:", page1Data.nutrition);
     setText("bbnFiber", nutrition.fiber);
     setText("bbnNetCarbs", nutrition.netCarbohydrates);
     setText("bbnHealthyFat", nutrition.healthyFat);
-    setText("bbnExcellentSource", nutrition.excellentSource);
-    setText("bbnHighIn", nutrition.highIn);
-    setText("bbnGoodSource", nutrition.goodSource);
-    setText("bbnAlsoProvides", nutrition.alsoProvides);
     setText("bbnFunctionalFocus", nutrition.functionalNutritionFocus);
     setText("bbnNutritionPillars", nutrition.bbnNutritionPillars);
     setText("bbnFreezerFriendly", nutrition.freezerFriendly);
@@ -888,6 +881,9 @@ function extractLabelValue(text, label, possibleEnds) {
     return text
         .substring(valueStart, valueEnd)
         .replace(/\s+/g, " ")
+        .trim()
+        .replace(/\s*BBN\s*$/i, "")
+        .replace(/^:\s*/, "")
         .trim();
 }
 

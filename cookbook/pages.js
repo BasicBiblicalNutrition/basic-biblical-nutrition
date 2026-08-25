@@ -291,7 +291,6 @@ if (pdf.numPages >= 2) {
             finishCurrentLine();
             readingIngredients = false;
             readingDirections = true;
-            waitingForDirectionStep = false;
             return;
         }
 
@@ -392,6 +391,8 @@ if (readingDirections) {
        Scan every PDF page so section locations are not
        tied to Page 1 or Page 2.
     */
+    const allPdfTextParts = [];
+
     for (
         let pageNumber = 1;
         pageNumber <= pdf.numPages;
@@ -411,19 +412,28 @@ if (readingDirections) {
         const recipeTextItems =
             recipeTextContent.items;
 
-        for (const textItem of recipeTextItems) {
-            processTextItem(textItem);
-        }
+        allPdfTextParts.push(
+            recipeTextItems.map(item => item.str).join(" ")
+        );
 
         /*
-           Temporary Rev 1 page-boundary rule:
-           if Directions are still being read when a PDF page
-           ends, finish the current step and ignore page-header
-           text until the next numbered step begins.
+           PDF PAGE BOUNDARY — DIRECTIONS
+
+           A Directions step may span a PDF page boundary, but
+           this PDF places a repeated page header before Step 6.
+           Tell the parser to ignore non-numbered text at the
+           start of the new page until the next numbered step.
+
+           Do NOT clear currentLine here. It still contains the
+           previous numbered step and must be pushed when the next
+           numbered step is encountered.
         */
-        if (readingDirections) {
-            finishCurrentLine();
+        if (pageNumber > 1 && readingDirections) {
             waitingForDirectionStep = true;
+        }
+
+        for (const textItem of recipeTextItems) {
+            processTextItem(textItem);
         }
     }
 
@@ -435,6 +445,10 @@ if (readingDirections) {
     */
     page1Data.ingredients = ingredients;
     page1Data.directions = directions;
+    page1Data.scoreExplanation =
+        extractScoreExplanation(
+            allPdfTextParts.join(" ")
+        );
 
     console.log("");
     console.log("=================================");
@@ -655,19 +669,55 @@ function extractRecipeDescription(text, recipeTitle) {
     return description;
 }
 
+function extractScoreExplanation(text) {
+
+    const match = text.match(
+        /Why\s+(\d+)\s+out\s+of\s+(\d+)\s+stars\?\s*(.*?)(?=Disclaimer|$)/is
+    );
+
+    if (!match) {
+        return {
+            heading: "",
+            text: ""
+        };
+    }
+
+    return {
+        heading: `Why ${match[1]} out of ${match[2]} stars?`,
+        text: match[3]
+            .replace(/\s+/g, " ")
+            .trim()
+    };
+}
+
+
+function extractNutritionCalculationNote(text) {
+    const match = text.match(
+        /(?:NOTE|Nutrition Calculation Note)\s*:\s*(.*?)(?=(?:High In:|Good Source:|Also Provides:|BBN Functional Nutrition Snapshot|Functional Nutrition Snapshot|Disclaimer|$))/is
+    );
+
+    if (!match) {
+        return "";
+    }
+
+    return match[1]
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+
 function normalizeNutritionText(text) {
     return text
         .replace(/Good\s+Source\s*:/gi, "Good Source:")
         .replace(/High\s+In\s*:/gi, "High In:")
         .replace(/Excellent\s+Source\s*:/gi, "Excellent Source:")
-        .replace(/Live\s+Probiotics\s*:/gi, "Live Probiotics:")
+        .replace(/Also\s+Provides\s*:/gi, "Also Provides:")
         .replace(/Functional\s+Nutrition\s+Snapshot/gi, "Functional Nutrition Snapshot")
 
         .replace(/Functional\s+Nutrition\s+Focus\s*:/gi, "Functional Nutrition Focus:")
         .replace(/BBN\s+Nutrition\s+Pillars\s*:/gi, "BBN Nutrition Pillars:")
         .replace(/Freezer\s+Friendly\s*:/gi, "Freezer Friendly:")
         .replace(/Gluten\s+Free\s*:/gi, "Gluten Free:")
-        .replace(/Non\s*-\s*GMO\s+Friendly\s*:/gi, "Non-GMO Friendly:")    
         .replace(/BBN\s+Nutrient\s+Density\s+Score\s*:/gi, "BBN Nutrient Density Score:");
 }
 
@@ -686,20 +736,22 @@ function extractNutritionData(text) {
         netCarbohydrates: extractLabelValue(text, "Net Carbohydrates", ["Healthy Fat"]),
         healthyFat: extractLabelValue(text, "Healthy Fat", [
             "Excellent Source:", "High In:", "Good Source:",
-            "Live Probiotics:", "Functional Nutrition Snapshot"
+            "Also Provides:", "Functional Nutrition Snapshot"
         ]),
+
+        nutritionCalculationNote:
+            extractNutritionCalculationNote(text),
 
         excellentSource: extractLabelValue(text, "Excellent Source:", ["High In:"]),
         highIn: extractLabelValue(text, "High In:", ["Good Source:"]),
-        goodSource: extractLabelValue(text, "Good Source:", ["Live Probiotics:"]),
+        goodSource: extractLabelValue(text, "Good Source:", ["Also Provides:"]),
 
-        liveProbiotics: extractLabelValue(text, "Live Probiotics:", ["Functional Nutrition Snapshot"]),
+        alsoProvides: extractLabelValue(text, "Also Provides:", ["Functional Nutrition Snapshot"]),
 
         functionalNutritionFocus: extractLabelValue(text, "Functional Nutrition Focus:", ["BBN Nutrition Pillars:"]),
         bbnNutritionPillars: extractLabelValue(text, "BBN Nutrition Pillars:", ["Freezer Friendly:"]),
         freezerFriendly: extractLabelValue(text, "Freezer Friendly:", ["Gluten Free:"]),
-        glutenFree: extractLabelValue(text, "Gluten Free:", ["Non-GMO Friendly:"]),
-        nonGmoFriendly: extractLabelValue(text, "Non-GMO Friendly:", ["BBN Nutrient Density Score:"])
+        glutenFree: extractLabelValue(text, "Gluten Free:", ["BBN Nutrient Density Score:"])
     };
 
     return nutrition;
@@ -727,7 +779,10 @@ console.log("Nutrition data:", page1Data.nutrition);
         return;
     }
 
-    const nutrition = page1Data.nutrition || {};
+    const nutrition = {
+        ...(page1Data.nutrition || {}),
+        scoreExplanation: page1Data.scoreExplanation || { heading: "", text: "" }
+    };
 
     const modal = document.createElement("div");
     modal.id = "bbnNutritionModal";
@@ -739,7 +794,7 @@ console.log("Nutrition data:", page1Data.nutrition);
         <div class="bbn-nutrition-popup" role="dialog" aria-modal="true" aria-labelledby="bbnNutritionTitle">
             <button type="button" class="bbn-nutrition-close" aria-label="Close nutritional information" onclick="closeNutritionPopup(); return false;">×</button>
             <h2 id="bbnNutritionTitle">BBN Nutritional Information</h2>
-            <p class="bbn-nutrition-serving"><strong>Serving Size:</strong> <span id="bbnNutritionServing"></span></p>
+            <p class="bbn-nutrition-serving"><strong>Serving Size</strong><span id="bbnNutritionServing"></span></p>
             <div class="bbn-nutrition-table">
                 <div><strong>Calories</strong><span id="bbnCalories"></span></div>
                 <div><strong>Protein</strong><span id="bbnProtein"></span></div>
@@ -748,22 +803,31 @@ console.log("Nutrition data:", page1Data.nutrition);
                 <div><strong>Net Carbohydrates</strong><span id="bbnNetCarbs"></span></div>
                 <div><strong>Healthy Fat</strong><span id="bbnHealthyFat"></span></div>
             </div>
-            <div class="bbn-nutrition-highlights">
+            ${nutrition.nutritionCalculationNote ? `
+            <div class="bbn-nutrition-calculation-note">
+                <h3>Nutrition Calculation Note</h3>
+                <p>${nutrition.nutritionCalculationNote}</p>
+            </div>` : ""}
 
-                <p><strong>Excellent Source:</strong> <span id="bbnExcellentSource"></span><br /></p>
-                
-                <p><strong>High In:</strong> <span id="bbnHighIn"></span><br /></p>
-                <p><strong>Good Source:</strong> <span id="bbnGoodSource"></span><br /></p>
-                <p><strong>Live Probiotics:</strong> <span id="bbnLiveProbiotics"></span><br /></p>
+            <div class="bbn-nutrition-highlights">
+                ${nutrition.excellentSource ? `<p><strong>Excellent Source:</strong> ${nutrition.excellentSource}</p>` : ""}
+                ${nutrition.highIn ? `<p><strong>High In:</strong> ${nutrition.highIn}</p>` : ""}
+                ${nutrition.goodSource ? `<p><strong>Good Source:</strong> ${nutrition.goodSource}</p>` : ""}
+                ${nutrition.alsoProvides ? `<p><strong>Also Provides:</strong> ${nutrition.alsoProvides}</p>` : ""}
             </div>
             <div class="bbn-nutrition-snapshot">
                 <h3>Functional Nutrition Snapshot</h3>
-                <p><strong>Functional Nutrition Focus:  </strong> <span id="bbnFunctionalFocus"></span><br /></p>
-                <p><strong>BBN Nutrition Pillars:  </strong> <span id="bbnNutritionPillars"></span><br /></p>
-                <p><strong>Freezer Friendly:  </strong> <span id="bbnFreezerFriendly"></span><br /></p>
-                <p><strong>Gluten Free:  </strong> <span id="bbnGlutenFree"></span><br /></p>
-                <p><strong>Non-GMO Friendly:  </strong> <span id="bbnNonGMO"></span><br /></p>
+                <p><strong>Functional Nutrition Focus</strong>: <span id="bbnFunctionalFocus"></span><br /></p>
+                <p><strong>BBN Nutrition Pillars</strong>: <span id="bbnNutritionPillars"></span><br /></p>
+                <p><strong>Freezer Friendly</strong>: <span id="bbnFreezerFriendly"></span><br /></p>
+                <p><strong>Gluten Free</strong>: <span id="bbnGlutenFree"></span><br /></p>
             </div>
+
+            ${nutrition.scoreExplanation?.heading ? `
+            <div class="bbn-nutrition-score-explanation">
+                <h3>${nutrition.scoreExplanation.heading}</h3>
+                <p>${nutrition.scoreExplanation.text}</p>
+            </div>` : ""}
         </div>`;
 
     document.body.appendChild(modal);
@@ -780,15 +844,10 @@ console.log("Nutrition data:", page1Data.nutrition);
     setText("bbnFiber", nutrition.fiber);
     setText("bbnNetCarbs", nutrition.netCarbohydrates);
     setText("bbnHealthyFat", nutrition.healthyFat);
-    setText("bbnExcellentSource", nutrition.excellentSource);
-    setText("bbnHighIn", nutrition.highIn);
-    setText("bbnGoodSource", nutrition.goodSource);
-    setText("bbnLiveProbiotics", nutrition.liveProbiotics);
     setText("bbnFunctionalFocus", nutrition.functionalNutritionFocus);
     setText("bbnNutritionPillars", nutrition.bbnNutritionPillars);
     setText("bbnFreezerFriendly", nutrition.freezerFriendly);
     setText("bbnGlutenFree", nutrition.glutenFree);
-    setText("bbnNonGMO", nutrition.nonGmoFriendly);
 
     button.setAttribute("onclick", "showNutritionPopup(); return false;");
 }
@@ -838,6 +897,9 @@ function extractLabelValue(text, label, possibleEnds) {
     return text
         .substring(valueStart, valueEnd)
         .replace(/\s+/g, " ")
+        .trim()
+        .replace(/\s*BBN\s*$/i, "")
+        .replace(/^:\s*/, "")
         .trim();
 }
 

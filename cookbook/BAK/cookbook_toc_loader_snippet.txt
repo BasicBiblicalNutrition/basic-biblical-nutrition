@@ -1,0 +1,63 @@
+/* =====================================================
+   LOAD TOC.html THEN WIRE TOC BUTTONS
+   ===================================================== */
+
+async function loadTOC() {
+
+  const tocContainer =
+    document.getElementById("tocContainer");
+
+  if (!tocContainer) {
+    console.error("TOC container not found.");
+    return;
+  }
+
+  try {
+
+    const response =
+      await fetch("TOC.html");
+
+    if (!response.ok) {
+      throw new Error(
+        `Unable to load TOC.html — HTTP ${response.status}`
+      );
+    }
+
+    const html =
+      await response.text();
+
+    tocContainer.innerHTML = html;
+
+    /*
+       The TOC now exists in the DOM,
+       so it is safe to attach the click handlers.
+    */
+    document.querySelectorAll(".toc-item").forEach(btn => {
+
+      btn.addEventListener("click", () => {
+
+        render(Number(btn.dataset.jump));
+
+        book.focus({
+          preventScroll: true
+        });
+
+      });
+
+    });
+
+  } catch (error) {
+
+    console.error(
+      "Unable to load TOC.html:",
+      error
+    );
+  }
+}
+
+
+/* =====================================================
+   START TOC LOADING
+   ===================================================== */
+
+loadTOC();

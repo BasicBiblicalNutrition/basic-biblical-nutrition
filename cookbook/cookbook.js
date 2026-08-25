@@ -128,12 +128,112 @@ next.addEventListener('click',goNext);
 bookPrev.addEventListener('click',goPrev);
 bookNext.addEventListener('click',goNext);
 
-document.querySelectorAll('.toc-item').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    render(Number(btn.dataset.jump));
-    book.focus({preventScroll:true});
-  });
-});
+async function loadTOC(){
+
+  const tocContainer =
+    document.getElementById('tocContainer');
+
+  if(!tocContainer){
+    console.error('TOC container not found.');
+    return;
+  }
+
+  try{
+
+    const tocResponse =
+      await fetch('TOC.html');
+
+    if(!tocResponse.ok){
+      throw new Error(
+        `Unable to load TOC.html — HTTP ${tocResponse.status}`
+      );
+    }
+
+    tocContainer.innerHTML =
+      await tocResponse.text();
+
+    const xmlResponse =
+      await fetch('./xml/recipes.xml');
+
+    if(!xmlResponse.ok){
+      throw new Error(
+        `Unable to load recipes.xml — HTTP ${xmlResponse.status}`
+      );
+    }
+
+    const xmlText =
+      await xmlResponse.text();
+
+    const parser =
+      new DOMParser();
+
+    const xml =
+      parser.parseFromString(
+        xmlText,
+        'application/xml'
+      );
+
+    const parserError =
+      xml.querySelector('parsererror');
+
+    if(parserError){
+      throw new Error(
+        'recipes.xml could not be parsed.'
+      );
+    }
+
+    const recipeNodes =
+      [...xml.querySelectorAll('recipe')];
+
+    const tocList =
+      document.getElementById('recipeTOCList');
+
+    if(!tocList){
+      throw new Error(
+        'recipeTOCList not found in TOC.html.'
+      );
+    }
+
+    tocList.innerHTML = '';
+
+    recipeNodes.forEach((recipe, index) => {
+
+      const title =
+        recipe.querySelector('title')
+          ?.textContent
+          .trim();
+
+      if(!title){
+        return;
+      }
+
+      const button =
+        document.createElement('button');
+
+      button.type = 'button';
+      button.className = 'toc-item';
+      button.textContent = title;
+
+      /*
+         Navigation hook comes later.
+         For now we are only testing the
+         seven XML recipe titles.
+      */
+      button.dataset.recipeIndex = index;
+
+      tocList.appendChild(button);
+    });
+
+  }catch(error){
+
+    console.error(
+      'Unable to build recipe TOC:',
+      error
+    );
+  }
+}
+
+loadTOC();
 
 if(fontSize){
   fontSize.addEventListener('change',e=>{

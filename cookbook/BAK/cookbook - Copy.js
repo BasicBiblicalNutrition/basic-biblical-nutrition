@@ -18,8 +18,10 @@ fetch('pages.html')
     });
 
     pages = [...container.querySelectorAll('.page')];
-
+/*
     render(0,"",false);
+    */
+   
   });
 
 
@@ -139,13 +141,39 @@ if(fontSize){
   });
 }
 
-const printButton=document.getElementById('print');
-if(printButton){
-  printButton.addEventListener('click',e=>{
-    e.preventDefault();
-    window.print();
+// =====================================================
+// PRINT PDF
+// Temporary hard-coded PDF for testing
+// =====================================================
+const PRINT_PDF =
+  "recipes/soup/BBN_Sweet_Gypsy_Golden_Pepper_Soup_Final.pdf";
+
+
+ 
+function printPDF(pdfPath){
+  const printWindow = window.open(pdfPath, "_blank");
+
+  if (!printWindow) {
+    alert("Please allow pop-ups for this site to print.");
+    return;
+  }
+
+  printWindow.addEventListener("load", () => {
+    printWindow.focus();
+    printWindow.print();
   });
 }
+
+ /*
+const printButton = document.getElementById('print');
+
+if (printButton) {
+    printButton.addEventListener('click', e => {
+        e.preventDefault();
+        printPDF(PRINT_PDF);
+    });
+}
+*/
 
 /* More / burger menu */
 const moreMenu=document.getElementById('moreMenu');
@@ -196,4 +224,6 @@ window.addEventListener('keydown',e=>{
   }
 });
 
-render(0,"",false);
+window.addEventListener("BBN_PAGES_READY", () => {
+  render(0,"",false);
+});

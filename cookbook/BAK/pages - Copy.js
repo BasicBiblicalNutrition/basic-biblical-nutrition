@@ -199,41 +199,21 @@ if (pdf.numPages >= 2) {
     */
     const page2Items =
         page2TextContent.items.map(item => item.str);
+
     const page2Text =
         page2Items.join(" ").replace(/\s+/g, " ").trim();
 
-    console.log("=================================");
-    console.log("PAGE 2 — NUTRIENT SCORE");
-    console.log("=================================");
-    /*
-       Count the actual star characters in the PDF.
-    */
-    const nutrientScoreLabel =
+     const nutrientScoreLabel =
         extractNutrientScoreLabel(page2Text);
 
     const starCount =
         (page2Text.match(/★/g) || []).length;
 
-    /*
-       Convert the count to cookbook emojis.
-    */
     page1Data.nutrientScoreLabel =
         nutrientScoreLabel;
 
     page1Data.nutrientScore =
-        "⭐".repeat(starCount);
-
-    console.log(
-        "Stars found in PDF:",
-        starCount
-    );
-
-    console.log(
-        "Cookbook display:",
-        page1Data.nutrientScore
-    );
-
-    console.log("");
+        "⭐".repeat(starCount);   
 
     /* ==================================================
        PAGE 2 — EXTRACT NUTRITION INFORMATION
@@ -250,6 +230,226 @@ if (pdf.numPages >= 2) {
     console.log(page1Data.nutrition);
 
 }
+    /* ==================================================
+       INGREDIENTS + DIRECTIONS — SECOND PASS TEST
+
+       Find sections by their markers, not page number.
+       Remove blank lines.
+       Concatenate wrapped text.
+
+       Still no screen formatting.
+    ================================================== */
+
+    const ingredients = [];
+    const directions = [];
+
+    let readingIngredients = false;
+    let readingDirections = false;
+    let currentLine = "";
+    let waitingForDirectionStep = false;
+
+
+    const finishCurrentLine = () => {
+        if (currentLine !== "") {
+            if (readingIngredients) {
+                ingredients.push(currentLine);
+            } else if (readingDirections) {
+                directions.push(currentLine);
+            }
+        }
+
+        currentLine = "";
+    };
+
+    const processTextItem = (textItem) => {
+
+        const cleanLine = textItem.str.trim();
+
+        if (readingIngredients || readingDirections) {
+            console.log(
+                "SECTION ITEM:",
+                JSON.stringify(textItem.str),
+                "hasEOL:",
+                textItem.hasEOL
+            );
+        }
+
+
+
+        if (cleanLine === "") {
+            return;
+        }
+
+        if (cleanLine === "Ingredients") {
+            finishCurrentLine();
+            readingIngredients = true;
+            readingDirections = false;
+            return;
+        }
+
+        if (cleanLine === "Directions") {
+            finishCurrentLine();
+            readingIngredients = false;
+            readingDirections = true;
+            waitingForDirectionStep = false;
+            return;
+        }
+
+        if (
+            readingDirections &&
+            cleanLine === "Approximate Nutrition"
+        ) {
+            finishCurrentLine();
+            readingDirections = false;
+            return;
+        }
+
+        if (readingIngredients) {
+
+            /*
+               Rev 1 Ingredients rule:
+               A bullet begins a new ingredient.
+               Wrapped PDF text is accumulated until
+               the next bullet is encountered.
+            */
+            if (cleanLine.startsWith("•")) {
+
+                if (currentLine !== "") {
+                    ingredients.push(currentLine);
+                }
+
+                currentLine = cleanLine;
+
+            } else if (currentLine !== "") {
+
+                currentLine += " " + cleanLine;
+
+            }
+
+            return;
+        }
+
+if (readingDirections) {
+
+    const isNumberedStep =
+        /^\d+\.\s*/.test(cleanLine);
+
+    /*
+       When Directions continue onto a new PDF page,
+       ignore page-header text until the next numbered step.
+    */
+    if (waitingForDirectionStep) {
+
+        if (!isNumberedStep) {
+            return;
+        }
+
+        waitingForDirectionStep = false;
+    }
+
+    if (isNumberedStep) {
+
+        if (currentLine !== "") {
+            directions.push(currentLine);
+        }
+
+        currentLine = cleanLine;
+        return;
+    }
+
+    const nutritionIndex =
+        cleanLine.indexOf("Approximate Nutrition");
+
+    if (nutritionIndex !== -1) {
+
+        const directionText =
+            cleanLine
+                .substring(0, nutritionIndex)
+                .trim();
+
+        if (directionText !== "") {
+            currentLine +=
+                (currentLine === "" ? "" : " ") +
+                directionText;
+        }
+
+        finishCurrentLine();
+        readingDirections = false;
+        return;
+    }
+
+    if (currentLine !== "") {
+        currentLine += " " + cleanLine;
+    }
+
+    return;
+}
+
+
+    };
+
+    /*
+       Scan every PDF page so section locations are not
+       tied to Page 1 or Page 2.
+    */
+    for (
+        let pageNumber = 1;
+        pageNumber <= pdf.numPages;
+        pageNumber++
+    ) {
+
+
+
+
+        
+        const recipePage =
+            await pdf.getPage(pageNumber);
+
+        const recipeTextContent =
+            await recipePage.getTextContent();
+
+        const recipeTextItems =
+            recipeTextContent.items;
+
+        for (const textItem of recipeTextItems) {
+            processTextItem(textItem);
+        }
+
+        /*
+           Temporary Rev 1 page-boundary rule:
+           if Directions are still being read when a PDF page
+           ends, finish the current step and ignore page-header
+           text until the next numbered step begins.
+        */
+        if (readingDirections) {
+            finishCurrentLine();
+            waitingForDirectionStep = true;
+        }
+    }
+
+    finishCurrentLine();
+
+    /*
+       Preserve the parsed recipe sections for the
+       dynamic cookbook page builders.
+    */
+    page1Data.ingredients = ingredients;
+    page1Data.directions = directions;
+
+    console.log("");
+    console.log("=================================");
+    console.log("INGREDIENTS — CONCATENATED TEST");
+    console.log("=================================");
+    console.log(ingredients);
+
+    console.log("");
+    console.log("=================================");
+    console.log("DIRECTIONS — REV 1 NUMBERED-STEP TEST");
+    console.log("=================================");
+    console.log(directions);
+
+    console.log("");
+
     /* ==================================================
        INSPECT PDF IMAGES
     ================================================== */
@@ -800,6 +1000,149 @@ function buildPage1HTML(page1Data) {
 
 
 
+
+/* ======================================================
+   BUILD PAGE 2 — INGREDIENTS
+====================================================== */
+
+function buildIngredientsPageHTML(page1Data) {
+
+    const ingredientsHTML =
+        (page1Data.ingredients || [])
+            .map(ingredient => {
+                const cleanIngredient =
+                    ingredient.replace(/^•\s*/, "");
+
+                return `<li>${cleanIngredient}</li>`;
+            })
+            .join("");
+
+    return `
+<section class="page right-page" data-page="1" aria-label="Ingredients">
+    <div class="temp-page-guide" aria-hidden="true">
+        <span class="temp-overflow-flag">OVERFLOWED</span>
+    </div>
+
+    <div class="eyebrow">${page1Data.title}</div>
+    <h2>Ingredients</h2>
+
+    <ul class="ingredients">
+        ${ingredientsHTML}
+    </ul>
+
+    <div class="temp-page-number" aria-hidden="true">
+        Page <span class="temp-page-number-value"></span>
+    </div>
+</section>
+`;
+}
+
+
+/* ======================================================
+   BUILD PAGE 3 — DIRECTIONS
+====================================================== */
+
+function buildDirectionsPageHTML(page1Data) {
+
+    const directionsHTML =
+        (page1Data.directions || [])
+            .map(direction => {
+
+                const match =
+                    direction.match(/^(\d+)\.\s*(.*)$/);
+
+                if (match) {
+                    return `<li value="${match[1]}">${match[2]}</li>`;
+                }
+
+                return `<li>${direction}</li>`;
+            })
+            .join("");
+
+    return `
+<section class="page" data-page="2" aria-label="Directions">
+    <div class="temp-page-guide" aria-hidden="true">
+        <span class="temp-overflow-flag">OVERFLOWED</span>
+    </div>
+
+    <div class="eyebrow">${page1Data.title}</div>
+    <h2>Directions</h2>
+
+    <ol class="directions">
+        ${directionsHTML}
+    </ol>
+
+    <div class="temp-page-number" aria-hidden="true">
+        Page <span class="temp-page-number-value"></span>
+    </div>
+</section>
+`;
+}
+
+
+/* ======================================================
+   BUILD ALL DYNAMIC RECIPE PAGES
+
+   cookbook.js loads the legacy page markup
+   asynchronously. Once those source pages exist,
+   replace them with the three dynamic recipe pages.
+====================================================== */
+
+function buildDynamicRecipePages(page1Data) {
+
+    const container =
+        document.querySelector("#recipePages");
+
+    if (!container) {
+        console.error(
+            "Dynamic recipe page container #recipePages was not found."
+        );
+        return;
+    }
+
+
+
+    const dynamicPage1 =
+        buildPage1HTML(page1Data);
+
+    const dynamicPage2 =
+        buildIngredientsPageHTML(page1Data);
+
+    const dynamicPage3 =
+        buildDirectionsPageHTML(page1Data);
+
+    container.innerHTML =
+        dynamicPage1 +
+        dynamicPage2 +
+        dynamicPage3;
+
+    pages = [
+        ...container.querySelectorAll(".page")
+    ];
+
+    pages.forEach((page, index) => {
+        const number =
+            page.querySelector(".temp-page-number-value");
+
+        if (number) {
+            number.textContent = index + 1;
+        }
+    });
+
+    setupNutritionPopup(page1Data);
+
+    if (typeof render === "function") {
+        render(0, "", false);
+    }
+
+    console.log("");
+    console.log("=================================");
+    console.log("DYNAMIC RECIPE PAGES COMPLETE");
+    console.log("=================================");
+    console.log("Dynamic pages:", pages.length);
+}
+
+
 /* ======================================================
    START
 ====================================================== */
@@ -866,47 +1209,15 @@ async function runCookbookReaderTest() {
 
         console.log("");
         console.log("#################################");
-        console.log("DYNAMIC PAGE 1 HTML BUILD");
+        console.log("DYNAMIC RECIPE PAGE BUILD");
         console.log("#################################");
 
-        /* ======================================================
-        INSERT DYNAMIC PAGE 1 INTO EXISTING PAGE 1 SHELL
-        ====================================================== */
-        const dynamicPage1 =
-            buildPage1HTML(page1Data);
+        window.BBN_RECIPE_TEST = {
+            recipe: pepperSoup,
+            page1: page1Data
+        };
 
-console.log("DYNAMIC PAGE 1 HTML:");
-console.log(dynamicPage1);
-
-        document
-            .querySelector("#recipePages")
-            .insertAdjacentHTML("afterbegin", dynamicPage1);
-
-            setupNutritionPopup(page1Data);
-
-
-            // ======================================================
-            // rebuild pages[] after dynamic Page 1
-            // is inserted. Remove/rework when all dynamic pages
-            // are being built.
-            // ======================================================
-
-
-
-                pages = [
-                    ...document.querySelectorAll("#recipePages .page")
-                ];
-                window.dispatchEvent(new Event("BBN_PAGES_READY"));
-                    /*
-                    Make the result available in the console
-                    for us to inspect later.
-                    */
-
-                    window.BBN_RECIPE_TEST = {
-                        recipe: pepperSoup,
-                        page1: page1Data
-                    };
-
+        buildDynamicRecipePages(page1Data);
 
                 }
 
