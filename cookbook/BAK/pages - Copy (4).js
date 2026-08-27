@@ -143,7 +143,7 @@ async function readRecipePDF(pdfPath, recipeTitle) {
         yield: extractLabeledValue(
             page1Text,
             "Yield:",
-            "Serving Size:"
+            "Prep Time:"
         ),
 
         servingSize: extractLabeledValue(
@@ -169,7 +169,11 @@ async function readRecipePDF(pdfPath, recipeTitle) {
             "Total Time:",
             "Ingredients"
         )
+
+
     };
+
+console.log("EXTRACTED YIELD:", page1Data.yield);
 
     console.log("=================================");
     console.log("PAGE 1 DATA");
@@ -416,6 +420,22 @@ if (readingDirections) {
             recipeTextItems.map(item => item.str).join(" ")
         );
 
+        /*
+           PDF PAGE BOUNDARY — DIRECTIONS
+
+           A Directions step may span a PDF page boundary, but
+           this PDF places a repeated page header before Step 6.
+           Tell the parser to ignore non-numbered text at the
+           start of the new page until the next numbered step.
+
+           Do NOT clear currentLine here. It still contains the
+           previous numbered step and must be pushed when the next
+           numbered step is encountered.
+        */
+        if (pageNumber > 1 && readingDirections) {
+            waitingForDirectionStep = true;
+        }
+
         for (const textItem of recipeTextItems) {
             processTextItem(textItem);
         }
@@ -490,6 +510,10 @@ async function inspectPageImages(page) {
 
         let imageCount = 0;
 
+        console.log("=================================");
+        console.log("ALL PAGE 1 IMAGES");
+        console.log("=================================");
+
         for (let i = 0; i < operatorList.fnArray.length; i++) {
 
             const fn = operatorList.fnArray[i];
@@ -505,37 +529,13 @@ async function inspectPageImages(page) {
                 imageCount++;
 
                 const args = operatorList.argsArray[i];
-
                 const imageName = args[0];
-
-                if (imageName === "img_p0_4") {
-                    console.log("FOUND RECIPE IMAGE:", imageName);
-                    const image = await page.objs.get(imageName);
-
-                    console.log("RECIPE IMAGE OBJECT:", image);
-
-                    const canvas = document.createElement("canvas");
-                    canvas.width = image.width;
-                    canvas.height = image.height;
-
-                    const ctx = canvas.getContext("2d");
-
-                    ctx.drawImage(
-                        image.bitmap,
-                        0,
-                        0,
-                        image.width,
-                        image.height
-                    );
-
-                    return canvas.toDataURL("image/png");
-                }
 
                 console.log(
                     `IMAGE ${imageCount}`,
                     {
                         operator: fn,
-                        arg0: args[0],
+                        imageName: imageName,
                         arg1: args[1],
                         arg2: args[2]
                     }
@@ -544,8 +544,75 @@ async function inspectPageImages(page) {
         }
 
         console.log(
-            `Total image operators found: ${imageCount}`
+            `TOTAL IMAGE OPERATORS FOUND: ${imageCount}`
         );
+
+        /*
+           The recipe photo is identified by its standard
+           600 x 400 pixel dimensions.
+
+           This avoids relying on the image's position in
+           the PDF or on the number of image operators.
+        */
+
+        let recipeImageName = null;
+        let image = null;
+
+        for (let i = 0; i < imageCount; i++) {
+
+            const candidateName = `img_p0_${i + 1}`;
+
+            const candidate = await new Promise(resolve => {
+                page.objs.get(candidateName, resolve);
+            });
+
+            if (
+                candidate &&
+                candidate.width === 600 &&
+                candidate.height === 400
+            ) {
+                recipeImageName = candidateName;
+                image = candidate;
+
+                console.log(
+                    "FOUND 600x400 RECIPE IMAGE:",
+                    recipeImageName
+                );
+
+                break;
+            }
+        }
+
+        if (!image || !image.bitmap) {
+            console.warn(
+                "No 600x400 recipe image found."
+            );
+            return "";
+        }
+
+        console.log(
+            "RECIPE IMAGE OBJECT:",
+            image
+        );
+
+        const canvas = document.createElement("canvas");
+
+        canvas.width = image.width;
+        canvas.height = image.height;
+
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(
+            image.bitmap,
+            0,
+            0,
+            image.width,
+            image.height
+        );
+
+        return canvas.toDataURL("image/png");
+
+
 
     }
 
@@ -555,6 +622,8 @@ async function inspectPageImages(page) {
             "Image inspection could not be completed:",
             error
         );
+
+        return "";
     }
 }
 
@@ -606,12 +675,51 @@ function extractAfter(text, start) {
 
 function extractRecipeDescription(text, recipeTitle) {
 
-    const titleIndex =
-        text.indexOf(recipeTitle);
+    const normalizedText =
+        text.replace(/\s+/g, " ").trim();
 
-    const creatorMatch = text.match(
-        /Creator\s*:/i
-    );
+    /*
+       recipes.xml is the source of truth for the recipe title.
+
+       The PDF title may contain the "BBN " prefix while the XML
+       title does not. Tomato Sauce is the exception: its PDF title
+       does not contain BBN. Therefore we try the exact XML title
+       first, then the same title with BBN added.
+
+       This keeps the parser generic for all recipes instead of
+       creating recipe-specific title rules.
+    */
+    const normalizedTitle =
+        recipeTitle.replace(/\s+/g, " ").trim();
+
+    const titleWithoutBBN =
+        normalizedTitle.replace(/^BBN\s+/i, "");
+
+    const titleVariants = [
+        normalizedTitle,
+        "BBN " + titleWithoutBBN,
+        titleWithoutBBN
+    ];
+
+    let titleIndex = -1;
+    let matchedTitle = "";
+
+    for (const variant of titleVariants) {
+
+        const index =
+            normalizedText
+                .toLowerCase()
+                .indexOf(variant.toLowerCase());
+
+        if (index !== -1) {
+            titleIndex = index;
+            matchedTitle = variant;
+            break;
+        }
+    }
+
+    const creatorMatch =
+        normalizedText.match(/Creator\s*:/i);
 
     const creatorIndex =
         creatorMatch
@@ -619,14 +727,9 @@ function extractRecipeDescription(text, recipeTitle) {
             : -1;
 
     console.log("===== DESCRIPTION DEBUG =====");
-    console.log("recipeTitle:", recipeTitle);
+    console.log("XML recipeTitle:", recipeTitle);
+    console.log("matchedTitle:", matchedTitle);
     console.log("titleIndex:", titleIndex);
-    console.log("text around title:",
-        text.substring(
-            Math.max(0, titleIndex - 20),
-            titleIndex + recipeTitle.length + 200
-        )
-    );
     console.log("creatorIndex:", creatorIndex);
 
     if (titleIndex === -1) {
@@ -639,10 +742,14 @@ function extractRecipeDescription(text, recipeTitle) {
         return "";
     }
 
+    /*
+       The description is always the text between the matched
+       recipe title and Creator: on Page 1.
+    */
     const description =
-        text
+        normalizedText
             .substring(
-                titleIndex + recipeTitle.length,
+                titleIndex + matchedTitle.length,
                 creatorIndex
             )
             .trim();
@@ -652,6 +759,7 @@ function extractRecipeDescription(text, recipeTitle) {
 
     return description;
 }
+
 
 function extractScoreExplanation(text) {
 
@@ -702,7 +810,6 @@ function normalizeNutritionText(text) {
         .replace(/BBN\s+Nutrition\s+Pillars\s*:/gi, "BBN Nutrition Pillars:")
         .replace(/Freezer\s+Friendly\s*:/gi, "Freezer Friendly:")
         .replace(/Gluten\s+Free\s*:/gi, "Gluten Free:")
-        .replace(/Non\s*-\s*GMO\s+Friendly\s*:/gi, "Non-GMO Friendly:")    
         .replace(/BBN\s+Nutrient\s+Density\s+Score\s*:/gi, "BBN Nutrient Density Score:");
 }
 
@@ -779,7 +886,7 @@ console.log("Nutrition data:", page1Data.nutrition);
         <div class="bbn-nutrition-popup" role="dialog" aria-modal="true" aria-labelledby="bbnNutritionTitle">
             <button type="button" class="bbn-nutrition-close" aria-label="Close nutritional information" onclick="closeNutritionPopup(); return false;">×</button>
             <h2 id="bbnNutritionTitle">BBN Nutritional Information</h2>
-            <p class="bbn-nutrition-serving"><strong>Serving Size:</strong> <span id="bbnNutritionServing"></span></p>
+            <p class="bbn-nutrition-serving"><strong>Serving Size</strong><span id="bbnNutritionServing"></span></p>
             <div class="bbn-nutrition-table">
                 <div><strong>Calories</strong><span id="bbnCalories"></span></div>
                 <div><strong>Protein</strong><span id="bbnProtein"></span></div>
@@ -795,19 +902,17 @@ console.log("Nutrition data:", page1Data.nutrition);
             </div>` : ""}
 
             <div class="bbn-nutrition-highlights">
-
-                <p><strong>Excellent Source:</strong> <span id="bbnExcellentSource"></span><br /></p>
-                
-                <p><strong>High In:</strong> <span id="bbnHighIn"></span><br /></p>
-                <p><strong>Good Source:</strong> <span id="bbnGoodSource"></span><br /></p>
-                <p><strong>Also Provides:</strong> <span id="bbnAlsoProvides"></span><br /></p>
+                ${nutrition.excellentSource ? `<p><strong>Excellent Source:</strong> ${nutrition.excellentSource}</p>` : ""}
+                ${nutrition.highIn ? `<p><strong>High In:</strong> ${nutrition.highIn}</p>` : ""}
+                ${nutrition.goodSource ? `<p><strong>Good Source:</strong> ${nutrition.goodSource}</p>` : ""}
+                ${nutrition.alsoProvides ? `<p><strong>Also Provides:</strong> ${nutrition.alsoProvides}</p>` : ""}
             </div>
             <div class="bbn-nutrition-snapshot">
                 <h3>Functional Nutrition Snapshot</h3>
-                <p><strong>Functional Nutrition Focus:  </strong> <span id="bbnFunctionalFocus"></span><br /></p>
-                <p><strong>BBN Nutrition Pillars:  </strong> <span id="bbnNutritionPillars"></span><br /></p>
-                <p><strong>Freezer Friendly:  </strong> <span id="bbnFreezerFriendly"></span><br /></p>
-                <p><strong>Gluten Free:  </strong> <span id="bbnGlutenFree"></span><br /></p>
+                <p><strong>Functional Nutrition Focus</strong>: <span id="bbnFunctionalFocus"></span><br /></p>
+                <p><strong>BBN Nutrition Pillars</strong>: <span id="bbnNutritionPillars"></span><br /></p>
+                <p><strong>Freezer Friendly</strong>: <span id="bbnFreezerFriendly"></span><br /></p>
+                <p><strong>Gluten Free</strong>: <span id="bbnGlutenFree"></span><br /></p>
             </div>
 
             ${nutrition.scoreExplanation?.heading ? `
@@ -831,10 +936,6 @@ console.log("Nutrition data:", page1Data.nutrition);
     setText("bbnFiber", nutrition.fiber);
     setText("bbnNetCarbs", nutrition.netCarbohydrates);
     setText("bbnHealthyFat", nutrition.healthyFat);
-    setText("bbnExcellentSource", nutrition.excellentSource);
-    setText("bbnHighIn", nutrition.highIn);
-    setText("bbnGoodSource", nutrition.goodSource);
-    setText("bbnAlsoProvides", nutrition.alsoProvides);
     setText("bbnFunctionalFocus", nutrition.functionalNutritionFocus);
     setText("bbnNutritionPillars", nutrition.bbnNutritionPillars);
     setText("bbnFreezerFriendly", nutrition.freezerFriendly);
@@ -888,6 +989,9 @@ function extractLabelValue(text, label, possibleEnds) {
     return text
         .substring(valueStart, valueEnd)
         .replace(/\s+/g, " ")
+        .trim()
+        .replace(/\s*BBN\s*$/i, "")
+        .replace(/^:\s*/, "")
         .trim();
 }
 
@@ -928,20 +1032,26 @@ function extractLabeledValue(text, startLabel, endLabel) {
     const valueStart =
         startIndex + startMatch[0].length;
 
-    const endIndex =
-        text.search(
+
+
+
+    const remainingText = text.substring(valueStart);
+
+    const endMatch =
+        remainingText.search(
             new RegExp(
                 endLabel.replace(":", "\\s*:\\s*"),
                 "i"
             )
         );
 
-    if (endIndex === -1 || endIndex <= valueStart) {
-        return "";
-    }
+    const valueEnd =
+        endMatch === -1
+            ? text.length
+            : valueStart + endMatch;
 
     return text
-        .substring(valueStart, endIndex)
+        .substring(valueStart, valueEnd)
         .trim();
 }
 
@@ -984,14 +1094,17 @@ function buildPage1HTML(page1Data) {
     <img
         class="recipe-photo"
         src="${page1Data.image}"
-        alt="Bowl of Sweet Gypsy Pepper and Chicken Soup garnished with avocado and fresh basil"
+        alt="Image of ${page1Data.title}"
     >
 
-    <div class="title soup-title">${page1Data.title}</div>
+        <div class="title soup-title">${page1Data.title}</div>
 
-    <p class="story">${page1Data.description}</p>
+        ${page1Data.description
+            ? `<p class="story">${page1Data.description}</p>`
+            : ""
+        }
 
-    <div class="recipe-meta">
+        <div class="recipe-meta">
 
         <div>
             <strong>Yield:</strong>
@@ -1191,6 +1304,46 @@ function buildDynamicRecipePages(page1Data) {
     console.log("=================================");
     console.log("Dynamic pages:", pages.length);
 }
+
+
+/* ======================================================
+   LOAD RECIPE FROM TOC
+
+   First TOC test: Sweet Gypsy Pepper and Chicken Soup.
+   Other recipes remain on the existing cookbook pages until
+   we verify their page fit.
+====================================================== */
+
+async function loadRecipeFromTOC(recipeIndex) {
+
+    const recipes = await readRecipesXML();
+    const recipe = recipes[recipeIndex];
+
+    if (!recipe) {
+        throw new Error(`Recipe index ${recipeIndex} was not found in recipes.xml.`);
+    }
+
+    console.log(
+        "TOC selected recipe:",
+        recipe.title
+    );
+
+    const page1Data =
+        await readRecipePDF(
+            recipe.pdf,
+            recipe.title
+        );
+
+    window.BBN_RECIPE_TEST = {
+        recipe,
+        page1: page1Data
+    };
+
+    buildDynamicRecipePages(page1Data);
+}
+
+window.BBN_LOAD_RECIPE_FROM_TOC =
+    loadRecipeFromTOC;
 
 
 /* ======================================================

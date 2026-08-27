@@ -221,6 +221,14 @@ async function loadTOC(){
       */
       button.dataset.recipeIndex = index;
 
+      button.addEventListener('click', async () => {
+        if (typeof window.BBN_LOAD_RECIPE_FROM_TOC === 'function') {
+          await window.BBN_LOAD_RECIPE_FROM_TOC(index);
+        } else {
+          console.error('BBN_LOAD_RECIPE_FROM_TOC is not available.');
+        }
+      });
+
       tocList.appendChild(button);
     });
 
@@ -251,6 +259,9 @@ const PRINT_PDF =
 
  
 function printPDF(pdfPath){
+  // Use the PDF belonging to the recipe currently displayed.
+  pdfPath = window.BBN_CURRENT_PDF || pdfPath;
+
   const printWindow = window.open(pdfPath, "_blank");
 
   if (!printWindow) {

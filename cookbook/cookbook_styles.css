@@ -992,7 +992,7 @@ body {
   right:20px;
   bottom:20px;
 
-  border:2px dashed rgba(190,0,0,.75);
+  border:1px dashed rgba(190,0,0,.28);
   box-sizing:border-box;
   pointer-events:none;
   z-index:100;

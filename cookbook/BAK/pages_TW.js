@@ -143,7 +143,7 @@ async function readRecipePDF(pdfPath, recipeTitle) {
         yield: extractLabeledValue(
             page1Text,
             "Yield:",
-            "Prep Time:"
+            "Serving Size"
         ),
 
         servingSize: extractLabeledValue(
@@ -679,55 +679,36 @@ function extractRecipeDescription(text, recipeTitle) {
         text.replace(/\s+/g, " ").trim();
 
     const normalizedTitle =
-        recipeTitle
-            .replace(/^BBN\s+/i, "")
-            .replace(/\s+/g, " ")
-            .trim();
+        recipeTitle.replace(/\s+/g, " ").trim();
 
-    /*
-       The PDF structure is:
-       Recipe Title
-       Description
-       Creator:
-       AI Assisted Recipe Development:
-       Yield:
-       ...
+    const creatorMatch = normalizedText.match(
+        /Creator\s*:/i
+    );
 
-       Find the recipe title in the PDF, allowing for an
-       optional BBN prefix. Then take everything between the
-       title and Creator.
-    */
-    const escapedTitle =
-        normalizedTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const creatorIndex =
+        creatorMatch
+            ? creatorMatch.index
+            : -1;
 
-    const titlePattern =
-        new RegExp(
-            "(?:^|\\s)(?:BBN\\s+)?" +
-            escapedTitle +
-            "(?=\\s)",
-            "i"
+    const titleIndex =
+        normalizedText.toLowerCase().indexOf(
+            normalizedTitle.toLowerCase()
         );
-
-    const titleMatch =
-        normalizedText.match(titlePattern);
 
     console.log("===== DESCRIPTION DEBUG =====");
     console.log("recipeTitle:", recipeTitle);
-    console.log("normalizedTitle:", normalizedTitle);
-    console.log("titleMatch:", titleMatch ? titleMatch[0] : "NOT FOUND");
+    console.log("titleIndex:", titleIndex);
+    console.log("creatorIndex:", creatorIndex);
 
-    if (!titleMatch) {
+
+
+
+
+
+    if (titleIndex === -1) {
         console.log("TITLE NOT FOUND");
         return "";
     }
-
-    const titleEnd =
-        titleMatch.index + titleMatch[0].length;
-
-    const creatorIndex =
-        normalizedText.indexOf("Creator:", titleEnd);
-
-    console.log("creatorIndex:", creatorIndex);
 
     if (creatorIndex === -1) {
         console.log("CREATOR NOT FOUND");
@@ -736,7 +717,10 @@ function extractRecipeDescription(text, recipeTitle) {
 
     const description =
         normalizedText
-            .substring(titleEnd, creatorIndex)
+            .substring(
+                titleIndex + normalizedTitle.length,
+                creatorIndex
+            )
             .trim();
 
     console.log("EXTRACTED DESCRIPTION:", description);
@@ -744,7 +728,6 @@ function extractRecipeDescription(text, recipeTitle) {
 
     return description;
 }
-
 
 function extractScoreExplanation(text) {
 
@@ -852,14 +835,30 @@ console.log("Nutrition data:", page1Data.nutrition);
         return;
     }
 
-    if (document.getElementById("bbnNutritionModal")) {
-        return;
-    }
-
     const nutrition = {
         ...(page1Data.nutrition || {}),
         scoreExplanation: page1Data.scoreExplanation || { heading: "", text: "" }
     };
+
+    // Bind nutrition to THIS recipe's current button.
+    // This avoids retaining the first recipe's popup data.
+    button._bbnNutrition = nutrition;
+
+    /*
+       The nutrition data is correctly extracted for each PDF.
+       The problem was that the popup was created for the first
+       recipe and then setupNutritionPopup() returned immediately
+       for every later recipe.
+
+       If the popup already exists, update its recipe-specific
+       values instead of returning with the first recipe's data.
+    */
+    const existingModal =
+        document.getElementById("bbnNutritionModal");
+
+    if (existingModal) {
+        return;
+    }
 
     const modal = document.createElement("div");
     modal.id = "bbnNutritionModal";
@@ -932,12 +931,39 @@ console.log("Nutrition data:", page1Data.nutrition);
 
 
 function showNutritionPopup() {
-    const modal = document.getElementById("bbnNutritionModal");
-    modal.classList.add("open");
-    if (modal) {
-        modal.hidden = false;
-        modal.setAttribute("aria-hidden", "false");
+
+    const modal =
+        document.getElementById("bbnNutritionModal");
+
+    const button =
+        document.getElementById("bbnNutritionButton");
+
+    const nutrition =
+        button?._bbnNutrition || {};
+
+    const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = value || "";
+        }
+    };
+
+    /*
+       Always populate the popup from the nutrition bound to
+       the CURRENT recipe button. This prevents the first
+       recipe's nutrition from being reused.
+    */
+    setText("bbnNutritionServing", nutrition.servingSize);
+    setText("bbnCalories", nutrition.calories);
+    setText("bbnProtein", nutrition.protein);
+
+    if (!modal) {
+        return;
     }
+
+    modal.classList.add("open");
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
 }
 
 function closeNutritionPopup() {

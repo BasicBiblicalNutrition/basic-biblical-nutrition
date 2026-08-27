@@ -998,22 +998,6 @@ body {
   z-index:100;
 }
 
-.temp-overflow-flag{
-  position:absolute;
-  right:20px;
-  top:20px;
-
-  padding:4px 8px;
-  background:#fff;
-  color:#b00000;
-  border:2px solid #b00000;
-  border-radius:4px;
-
-  font:800 11px/1 Arial,sans-serif;
-  letter-spacing:.06em;
-}
-
-
 
 /* ======================================================
    BBN NUTRITION POPUP

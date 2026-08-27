@@ -17,7 +17,7 @@
 
     <h2>Contact</h2>
 
-    <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="contact-form">
 
         <input type="hidden" name="access_key" value="723b6c85-a00d-474d-9828-2f26524f114a">
         <input type="hidden" name="redirect" 
@@ -31,7 +31,7 @@
             required
         >
 
-        <label for="contact-subject">Subject:</label>
+       <label for="contact-subject">Subject:</label>
         <input
             type="text"
             id="contact-subject"
@@ -70,6 +70,24 @@
 
 <script>
 const form = document.getElementById('contact-form');
+const subjectField = document.getElementById('contact-subject');
+
+const params = new URLSearchParams(window.location.search);
+const prefix = params.get('subject') || '';
+
+subjectField.value = prefix;
+
+subjectField.addEventListener('input', function () {
+    if (!this.value.startsWith(prefix)) {
+        this.value = prefix;
+    }
+
+    const addedText = this.value.substring(prefix.length);
+
+    if (addedText.length > 20) {
+        this.value = prefix + addedText.substring(0, 20);
+    }
+});
 
 form.addEventListener('submit', function(e) {
 

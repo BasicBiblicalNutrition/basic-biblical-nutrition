@@ -77,6 +77,33 @@ async function readRecipesXML() {
    STEP 2 — READ PDF
 ====================================================== */
 
+
+/* ======================================================
+   PDF PAGE TEXT — PRESERVE PHYSICAL PAGE BOUNDARIES
+
+   Step 1 only: return the parsed text items and normalized
+   text for ONE physical PDF page without combining it with
+   any other page.
+====================================================== */
+async function getPdfPageText(pdf, pageNumber) {
+
+    const page = await pdf.getPage(pageNumber);
+    const textContent = await page.getTextContent();
+    const items = textContent.items;
+
+    const text = items
+        .map(item => item.str)
+        .join(" ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    return {
+        pageNumber,
+        items,
+        text
+    };
+}
+
 async function readRecipePDF(pdfPath, recipeTitle) {
 
     console.log("");
@@ -114,14 +141,11 @@ async function readRecipePDF(pdfPath, recipeTitle) {
        PAGE 1 — GET TEXT
     ================================================== */
 
+    const page1DataText =
+        await getPdfPageText(pdf, 1);
+
     const page1 = await pdf.getPage(1);
-    const page1TextContent =
-        await page1.getTextContent();
-    const page1Text = page1TextContent.items
-        .map(item => item.str)
-        .join(" ")
-        .replace(/\s+/g, " ")
-        .trim();
+    const page1Text = page1DataText.text;
 
     console.log("=================================");
     console.log("PAGE 1 TEXT");
@@ -143,7 +167,7 @@ async function readRecipePDF(pdfPath, recipeTitle) {
         yield: extractLabeledValue(
             page1Text,
             "Yield:",
-            "Prep Time:"
+            "Serving Size"
         ),
 
         servingSize: extractLabeledValue(
@@ -192,20 +216,12 @@ console.log("EXTRACTED YIELD:", page1Data.yield);
 ================================================== */
 
 if (pdf.numPages >= 2) {
+    const page2DataText =
+        await getPdfPageText(pdf, 2);
+
     const page2 = await pdf.getPage(2);
-    const page2TextContent =
-        await page2.getTextContent();
-
-    /*
-       Keep the individual PDF text items intact.
-       This is important because PDF.js may split
-       the label and stars into separate items.
-    */
-    const page2Items =
-        page2TextContent.items.map(item => item.str);
-
-    const page2Text =
-        page2Items.join(" ").replace(/\s+/g, " ").trim();
+    const page2Items = page2DataText.items;
+    const page2Text = page2DataText.text;
 
      const nutrientScoreLabel =
         extractNutrientScoreLabel(page2Text);
@@ -226,7 +242,47 @@ if (pdf.numPages >= 2) {
        information and Functional Nutrition Snapshot
        used by the final cookbook page.
     ================================================== */
-    page1Data.nutrition = extractNutritionData(page2Text);
+    /*
+       EXTRACT NUTRITION INFORMATION
+
+       Some recipes begin the Approximate Nutrition section
+       at the bottom of Page 1 and continue onto Page 2.
+       Chicken is one of those recipes: Serving Size, Calories,
+       and Protein are on Page 1, while the remaining nutrition
+       fields continue on Page 2.
+
+       Build the nutrition text from the Approximate Nutrition
+       marker on Page 1 when present, then append Page 2.
+       Otherwise use Page 2 as before.
+    */
+    let nutritionText = page2Text;
+
+    const nutritionStartIndex =
+        page1Text.search(/Approximate\s+Nutrition\s*\(\s*Per\s+Serving\s*\)/i);
+
+    if (nutritionStartIndex !== -1) {
+        nutritionText =
+            page1Text.substring(nutritionStartIndex) +
+            " " +
+            page2Text;
+    }
+
+    console.log("=================================");
+    console.log("NUTRITION TEXT USED FOR EXTRACTION");
+    console.log("=================================");
+    console.log(nutritionText);
+
+    // Protein is sometimes the final Nutrition field on Page 1.
+    // Keep it on the Page 1 Nutrition segment when that label is present,
+    // while allowing the remaining Nutrition fields to continue onto Page 2.
+    const proteinText =
+        nutritionStartIndex !== -1 &&
+        /Protein\s*:/i.test(page1Text.substring(nutritionStartIndex))
+            ? page1Text.substring(nutritionStartIndex)
+            : nutritionText;
+
+    page1Data.nutrition =
+        extractNutritionData(nutritionText, proteinText);
 
     console.log("=================================");
     console.log("PAGE 2 — NUTRITION DATA");
@@ -396,6 +452,7 @@ if (readingDirections) {
        tied to Page 1 or Page 2.
     */
     const allPdfTextParts = [];
+    const allPdfPages = [];
 
     for (
         let pageNumber = 1;
@@ -407,18 +464,17 @@ if (readingDirections) {
 
 
         
+        const recipePageData =
+            await getPdfPageText(pdf, pageNumber);
+
         const recipePage =
             await pdf.getPage(pageNumber);
 
-        const recipeTextContent =
-            await recipePage.getTextContent();
-
         const recipeTextItems =
-            recipeTextContent.items;
+            recipePageData.items;
 
-        allPdfTextParts.push(
-            recipeTextItems.map(item => item.str).join(" ")
-        );
+        allPdfPages.push(recipePageData);
+        allPdfTextParts.push(recipePageData.text);
 
         /*
            PDF PAGE BOUNDARY — DIRECTIONS
@@ -442,6 +498,18 @@ if (readingDirections) {
     }
 
     finishCurrentLine();
+
+    console.log("=================================");
+    console.log("PDF PAGE BOUNDARY CHECK — STEP 1");
+    console.log("=================================");
+    for (const pdfPage of allPdfPages) {
+        console.log(
+            `PDF PAGE ${pdfPage.pageNumber} OF ${pdf.numPages}:`,
+            `\"${pdfPage.text.substring(0, 120)}...\"`
+        );
+    }
+    console.log("PDF PAGE BOUNDARIES PRESERVED:", allPdfPages.length);
+    console.log("");
 
     /*
        Preserve the parsed recipe sections for the
@@ -679,55 +747,36 @@ function extractRecipeDescription(text, recipeTitle) {
         text.replace(/\s+/g, " ").trim();
 
     const normalizedTitle =
-        recipeTitle
-            .replace(/^BBN\s+/i, "")
-            .replace(/\s+/g, " ")
-            .trim();
+        recipeTitle.replace(/\s+/g, " ").trim();
 
-    /*
-       The PDF structure is:
-       Recipe Title
-       Description
-       Creator:
-       AI Assisted Recipe Development:
-       Yield:
-       ...
+    const creatorMatch = normalizedText.match(
+        /Creator\s*:/i
+    );
 
-       Find the recipe title in the PDF, allowing for an
-       optional BBN prefix. Then take everything between the
-       title and Creator.
-    */
-    const escapedTitle =
-        normalizedTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const creatorIndex =
+        creatorMatch
+            ? creatorMatch.index
+            : -1;
 
-    const titlePattern =
-        new RegExp(
-            "(?:^|\\s)(?:BBN\\s+)?" +
-            escapedTitle +
-            "(?=\\s)",
-            "i"
+    const titleIndex =
+        normalizedText.toLowerCase().indexOf(
+            normalizedTitle.toLowerCase()
         );
-
-    const titleMatch =
-        normalizedText.match(titlePattern);
 
     console.log("===== DESCRIPTION DEBUG =====");
     console.log("recipeTitle:", recipeTitle);
-    console.log("normalizedTitle:", normalizedTitle);
-    console.log("titleMatch:", titleMatch ? titleMatch[0] : "NOT FOUND");
+    console.log("titleIndex:", titleIndex);
+    console.log("creatorIndex:", creatorIndex);
 
-    if (!titleMatch) {
+
+
+
+
+
+    if (titleIndex === -1) {
         console.log("TITLE NOT FOUND");
         return "";
     }
-
-    const titleEnd =
-        titleMatch.index + titleMatch[0].length;
-
-    const creatorIndex =
-        normalizedText.indexOf("Creator:", titleEnd);
-
-    console.log("creatorIndex:", creatorIndex);
 
     if (creatorIndex === -1) {
         console.log("CREATOR NOT FOUND");
@@ -736,7 +785,10 @@ function extractRecipeDescription(text, recipeTitle) {
 
     const description =
         normalizedText
-            .substring(titleEnd, creatorIndex)
+            .substring(
+                titleIndex + normalizedTitle.length,
+                creatorIndex
+            )
             .trim();
 
     console.log("EXTRACTED DESCRIPTION:", description);
@@ -744,7 +796,6 @@ function extractRecipeDescription(text, recipeTitle) {
 
     return description;
 }
-
 
 function extractScoreExplanation(text) {
 
@@ -800,14 +851,15 @@ function normalizeNutritionText(text) {
 
 
 
-function extractNutritionData(text) {
+function extractNutritionData(text, proteinText = text) {
 
     text = normalizeNutritionText(text);
+    proteinText = normalizeNutritionText(proteinText);
 
     const nutrition = {
         servingSize: extractLabelValue(text, "Serving Size:", ["Calories"]),
         calories: extractLabelValue(text, "Calories", ["Protein"]),
-        protein: extractLabelValue(text, "Protein", ["Carbohydrates"]),
+        protein: extractLabelValue(proteinText, "Protein", ["Carbohydrates"]),
         carbohydrates: extractLabelValue(text, "Carbohydrates", ["Fiber"]),
         fiber: extractLabelValue(text, "Fiber", ["Net Carbohydrates"]),
         netCarbohydrates: extractLabelValue(text, "Net Carbohydrates", ["Healthy Fat"]),
@@ -852,14 +904,108 @@ console.log("Nutrition data:", page1Data.nutrition);
         return;
     }
 
-    if (document.getElementById("bbnNutritionModal")) {
-        return;
-    }
-
     const nutrition = {
         ...(page1Data.nutrition || {}),
         scoreExplanation: page1Data.scoreExplanation || { heading: "", text: "" }
     };
+
+    // Bind nutrition to THIS recipe's current button.
+    // This avoids retaining the first recipe's popup data.
+    button._bbnNutrition = nutrition;
+
+    /*
+       The nutrition data is correctly extracted for each PDF.
+       The problem was that the popup was created for the first
+       recipe and then setupNutritionPopup() returned immediately
+       for every later recipe.
+
+       If the popup already exists, update its recipe-specific
+       values instead of returning with the first recipe's data.
+    */
+    const existingModal =
+        document.getElementById("bbnNutritionModal");
+
+    /*
+       The popup is created once, but the nutrition data changes
+       with each recipe. If the popup already exists, refresh ALL
+       recipe-specific fields from the current nutrition object
+       instead of leaving the first recipe's values in place.
+    */
+    if (existingModal) {
+        const setText = (id, value) => {
+            const element = document.getElementById(id);
+            if (element) element.textContent = value || "";
+        };
+
+        setText("bbnNutritionServing", nutrition.servingSize);
+        setText("bbnCalories", nutrition.calories);
+        setText("bbnProtein", nutrition.protein);
+        setText("bbnCarbohydrates", nutrition.carbohydrates);
+        setText("bbnFiber", nutrition.fiber);
+        setText("bbnNetCarbs", nutrition.netCarbohydrates);
+        setText("bbnHealthyFat", nutrition.healthyFat);
+        setText("bbnFunctionalFocus", nutrition.functionalNutritionFocus);
+        setText("bbnNutritionPillars", nutrition.bbnNutritionPillars);
+        setText("bbnFreezerFriendly", nutrition.freezerFriendly);
+        setText("bbnGlutenFree", nutrition.glutenFree);
+
+        const note =
+            existingModal.querySelector(".bbn-nutrition-calculation-note");
+        if (nutrition.nutritionCalculationNote) {
+            if (note) {
+                const noteText = note.querySelector("p");
+                if (noteText) noteText.textContent = nutrition.nutritionCalculationNote;
+            } else {
+                const popup = existingModal.querySelector(".bbn-nutrition-popup");
+                if (popup) {
+                    const highlights = popup.querySelector(".bbn-nutrition-highlights");
+                    const block = document.createElement("div");
+                    block.className = "bbn-nutrition-calculation-note";
+                    block.innerHTML = "<h3>Nutrition Calculation Note</h3><p></p>";
+                    block.querySelector("p").textContent = nutrition.nutritionCalculationNote;
+                    if (highlights) popup.insertBefore(block, highlights);
+                    else popup.appendChild(block);
+                }
+            }
+        } else if (note) {
+            note.remove();
+        }
+
+        const highlights =
+            existingModal.querySelector(".bbn-nutrition-highlights");
+        if (highlights) {
+            highlights.innerHTML = `
+                ${nutrition.excellentSource ? `<p><strong>Excellent Source:</strong> ${nutrition.excellentSource}</p>` : ""}
+                ${nutrition.highIn ? `<p><strong>High In:</strong> ${nutrition.highIn}</p>` : ""}
+                ${nutrition.goodSource ? `<p><strong>Good Source:</strong> ${nutrition.goodSource}</p>` : ""}
+                ${nutrition.alsoProvides ? `<p><strong>Also Provides:</strong> ${nutrition.alsoProvides}</p>` : ""}`;
+        }
+
+        const scoreBlock =
+            existingModal.querySelector(".bbn-nutrition-score-explanation");
+        if (nutrition.scoreExplanation?.heading) {
+            if (scoreBlock) {
+                const heading = scoreBlock.querySelector("h3");
+                const paragraph = scoreBlock.querySelector("p");
+                if (heading) heading.textContent = nutrition.scoreExplanation.heading;
+                if (paragraph) paragraph.textContent = nutrition.scoreExplanation.text || "";
+            } else {
+                const popup = existingModal.querySelector(".bbn-nutrition-popup");
+                if (popup) {
+                    const block = document.createElement("div");
+                    block.className = "bbn-nutrition-score-explanation";
+                    block.innerHTML = "<h3></h3><p></p>";
+                    block.querySelector("h3").textContent = nutrition.scoreExplanation.heading;
+                    block.querySelector("p").textContent = nutrition.scoreExplanation.text || "";
+                    popup.appendChild(block);
+                }
+            }
+        } else if (scoreBlock) {
+            scoreBlock.remove();
+        }
+
+        return;
+    }
 
     const modal = document.createElement("div");
     modal.id = "bbnNutritionModal";
@@ -932,12 +1078,47 @@ console.log("Nutrition data:", page1Data.nutrition);
 
 
 function showNutritionPopup() {
-    const modal = document.getElementById("bbnNutritionModal");
-    modal.classList.add("open");
-    if (modal) {
-        modal.hidden = false;
-        modal.setAttribute("aria-hidden", "false");
+
+    const modal =
+        document.getElementById("bbnNutritionModal");
+
+    const button =
+        document.getElementById("bbnNutritionButton");
+
+    const nutrition =
+        button?._bbnNutrition || {};
+
+    const setText = (id, value) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = value || "";
+        }
+    };
+
+    /*
+       Always populate the popup from the nutrition bound to
+       the CURRENT recipe button. This prevents the first
+       recipe's nutrition from being reused.
+    */
+    setText("bbnNutritionServing", nutrition.servingSize);
+    setText("bbnCalories", nutrition.calories);
+    setText("bbnProtein", nutrition.protein);
+    setText("bbnCarbohydrates", nutrition.carbohydrates);
+    setText("bbnFiber", nutrition.fiber);
+    setText("bbnNetCarbs", nutrition.netCarbohydrates);
+    setText("bbnHealthyFat", nutrition.healthyFat);
+    setText("bbnFunctionalFocus", nutrition.functionalNutritionFocus);
+    setText("bbnNutritionPillars", nutrition.bbnNutritionPillars);
+    setText("bbnFreezerFriendly", nutrition.freezerFriendly);
+    setText("bbnGlutenFree", nutrition.glutenFree);
+
+    if (!modal) {
+        return;
     }
+
+    modal.classList.add("open");
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
 }
 
 function closeNutritionPopup() {

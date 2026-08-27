@@ -143,7 +143,7 @@ async function readRecipePDF(pdfPath, recipeTitle) {
         yield: extractLabeledValue(
             page1Text,
             "Yield:",
-            "Prep Time:"
+            "Serving Size:"
         ),
 
         servingSize: extractLabeledValue(
@@ -169,11 +169,7 @@ async function readRecipePDF(pdfPath, recipeTitle) {
             "Total Time:",
             "Ingredients"
         )
-
-
     };
-
-console.log("EXTRACTED YIELD:", page1Data.yield);
 
     console.log("=================================");
     console.log("PAGE 1 DATA");
@@ -510,10 +506,6 @@ async function inspectPageImages(page) {
 
         let imageCount = 0;
 
-        console.log("=================================");
-        console.log("ALL PAGE 1 IMAGES");
-        console.log("=================================");
-
         for (let i = 0; i < operatorList.fnArray.length; i++) {
 
             const fn = operatorList.fnArray[i];
@@ -529,13 +521,39 @@ async function inspectPageImages(page) {
                 imageCount++;
 
                 const args = operatorList.argsArray[i];
+
                 const imageName = args[0];
+
+                if (imageName === "img_p0_4") {
+                    console.log("FOUND RECIPE IMAGE:", imageName);
+                    const image = await new Promise(resolve => {
+                        page.objs.get(imageName, resolve);
+                    });
+
+                    console.log("RECIPE IMAGE OBJECT:", image);
+
+                    const canvas = document.createElement("canvas");
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+
+                    const ctx = canvas.getContext("2d");
+
+                    ctx.drawImage(
+                        image.bitmap,
+                        0,
+                        0,
+                        image.width,
+                        image.height
+                    );
+
+                    return canvas.toDataURL("image/png");
+                }
 
                 console.log(
                     `IMAGE ${imageCount}`,
                     {
                         operator: fn,
-                        imageName: imageName,
+                        arg0: args[0],
                         arg1: args[1],
                         arg2: args[2]
                     }
@@ -544,75 +562,8 @@ async function inspectPageImages(page) {
         }
 
         console.log(
-            `TOTAL IMAGE OPERATORS FOUND: ${imageCount}`
+            `Total image operators found: ${imageCount}`
         );
-
-        /*
-           The recipe photo is identified by its standard
-           600 x 400 pixel dimensions.
-
-           This avoids relying on the image's position in
-           the PDF or on the number of image operators.
-        */
-
-        let recipeImageName = null;
-        let image = null;
-
-        for (let i = 0; i < imageCount; i++) {
-
-            const candidateName = `img_p0_${i + 1}`;
-
-            const candidate = await new Promise(resolve => {
-                page.objs.get(candidateName, resolve);
-            });
-
-            if (
-                candidate &&
-                candidate.width === 600 &&
-                candidate.height === 400
-            ) {
-                recipeImageName = candidateName;
-                image = candidate;
-
-                console.log(
-                    "FOUND 600x400 RECIPE IMAGE:",
-                    recipeImageName
-                );
-
-                break;
-            }
-        }
-
-        if (!image || !image.bitmap) {
-            console.warn(
-                "No 600x400 recipe image found."
-            );
-            return "";
-        }
-
-        console.log(
-            "RECIPE IMAGE OBJECT:",
-            image
-        );
-
-        const canvas = document.createElement("canvas");
-
-        canvas.width = image.width;
-        canvas.height = image.height;
-
-        const ctx = canvas.getContext("2d");
-
-        ctx.drawImage(
-            image.bitmap,
-            0,
-            0,
-            image.width,
-            image.height
-        );
-
-        return canvas.toDataURL("image/png");
-
-
 
     }
 
@@ -622,8 +573,6 @@ async function inspectPageImages(page) {
             "Image inspection could not be completed:",
             error
         );
-
-        return "";
     }
 }
 
@@ -675,59 +624,39 @@ function extractAfter(text, start) {
 
 function extractRecipeDescription(text, recipeTitle) {
 
+    const creatorMatch = text.match(
+        /Creator\s*:/i
+    );
+
+    const creatorIndex =
+        creatorMatch
+            ? creatorMatch.index
+            : -1;
+
+    /*
+       PDF.js may alter the spacing or line breaks around
+       the recipe title. Normalize whitespace for matching.
+    */
     const normalizedText =
         text.replace(/\s+/g, " ").trim();
 
     const normalizedTitle =
-        recipeTitle
-            .replace(/^BBN\s+/i, "")
-            .replace(/\s+/g, " ")
-            .trim();
+        recipeTitle.replace(/\s+/g, " ").trim();
 
-    /*
-       The PDF structure is:
-       Recipe Title
-       Description
-       Creator:
-       AI Assisted Recipe Development:
-       Yield:
-       ...
-
-       Find the recipe title in the PDF, allowing for an
-       optional BBN prefix. Then take everything between the
-       title and Creator.
-    */
-    const escapedTitle =
-        normalizedTitle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
-    const titlePattern =
-        new RegExp(
-            "(?:^|\\s)(?:BBN\\s+)?" +
-            escapedTitle +
-            "(?=\\s)",
-            "i"
+    const titleIndex =
+        normalizedText.toLowerCase().indexOf(
+            normalizedTitle.toLowerCase()
         );
-
-    const titleMatch =
-        normalizedText.match(titlePattern);
 
     console.log("===== DESCRIPTION DEBUG =====");
     console.log("recipeTitle:", recipeTitle);
-    console.log("normalizedTitle:", normalizedTitle);
-    console.log("titleMatch:", titleMatch ? titleMatch[0] : "NOT FOUND");
+    console.log("titleIndex:", titleIndex);
+    console.log("creatorIndex:", creatorIndex);
 
-    if (!titleMatch) {
+    if (titleIndex === -1) {
         console.log("TITLE NOT FOUND");
         return "";
     }
-
-    const titleEnd =
-        titleMatch.index + titleMatch[0].length;
-
-    const creatorIndex =
-        normalizedText.indexOf("Creator:", titleEnd);
-
-    console.log("creatorIndex:", creatorIndex);
 
     if (creatorIndex === -1) {
         console.log("CREATOR NOT FOUND");
@@ -736,7 +665,10 @@ function extractRecipeDescription(text, recipeTitle) {
 
     const description =
         normalizedText
-            .substring(titleEnd, creatorIndex)
+            .substring(
+                titleIndex + normalizedTitle.length,
+                creatorIndex
+            )
             .trim();
 
     console.log("EXTRACTED DESCRIPTION:", description);
@@ -744,7 +676,6 @@ function extractRecipeDescription(text, recipeTitle) {
 
     return description;
 }
-
 
 function extractScoreExplanation(text) {
 
@@ -1017,26 +948,20 @@ function extractLabeledValue(text, startLabel, endLabel) {
     const valueStart =
         startIndex + startMatch[0].length;
 
-
-
-
-    const remainingText = text.substring(valueStart);
-
-    const endMatch =
-        remainingText.search(
+    const endIndex =
+        text.search(
             new RegExp(
                 endLabel.replace(":", "\\s*:\\s*"),
                 "i"
             )
         );
 
-    const valueEnd =
-        endMatch === -1
-            ? text.length
-            : valueStart + endMatch;
+    if (endIndex === -1 || endIndex <= valueStart) {
+        return "";
+    }
 
     return text
-        .substring(valueStart, valueEnd)
+        .substring(valueStart, endIndex)
         .trim();
 }
 
@@ -1082,14 +1007,11 @@ function buildPage1HTML(page1Data) {
         alt="Image of ${page1Data.title}"
     >
 
-        <div class="title soup-title">${page1Data.title}</div>
+    <div class="title soup-title">${page1Data.title}</div>
 
-        ${page1Data.description
-            ? `<p class="story">${page1Data.description}</p>`
-            : ""
-        }
+    <p class="story">${page1Data.description}</p>
 
-        <div class="recipe-meta">
+    <div class="recipe-meta">
 
         <div>
             <strong>Yield:</strong>
