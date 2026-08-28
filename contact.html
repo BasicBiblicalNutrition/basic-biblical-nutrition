@@ -84,8 +84,8 @@ subjectField.addEventListener('input', function () {
 
     const addedText = this.value.substring(prefix.length);
 
-    if (addedText.length > 20) {
-        this.value = prefix + addedText.substring(0, 20);
+    if (addedText.length > 50) {
+        this.value = prefix + addedText.substring(0, 50);
     }
 });
 
