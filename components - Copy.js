@@ -28,37 +28,18 @@ async function loadComponent(id, file) {
 async function initializeHomeOverview() {
 
     await loadComponent("home-overview-left", "home_overview_left.html");
-    /* await loadComponent("home-take2", "home_take2.html"); */
+    await loadComponent("home-take2", "home_take2.html");
 
 }
 
 async function initializePage() {
 
     await loadComponent("site-banner", "site_banner.html");
-
-    // Mobile hamburger menu
-    const menuButton = document.querySelector(".bbn-menu-toggle");
-    const bannerNav = document.querySelector(".banner-nav");
-
-    if (menuButton && bannerNav) {
-        menuButton.addEventListener("click", () => {
-            bannerNav.classList.toggle("mobile-open");
-            menuButton.setAttribute(
-                "aria-label",
-                bannerNav.classList.contains("mobile-open")
-                    ? "Close Navigation"
-                    : "Open Navigation"
-            );
-        });
-    }
-
     await loadComponent("hero", "hero.html");
 
   
     await loadComponent("home-overview", "home_overview.html");
     await initializeHomeOverview();
-
-    await loadComponent("take2-container", "home_take2.html");
     await initializeTake2();
 
     await loadComponent("feature-section", "feature_section.html");

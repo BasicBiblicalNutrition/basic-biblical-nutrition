@@ -28,7 +28,7 @@ async function loadComponent(id, file) {
 async function initializeHomeOverview() {
 
     await loadComponent("home-overview-left", "home_overview_left.html");
-    /* await loadComponent("home-take2", "home_take2.html"); */
+    await loadComponent("home-take2", "home_take2.html");
 
 }
 
@@ -57,8 +57,7 @@ async function initializePage() {
   
     await loadComponent("home-overview", "home_overview.html");
     await initializeHomeOverview();
-
-    await loadComponent("take2-container", "home_take2.html");
+    await initializeTake2();
     await initializeTake2();
 
     await loadComponent("feature-section", "feature_section.html");
