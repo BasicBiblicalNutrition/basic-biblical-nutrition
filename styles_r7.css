@@ -1132,6 +1132,14 @@ body.dyslexia-font li{
 @media (max-width:900px){
     .take2-feature{
         display:block;
+        position:relative;
+        width:100%;
+        background-image:url("images/TreeOfLife_2.png");
+        background-repeat:no-repeat;
+        background-position:center center;
+        background-size:cover;
+        border-radius:18px;
+        overflow:hidden;
     }
 
     .take2-header-image{
@@ -1161,9 +1169,45 @@ body.dyslexia-font li{
 
     .take2-footer{
         display:flex;
-        justify-content:center;
+        justify-content:flex-end;
+        align-items:center;
         gap:12px;
         margin:14px 0 10px;
+    }
+
+    .take2-footer .pill-button{
+        border:1px solid #C6B17A;
+        border-radius:999px;
+        padding:8px 18px;
+        background:linear-gradient(#FFF9E8,#E8D39A);
+        box-shadow:0 3px 10px rgba(0,0,0,.16);
+        cursor:pointer;
+        color:#222;
+        font-weight:800;
+        text-decoration:none;
+    }
+
+    .take2-footer .pill-button a{
+        color:#222;
+        font-weight:800;
+        text-decoration:none;
+    }
+
+    .take2-footer .pill-button:last-child{
+        background:linear-gradient(#F4F1DE,#D7E0C0);
+        color:#999;
+        opacity:1;
+        cursor:default;
+        pointer-events:none;
+    }
+
+    .take2-footer .pill-button:last-child,
+    .take2-footer .pill-button:last-child .icon{
+        color:#999;
+    }
+
+    .take2-footer .icon{
+        margin-right:5px;
     }
 }
 
@@ -2203,4 +2247,204 @@ footer p{
 
 .guided-image img {
     pointer-events: none !important;
+}
+
+/* Take 2 — Proverbs 3:18 tooltip */
+.take2-proverb-reference{position:relative;display:inline-block;cursor:help;text-decoration:underline dotted;text-underline-offset:3px;}
+.take2-proverb-reference::after{content:attr(data-tooltip);position:absolute;left:50%;bottom:calc(100% + 12px);transform:translateX(-50%);width:min(360px,80vw);padding:14px 16px;background:#FFFBE9;border:1px solid #8B6F47;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.20);color:#5B4A1F;font-family:Inter,sans-serif;font-size:.9rem;font-style:normal;font-weight:600;line-height:1.5;text-align:left;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease;z-index:9999;}
+.take2-proverb-reference:hover::after,.take2-proverb-reference:focus::after{opacity:1;visibility:visible;}
+
+/*=====================================================
+  TAKE 2 — RESPONSIVE FLOATING CONTENT
+  Uses the feature container for proportional scaling.
+  No fixed mobile heights.
+=====================================================*/
+
+@media (max-width:900px){
+
+    .take2-feature{
+        container-type:inline-size;
+        container-name:take2;
+        position:relative;
+        width:100%;
+        overflow:hidden;
+        /* Preserve the source image's proportions rather than
+           forcing a mobile height. */
+        aspect-ratio:16 / 9;
+        background-size:cover;
+        background-position:center center;
+        background-repeat:no-repeat;
+    }
+
+    /* Floating text area: only as wide as its content,
+       with one translucent background. */
+    .take2-question-panel{
+        position:absolute;
+        top:clamp(1.5%,2.5cqw,4%);
+        left:50%;
+        transform:translateX(-50%);
+        width:max-content;
+        max-width:82cqw;
+        box-sizing:border-box;
+        margin:0;
+        padding:clamp(7px,1.4cqw,14px)
+                 clamp(12px,2.4cqw,24px);
+        background:rgba(248,244,232,.52);
+        border-radius:0;
+        box-shadow:none;
+        text-align:center;
+        z-index:2;
+
+    }
+
+    .take2-question-panel h3{
+        margin:0 0 clamp(3px,.6cqw,6px);
+        padding:0;
+        background:transparent;
+        color:#222;
+        font-size:clamp(.9rem,2.5cqw,1.25rem);
+        line-height:1.15;
+        text-align:center;
+    }
+
+    /* Short version at narrow widths; no extra background
+       is applied to this text. */
+    .take2-invite{
+        width:auto;
+        max-width:100%;
+        margin:0 auto;
+        padding:0;
+        background:transparent;
+        color:#222;
+        font-size:clamp(.76rem,1.85cqw,.95rem);
+        line-height:1.3;
+        font-weight:700;
+        text-align:center;
+    }
+
+    .take2-invite .take2-long-copy{
+        display:none;
+    }
+
+    .take2-invite .take2-short-copy{
+        display:block;
+    }
+
+    /* If the existing markup is plain text, hide the opening
+       sentence without adding another visual box. */
+    .take2-scripture{
+        display:none;
+    }
+
+    /* Buttons remain outside the floating text panel and sit
+       lower over the dish/background. */
+    .take2-footer{
+        position:absolute;
+        bottom:clamp(7%,9cqw,13%);
+        transform:translateX(-50%);
+        z-index:3;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:clamp(7px,1.5cqw,14px);
+        width:max-content;
+        margin:0;
+        padding:0;
+        background:transparent;
+    }
+
+    .take2-footer .pill-button{
+        padding:clamp(6px,1.15cqw,9px)
+                 clamp(11px,2.1cqw,21px);
+        font-size:clamp(.8rem,1.75cqw,.96rem);
+    }
+}
+
+/* Let the content progressively tighten as its own container narrows. */
+@container take2 (max-width:650px){
+    .take2-question-panel{
+        max-width:86cqw;
+    }
+
+    .take2-question-panel h3{
+        font-size:clamp(.86rem,2.7cqw,1.1rem);
+    }
+
+    .take2-invite{
+        font-size:clamp(.73rem,1.95cqw,.88rem);
+    }
+}
+
+@container take2 (max-width:500px){
+    .take2-question-panel{
+        max-width:90cqw;
+    }
+
+    .take2-footer{
+        gap:clamp(6px,1.5cqw,10px);
+    }
+}
+
+
+/*=====================================================
+  TAKE 2 — DECOUPLE THE PILLS FROM THE TEXT PANEL
+  The question panel is allowed to stay visually on the
+  right, but it no longer establishes the positioning
+  context for the footer.  The footer therefore anchors
+  to .take2-feature itself.
+=====================================================*/
+
+@media (max-width:900px){
+
+    .take2-question-panel{
+        position:static;
+        top:auto;
+        left:auto;
+        /* transform:none; */
+
+        transform:translateY(110%);
+
+        width:50%;
+        max-width:none;
+        margin-left:auto;
+        margin-right:0;
+        box-sizing:border-box;
+
+        /* The panel itself is the single floating text box. */
+        background:rgba(248,244,232,.52);
+        overflow:visible;
+        isolation:auto;
+    }
+
+    /* The old pseudo-element must not become a feature-sized
+       overlay now that the panel is no longer positioned. */
+    .take2-question-panel::before{
+        display:none;
+    }
+
+    /*
+      IMPORTANT:
+      Because .take2-question-panel is now static, this
+      absolute footer looks for .take2-feature — its nearest
+      positioned ancestor — instead of the text panel.
+    */
+    .take2-footer{
+        position:absolute;
+        left:20%;
+        right:auto;
+        bottom:clamp(7%,9cqw,13%);
+        top:auto;
+        transform:translateY(380%);
+
+        z-index:3;
+        width:max-content;
+        margin:0;
+        padding:0;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:clamp(7px,1.5cqw,14px);
+        background:transparent;
+    }
 }

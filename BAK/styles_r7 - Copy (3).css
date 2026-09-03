@@ -1004,6 +1004,213 @@ body.dyslexia-font li{
     text-align:center;
 }
 
+/*=====================================================
+  Take 2 — Desktop question feature
+  Tree of Life background
+=====================================================*/
+@media (min-width:901px){
+
+    .take2-feature{
+        display:block;
+        position:relative;
+        width:100%;
+        min-height:520px;
+        margin:0 0 18px;
+        padding:0;
+        background-image:url("images/TreeOfLife_2.png");
+        background-repeat:no-repeat;
+        background-position:center center;
+        background-size:cover;
+        border-radius:18px;
+        box-shadow:0 6px 18px rgba(0,0,0,.08);
+        overflow:hidden;
+    }
+
+    .take2-header-image{
+        display:none;
+    }
+
+    .take2-question-panel{
+        position:relative;
+        width:52%;
+        min-height:520px;
+        margin-left:auto;
+        box-sizing:border-box;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        padding:42px 48px 34px;
+        background:transparent;
+        isolation:isolate;
+        overflow:hidden;
+    }
+
+    .take2-question-panel::before{
+        content:"";
+        position:absolute;
+        inset:0;
+        z-index:-1;
+        background:linear-gradient(90deg,
+            rgba(248,244,232,0) 0%,
+            rgba(248,244,232,.16) 18%,
+            rgba(248,244,232,.28) 48%,
+            rgba(248,244,232,.30) 100%
+        );
+    }
+
+    .take2-question-panel h3{
+        margin:0 0 12px;
+        color:#222;
+        font-size:2rem;
+        line-height:1.15;
+    }
+
+    .take2-invite{
+        max-width:620px;
+        margin:0 0 16px;
+        font-size:1.18rem;
+        line-height:1.55;
+        color:#222;
+        font-weight:700;
+    }
+
+    .take2-scripture{
+        max-width:610px;
+        margin:0 0 18px;
+        font-family:"Cormorant Garamond",serif;
+        font-size:1.28rem;
+        font-style:italic;
+        line-height:1.35;
+        color:#111;
+        font-weight:800;
+      
+    }
+
+    .take2-scripture span{
+        display:block;
+        margin-top:5px;
+        font-size:.95rem;
+        font-style:normal;
+    }
+
+    .take2-footer{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:18px;
+        margin-top:4px;
+    }
+
+    .take2-footer .pill-button{
+        border:1px solid #C6B17A;
+        border-radius:999px;
+        padding:10px 26px;
+        background:linear-gradient(#FFF9E8,#E8D39A);
+        box-shadow:0 3px 10px rgba(0,0,0,.16);
+        cursor:pointer;
+    }
+
+    .take2-footer .pill-button a,
+    .take2-footer .pill-button{
+        color:#222;
+        font-weight:800;
+        text-decoration:none;
+    }
+
+    .take2-footer .pill-button:last-child{
+        background:linear-gradient(#F4F1DE,#D7E0C0);
+        opacity:1;
+    }
+
+    .take2-footer .icon{
+        margin-right:5px;
+    }
+}
+
+@media (max-width:900px){
+    .take2-feature{
+        display:block;
+        position:relative;
+        width:100%;
+        background-image:url("images/TreeOfLife_2.png");
+        background-repeat:no-repeat;
+        background-position:center center;
+        background-size:cover;
+        border-radius:18px;
+        overflow:hidden;
+    }
+
+    .take2-header-image{
+        width:100%;
+    }
+
+    .take2-header-image img{
+        width:100%;
+        display:block;
+        border-radius:12px;
+    }
+
+    .take2-question-panel{
+        padding:18px 10px 4px;
+        text-align:left;
+    }
+
+    .take2-question-panel h3{
+        text-align:center;
+    }
+
+    .take2-invite,
+    .take2-scripture{
+        margin-left:0;
+        margin-right:0;
+    }
+
+    .take2-footer{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:12px;
+        margin:14px 0 10px;
+    }
+
+    .take2-footer .pill-button{
+        border:1px solid #C6B17A;
+        border-radius:999px;
+        padding:8px 18px;
+        background:linear-gradient(#FFF9E8,#E8D39A);
+        box-shadow:0 3px 10px rgba(0,0,0,.16);
+        cursor:pointer;
+        color:#222;
+        font-weight:800;
+        text-decoration:none;
+    }
+
+    .take2-footer .pill-button a{
+        color:#222;
+        font-weight:800;
+        text-decoration:none;
+    }
+
+    .take2-footer .pill-button:last-child{
+        background:linear-gradient(#F4F1DE,#D7E0C0);
+        color:#999;
+        opacity:1;
+        cursor:default;
+        pointer-events:none;
+    }
+
+    .take2-footer .pill-button:last-child,
+    .take2-footer .pill-button:last-child .icon{
+        color:#999;
+    }
+
+    .take2-footer .icon{
+        margin-right:5px;
+    }
+}
+
 /* Take 2 — horizontal carousel matching the Momma card pattern. */
 .take2-list{
     display:flex;
@@ -2019,12 +2226,12 @@ footer p{
 }
 
 .take2-card{
-    flex:0 0 95%;
+    flex:0 0 340px;
     min-height:auto;
 }
 
 .take2-arrow{
-    display:none;
+    display:block;
 }
 
 }
@@ -2041,3 +2248,150 @@ footer p{
 .guided-image img {
     pointer-events: none !important;
 }
+
+/* Take 2 — Proverbs 3:18 tooltip */
+.take2-proverb-reference{position:relative;display:inline-block;cursor:help;text-decoration:underline dotted;text-underline-offset:3px;}
+.take2-proverb-reference::after{content:attr(data-tooltip);position:absolute;left:50%;bottom:calc(100% + 12px);transform:translateX(-50%);width:min(360px,80vw);padding:14px 16px;background:#FFFBE9;border:1px solid #8B6F47;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.20);color:#5B4A1F;font-family:Inter,sans-serif;font-size:.9rem;font-style:normal;font-weight:600;line-height:1.5;text-align:left;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease;z-index:9999;}
+.take2-proverb-reference:hover::after,.take2-proverb-reference:focus::after{opacity:1;visibility:visible;}
+
+/*=====================================================
+  TAKE 2 — NARROW REFINEMENT
+  Floating text panel + proportional background.
+=====================================================*/
+
+@media (max-width:900px){
+
+    .take2-feature{
+        container-type:inline-size;
+        container-name:take2;
+        position:relative;
+        display:block;
+        width:100%;
+        aspect-ratio:16 / 9;
+        background-image:url("images/TreeOfLife_2.png");
+        background-repeat:no-repeat;
+        background-position:center center;
+        background-size:100% 100%;
+        border-radius:18px;
+        overflow:hidden;
+    }
+
+    /* A single floating panel sized to the text, not the whole image. */
+    .take2-question-panel{
+        position:absolute;
+        z-index:2;
+        top:clamp(10px,2.5cqw,24px);
+        left:50%;
+        transform:translateX(-50%);
+        width:fit-content;
+        max-width:88cqw;
+        box-sizing:border-box;
+        margin:0;
+        padding:clamp(8px,1.6cqw,16px)
+                 clamp(14px,2.5cqw,24px);
+        text-align:center;
+        background:rgba(248,244,232,.52);
+        border-radius:0;
+        box-shadow:none;
+        isolation:auto;
+        overflow:visible;
+    }
+
+    .take2-question-panel h3{
+        margin:0 0 clamp(3px,.7cqw,7px);
+        padding:0;
+        background:transparent;
+        color:#222;
+        font-size:clamp(.96rem,2.7cqw,1.28rem);
+        line-height:1.15;
+        text-align:center;
+    }
+
+    /* Keep only the shorter message at this width. */
+    .take2-invite{
+        width:100%;
+        max-width:none;
+        margin:0 auto;
+        padding:0;
+        background:transparent;
+        color:#222;
+        font-size:0;
+        line-height:1.35;
+        font-weight:700;
+        text-align:center;
+        box-sizing:border-box;
+    }
+
+    .take2-invite::after{
+        content:"Send us your question. We’ll do our best to help you find clear, science-based answers — with a Biblical perspective.";
+        display:block;
+        width:100%;
+        font-size:clamp(.78rem,1.95cqw,.96rem);
+        line-height:1.32;
+    }
+
+    .take2-scripture{
+        display:none;
+    }
+
+    /* Pills stay outside the floating box and sit over the dish area. */
+    .take2-footer{
+        position:absolute;
+        z-index:3;
+        left:50%;
+        transform:translateX(-50%);
+        bottom:clamp(9%,11cqw,15%);
+        width:max-content;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:clamp(8px,1.6cqw,16px);
+        margin:0;
+        padding:0;
+        background:transparent;
+    }
+
+    .take2-footer .pill-button{
+        padding:clamp(6px,1.2cqw,9px)
+                 clamp(11px,2.2cqw,22px);
+        font-size:clamp(.84rem,1.8cqw,.98rem);
+    }
+}
+
+/* As the component gets narrower, the floating panel gets proportionally
+   narrower rather than taking over the entire background. */
+@container take2 (max-width:650px){
+    .take2-question-panel{
+        width:fit-content;
+        max-width:90cqw;
+    }
+
+    .take2-question-panel h3{
+        font-size:clamp(.92rem,2.9cqw,1.14rem);
+    }
+
+    .take2-invite::after{
+        font-size:clamp(.76rem,2.05cqw,.90rem);
+    }
+}
+
+@container take2 (max-width:500px){
+    .take2-question-panel{
+        width:fit-content;
+        max-width:92cqw;
+        top:clamp(7px,2cqw,12px);
+    }
+
+    .take2-question-panel h3{
+        font-size:clamp(.88rem,3.1cqw,1.04rem);
+    }
+
+    .take2-invite::after{
+        font-size:clamp(.74rem,2.25cqw,.86rem);
+    }
+
+    .take2-footer{
+        gap:clamp(6px,1.8cqw,10px);
+    }
+}
+

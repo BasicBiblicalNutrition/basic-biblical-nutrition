@@ -74,70 +74,419 @@ window.onload = () => {
   Version 0.1
 =====================================================*/
 
-const heroImages = document.querySelectorAll(".hero-image");
-
+let heroImages = [];
 let currentHero = 0;
+let heroTimer;
 
-setInterval(() => {
+async function initializeHero() {
 
-    heroImages[currentHero].classList.remove("active");
+    const response = await fetch("xml/hero.xml");
+    const xmlText = await response.text();
 
-    currentHero++;
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlText, "application/xml");
 
-    if (currentHero >= heroImages.length) {
-        currentHero = 0;
+    const slides = xml.querySelectorAll("slide");
+
+    const imageContainer = document.getElementById("hero-images");
+    const scripture = document.getElementById("hero-scripture");
+    const reference = document.getElementById("scripture-reference");
+
+    if (!imageContainer || slides.length === 0) return;
+
+    slides.forEach((slide, index) => {
+
+        const image = document.createElement("img");
+
+        image.className = "hero-image";
+        if (index === 0) {
+            image.classList.add("active");
+        }
+
+        image.src = slide.querySelector("image").textContent;
+        image.alt = slide.querySelector("alt").textContent;
+
+        imageContainer.appendChild(image);
+    });
+
+    heroImages = document.querySelectorAll(".hero-image");
+
+    const firstScripture = slides[0].querySelector("scripture");
+
+    if (firstScripture) {
+        scripture.textContent =
+            `"${firstScripture.querySelector("text").textContent}"`;
+
+        reference.textContent =
+            firstScripture.querySelector("reference").textContent;
     }
 
-    heroImages[currentHero].classList.add("active");
+    heroTimer = setInterval(() => {
 
-}, 12000);      // change every 12 seconds
+        heroImages[currentHero].classList.remove("active");
 
+        currentHero++;
 
+        if (currentHero >= heroImages.length) {
+            currentHero = 0;
+        }
 
+        heroImages[currentHero].classList.add("active");
 
-/* 04 - CAROUSEL */
+    }, 12000);
+}   
 
-const track = document.querySelector('.feature-carousel');
-const prevBtn = document.querySelector('.carousel-arrow.left');
-const nextBtn = document.querySelector('.carousel-arrow.right');
+async function initializeTake2() {
 
-if (track && prevBtn && nextBtn) {
+    const response = await fetch("xml/take2.xml");
+    const xmlText = await response.text();
 
-    const scrollAmount = track.clientWidth * 0.92;
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlText, "application/xml");
 
-  function updateArrows() {
+    const articles = xml.querySelectorAll("article");
+    const list = document.getElementById("take2-content");
 
-    prevBtn.disabled = track.scrollLeft <= 5;
+    if (!list || articles.length === 0) return;
 
-    nextBtn.disabled =
-        track.scrollLeft + track.clientWidth >= track.scrollWidth - 5;
+    articles.forEach(article => {
 
-  }
+        const card = document.createElement("article");
+        card.className = "take2-card";
 
-  prevBtn.addEventListener('click', () => {
-    track.scrollBy({
-        left: -scrollAmount,
-        behavior: 'smooth'
+        card.innerHTML = `
+            <div class="take2-card-content">
+                
+                 <h3 class="take2-card-title ${article.querySelector("title").textContent.length > 34 ? "long-title" : ""}">
+ 
+                 <a href="${article.querySelector("pdf").textContent.trim()}"
+                        target="_blank"
+                        class="take2-card-link">
+                        ${article.querySelector("title").textContent}
+                        <span class="icon">🔗</span>
+                    </a>
+                </h3>
+        
+
+                <p class="take2-card-date">
+                    ${article.querySelector("date").textContent}
+                </p>
+
+                <p class="take2-card-summary">
+                    ${article.querySelector("summary").textContent}
+                </p>
+
+            </div>
+
+            <div class="take2-card-image">
+                <img src="${article.querySelector("image").textContent}"
+                     alt="${article.querySelector("alt").textContent}">
+            </div>
+        `;
+
+        list.appendChild(card);
     });
+}
 
-    setTimeout(updateArrows, 350);
-  });
+async function initializeFeatureCarousel() {
 
-  nextBtn.addEventListener('click', () => {
-    track.scrollBy({
-        left: scrollAmount,
-        behavior: 'smooth'
+    const response = await fetch("xml/feature.xml");
+    const xmlText = await response.text();
+
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(xmlText, "application/xml");
+
+    const articles = xml.querySelectorAll("article");
+    const carousel = document.querySelector(".feature-carousel");
+
+    if (!carousel || articles.length === 0) return;
+
+    carousel.innerHTML = "";
+
+    articles.forEach(article => {
+
+        const card = document.createElement("article");
+
+        const isComingSoon =
+                  article.querySelector("date").textContent.trim() === "Coming Soon";
+
+        card.className = `feature-card${isComingSoon ? " coming-soon" : ""}`;
+
+        const pdfFilename =
+            article.querySelector("pdf").textContent.trim();
+
+       const readMore = pdfFilename
+            ? `<a href="${pdfFilename}" target="_blank" class="read-more">Read More</a>`
+            : "";
+        
+        card.innerHTML = `
+            
+            <img src="${article.querySelector("image").textContent}"
+                 alt="${article.querySelector("alt").textContent}"
+                 class="feature-image">
+
+            <p class="feature-category">
+                ${article.querySelector("category").textContent}
+            </p>
+
+            <h3>
+                ${article.querySelector("title").textContent}
+            </h3>
+
+            <p class="feature-meta">
+                ${article.querySelector("date").textContent}
+                •
+                ${article.querySelector("author").textContent}
+            </p>
+
+            <p class="feature-summary">
+                ${article.querySelector("summary").textContent}
+            </p>
+
+            ${readMore}
+        `;
+
+        carousel.appendChild(card);
     });
-
-    setTimeout(updateArrows, 350);
-  });
-
-  track.addEventListener('scroll', updateArrows);
-  window.addEventListener('resize', updateArrows);
-  updateArrows();
-
 }
 
 
 
+
+/*=====================================================
+  Reusable Carousel
+=====================================================*/
+
+function setupCarousel(trackSel, prevSel, nextSel, direction = "horizontal") {
+
+    const track = document.querySelector(trackSel);
+    const prevBtn = document.querySelector(prevSel);
+    const nextBtn = document.querySelector(nextSel);
+
+    if (!track || !prevBtn || !nextBtn) return;
+
+    const scrollAmount =
+        direction === "horizontal"
+            ? track.clientWidth * 0.92
+            : track.clientHeight * 0.92;
+
+    function updateArrows() {
+
+        if (direction === "horizontal") {
+
+            prevBtn.disabled = track.scrollLeft <= 5;
+
+            nextBtn.disabled =
+                track.scrollLeft + track.clientWidth >= track.scrollWidth - 5;
+
+        } else {
+
+            prevBtn.disabled = track.scrollTop <= 5;
+
+            nextBtn.disabled =
+                track.scrollTop + track.clientHeight >= track.scrollHeight - 5;
+        }
+    }
+
+    prevBtn.addEventListener("click", () => {
+
+        track.scrollBy(
+            direction === "horizontal"
+                ? { left: -scrollAmount, behavior: "smooth" }
+                : { top: -scrollAmount, behavior: "smooth" }
+        );
+
+        setTimeout(updateArrows, 350);
+
+    });
+
+    nextBtn.addEventListener("click", () => {
+
+        track.scrollBy(
+            direction === "horizontal"
+                ? { left: scrollAmount, behavior: "smooth" }
+                : { top: scrollAmount, behavior: "smooth" }
+        );
+
+        setTimeout(updateArrows, 350);
+
+    });
+
+    track.addEventListener("scroll", updateArrows);
+    window.addEventListener("resize", updateArrows);
+
+    updateArrows();
+}
+
+/* My Momma carousel */
+
+function initializeCarousels() {
+    setupCarousel(
+        ".feature-carousel",
+        ".carousel-arrow.left",
+        ".carousel-arrow.right",
+        "horizontal"
+    );
+
+    /* Take 2 carousel */
+
+    setupCarousel(
+        ".take2-list",
+        ".take2-arrow.up",
+        ".take2-arrow.down",
+        "vertical"
+    );
+}
+
+/*=====================================================
+  COMPONENT
+  Accessibility
+=====================================================*/
+
+function toggleLargeText() {
+
+    document.body.classList.toggle("large-text");
+
+    const icon = document.getElementById("textSizeIcon");
+    const label = document.getElementById("textSizeLabel");
+
+    if (document.body.classList.contains("large-text")) {
+
+        icon.textContent = "A-";
+        label.textContent = "Normal Text Size";
+
+    } else {
+
+        icon.textContent = "A+";
+        label.textContent = "Increase Text Size";
+
+    }
+
+}
+
+/*-----------------------------------------------------
+  High Contrast
+-----------------------------------------------------*/
+
+function toggleHighContrast() {
+
+    document.body.classList.toggle("high-contrast");
+
+    const isHighContrast =
+        document.body.classList.contains("high-contrast");
+
+    localStorage.setItem("highContrast", isHighContrast);
+
+    const icon = document.getElementById("contrastIcon");
+    const label = document.getElementById("contrastLabel");
+
+    if (isHighContrast) {
+
+        icon.textContent = "◑";
+        label.textContent = "Normal Contrast";
+
+    } else {
+
+        icon.textContent = "◐";
+        label.textContent = "High Contrast";
+    }
+}
+
+function restoreHighContrast() {
+
+    if (localStorage.getItem("highContrast") === "true") {
+
+        document.body.classList.add("high-contrast");
+
+        const icon = document.getElementById("contrastIcon");
+        const label = document.getElementById("contrastLabel");
+
+        if (icon) icon.textContent = "◑";
+        if (label) label.textContent = "Normal Contrast";
+    }
+}
+
+restoreHighContrast();
+
+
+
+
+/*-----------------------------------------------------
+  start/stop Motion
+-----------------------------------------------------*/
+
+function toggleMotion() {
+
+    const label = document.getElementById("motionLabel");
+
+    if (document.body.classList.contains("stop-motion")) {
+
+        document.body.classList.remove("stop-motion");
+
+        heroTimer = setInterval(() => {
+
+            heroImages[currentHero].classList.remove("active");
+
+            currentHero++;
+
+            if (currentHero >= heroImages.length) {
+                currentHero = 0;
+            }
+
+            heroImages[currentHero].classList.add("active");
+
+        }, 12000);
+
+        label.textContent = "Stop Motion";
+
+    } else {
+
+        document.body.classList.add("stop-motion");
+
+        clearInterval(heroTimer);
+
+        label.textContent = "Start Motion";
+
+    }
+
+}
+
+
+/*-----------------------------------------------------
+  Dyslexia-Friendly Font
+-----------------------------------------------------*/
+
+function toggleDyslexiaFont() {
+
+    document.body.classList.toggle("dyslexia-font");
+
+    const label = document.getElementById("dyslexiaLabel");
+
+    if (document.body.classList.contains("dyslexia-font")) {
+
+        label.textContent = "Normal Font";
+
+    } else {
+
+        label.textContent = "Dyslexia-Friendly Font";
+
+    }
+
+}
+
+function showAccessibilityStatement() {
+    const modal = document.getElementById("accessibility-modal");
+
+    if (modal) {
+        modal.hidden = false;
+    }
+}
+
+function closeAccessibilityStatement() {
+    const modal = document.getElementById("accessibility-modal");
+
+    if (modal) {
+        modal.hidden = true;
+    }
+}
 
