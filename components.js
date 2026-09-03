@@ -41,7 +41,8 @@ async function initializePage() {
     const bannerNav = document.querySelector(".banner-nav");
 
     if (menuButton && bannerNav) {
-        menuButton.addEventListener("click", () => {
+        menuButton.addEventListener("click", (event) => {
+            event.stopPropagation();
             bannerNav.classList.toggle("mobile-open");
             menuButton.setAttribute(
                 "aria-label",
@@ -50,12 +51,23 @@ async function initializePage() {
                     : "Open Navigation"
             );
         });
+
+        bannerNav.addEventListener("click", (event) => {
+            event.stopPropagation();
+        });
+
+        document.addEventListener("click", () => {
+            if (bannerNav.classList.contains("mobile-open")) {
+                bannerNav.classList.remove("mobile-open");
+                menuButton.setAttribute("aria-label", "Open Navigation");
+            }
+        });
     }
 
     await loadComponent("hero", "hero.html");
 
   
-    await loadComponent("home-overview", "home_overview.html");
+    /* await loadComponent("home-overview", "home_overview.html"); */
     await initializeHomeOverview();
 
     await loadComponent("take2-container", "home_take2.html");

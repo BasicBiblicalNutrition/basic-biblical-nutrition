@@ -154,20 +154,19 @@ async function initializeTake2() {
         const card = document.createElement("article");
         card.className = "take2-card";
 
-        const pdfFilename = article.querySelector("pdf").textContent.trim();
-
         card.innerHTML = `
-            <div class="take2-card-image">
-                <img src="${article.querySelector("image").textContent}"
-                     alt="${article.querySelector("alt").textContent}">
-            </div>
-
             <div class="take2-card-content">
-                <h3 class="take2-card-title ${article.querySelector("title").textContent.length > 34 ? "long-title" : ""}">
-                    <a href="${pdfFilename}" target="_blank" class="take2-card-link">
+                
+                 <h3 class="take2-card-title ${article.querySelector("title").textContent.length > 34 ? "long-title" : ""}">
+ 
+                 <a href="${article.querySelector("pdf").textContent.trim()}"
+                        target="_blank"
+                        class="take2-card-link">
                         ${article.querySelector("title").textContent}
+                        <span class="icon">🔗</span>
                     </a>
                 </h3>
+        
 
                 <p class="take2-card-date">
                     ${article.querySelector("date").textContent}
@@ -177,7 +176,11 @@ async function initializeTake2() {
                     ${article.querySelector("summary").textContent}
                 </p>
 
-                ${pdfFilename ? `<a href="${pdfFilename}" target="_blank" class="take2-card-read-more">Read More</a>` : ""}
+            </div>
+
+            <div class="take2-card-image">
+                <img src="${article.querySelector("image").textContent}"
+                     alt="${article.querySelector("alt").textContent}">
             </div>
         `;
 
@@ -331,7 +334,7 @@ function initializeCarousels() {
         ".take2-list",
         ".take2-arrow.up",
         ".take2-arrow.down",
-        "horizontal"
+        "vertical"
     );
 }
 

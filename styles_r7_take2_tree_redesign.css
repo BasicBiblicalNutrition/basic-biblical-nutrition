@@ -1011,15 +1011,16 @@ body.dyslexia-font li{
 @media (min-width:901px){
 
     .take2-feature{
-        display:block;
-        position:relative;
-        width:100%;
-        min-height:520px;
+        display:grid;
+        grid-template-columns:300px minmax(0,1fr);
+        gap:24px;
+        align-items:center;
+        min-height:360px;
         margin:0 0 18px;
-        padding:0;
-        background-image:url("images/TreeOfLife_2.png");
+        padding:24px 28px;
+        background-image:url("images/TreeOfLife.png");
         background-repeat:no-repeat;
-        background-position:center center;
+        background-position:center;
         background-size:cover;
         border-radius:18px;
         box-shadow:0 6px 18px rgba(0,0,0,.08);
@@ -1027,70 +1028,64 @@ body.dyslexia-font li{
     }
 
     .take2-header-image{
-        display:none;
+        width:285px;
+        height:225px;
+        flex:none;
+        align-self:end;
+        margin-bottom:4px;
+    }
+
+    .take2-header-image img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center;
+        border-radius:16px;
+        box-shadow:0 5px 14px rgba(0,0,0,.18);
     }
 
     .take2-question-panel{
         position:relative;
-        width:52%;
-        min-height:520px;
-        margin-left:auto;
-        box-sizing:border-box;
+        min-height:300px;
         display:flex;
         flex-direction:column;
         justify-content:center;
         align-items:center;
         text-align:center;
-        padding:42px 48px 34px;
-        background:transparent;
-        isolation:isolate;
+        padding:24px 34px;
         overflow:hidden;
-    }
-
-    .take2-question-panel::before{
-        content:"";
-        position:absolute;
-        inset:0;
-        z-index:-1;
-        background:linear-gradient(90deg,
-            rgba(248,244,232,0) 0%,
-            rgba(248,244,232,.16) 18%,
-            rgba(248,244,232,.28) 48%,
-            rgba(248,244,232,.30) 100%
-        );
+        background:rgba(248,244,232,.32);
+        border-radius:16px;
     }
 
     .take2-question-panel h3{
-        margin:0 0 12px;
-        color:#222;
+        margin:0 0 8px;
+        color:#18351F;
         font-size:2rem;
         line-height:1.15;
     }
 
     .take2-invite{
-        max-width:620px;
-        margin:0 0 16px;
-        font-size:1.18rem;
+        max-width:650px;
+        margin:0 0 14px;
+        font-size:1.08rem;
         line-height:1.55;
         color:#222;
-        font-weight:700;
     }
 
     .take2-scripture{
-        max-width:610px;
-        margin:0 0 18px;
+        max-width:650px;
+        margin:0 0 12px;
         font-family:"Cormorant Garamond",serif;
-        font-size:1.28rem;
+        font-size:1.18rem;
         font-style:italic;
         line-height:1.35;
-        color:#111;
-        font-weight:800;
-      
+        color:#3F321A;
     }
 
     .take2-scripture span{
         display:block;
-        margin-top:5px;
+        margin-top:4px;
         font-size:.95rem;
         font-style:normal;
     }
@@ -1100,7 +1095,7 @@ body.dyslexia-font li{
         justify-content:center;
         align-items:center;
         gap:18px;
-        margin-top:4px;
+        margin-top:8px;
     }
 
     .take2-footer .pill-button{
@@ -1114,8 +1109,8 @@ body.dyslexia-font li{
 
     .take2-footer .pill-button a,
     .take2-footer .pill-button{
-        color:#222;
-        font-weight:800;
+        color:#3F321A;
+        font-weight:700;
         text-decoration:none;
     }
 
@@ -1166,6 +1161,7 @@ body.dyslexia-font li{
         margin:14px 0 10px;
     }
 }
+
 
 /* Take 2 — horizontal carousel matching the Momma card pattern. */
 .take2-list{

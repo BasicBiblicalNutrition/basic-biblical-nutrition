@@ -14,7 +14,7 @@ Desktop  > 1024px
 */
 
 :root{
-  --bbn-bg:#f4f2ea;
+  --bbn-bg: #E6D4AE;
   --bbn-green:#6f8f72;
   --bbn-dark:#2c2c2c;
   --bbn-white:#ffffff;
@@ -24,8 +24,12 @@ body{
   margin:0;
   background:var(--bbn-bg);
   color:var(--bbn-dark);
-  font-family:Inter,sans-serif;
+  font-family:Inter, sans-serif;
+  font-size:18px;
+  line-height:1.7;
 }
+
+
 
 .container{
   max-width:1200px;
@@ -35,28 +39,19 @@ body{
 
 /* Tooltip */
 #bbnTooltip{
-
     display:none;
-
     position:absolute;
-
     max-width:320px;
-
     padding:16px;
-
     background:#fffbe9;
-
     border:1px solid #8b6f47;
-
     border-radius:8px;
-
     box-shadow:0 6px 18px rgba(0,0,0,.25);
-
     z-index:9999;
-
     font-size:.95rem;
-
     line-height:1.5;
+    color:#5B4A1F;
+    font-weight:600;  
 }
 
 
@@ -68,24 +63,37 @@ body{
 
 .banner-header{
     width:100%;
-    max-width:none;   /* 1400px;  */
+    max-width:1180px;
     height:290px;
-
     margin:0 auto;
 
-    background:url("images/Banner/bannerBackground_3.png") center center no-repeat;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size:cover;
+    position:relative;
+    z-index:1000;
+    overflow:visible;
 
     display:flex;
     align-items:center;
+
+}
+
+.banner-bg{
+    position:absolute;
+    inset:0;
+
+    width:100%;
+    height:100%;
+    object-fit:fill;
+
+    z-index:0;
 }
 
 .header-container{
     width:100%;
     max-width:1180px;   /* 1400px;  */
     margin:0 auto;
+
+    position:relative;
+    z-index:1;
 }
 
 .banner-overlay{
@@ -94,11 +102,11 @@ body{
     width:100%;
     max-width:1180px;   /* 1400px;  */
     margin:0 auto;
-   transform: translateY(10px);
+   transform: translateY(15px);
     display:flex;
     align-items:flex-start;
     justify-content:flex-start;
-    padding:0 40px;
+    padding:0 20px;
 }
 
 .banner-logo {
@@ -138,10 +146,11 @@ body{
 
 /* Tagline */
 .banner-brand p{
-    font-family:"Lato",sans-serif;
+    font-family:"Lato", sans-serif;
     font-size:1.25rem;
+    font-weight:600;
     color:#6b4d23;
-    margin-top:90px;
+    margin-top:60px;
 }
 
 .banner-divider{
@@ -152,19 +161,29 @@ body{
     margin-right:55px;
 }
 
+/*
 .banner-nav{
-
-    margin-left:60px;
-    align-items:center;
-    gap:32px;
-
-    white-space:nowrap;
-}
-
-.banner-nav{
+    flex:1;
+    margin-left:0;
     position:relative;
-    top:45px;      /* Move navigation up */
+    top: 92px;
+
+    display:flex;
+    justify-content:center;
 }
+*/
+.banner-nav{
+    flex:1;
+    margin-left:0;
+    position:static;
+    transform:translateY(92px);
+
+    display:flex;
+    justify-content:center;
+}
+
+
+
 
 .banner-nav ul{
     display:flex;
@@ -182,7 +201,7 @@ body{
 
 /* Navagation */
 .banner-nav a{
-    font-family:"Segoe UI", Arial, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
     font-size:1.15rem;
     font-weight:600;
     color:#222;
@@ -231,11 +250,23 @@ body{
     border-radius:4px;
 }
 
+.banner-header{
+    position:relative;
+    overflow:visible;
+}
+
+
+
+
+
 /* ---------- Accessibility Dropdown ---------- */
 
 .accessibility-menu{
     position:relative;
-    margin-left:40px;      /* Extra space after Contact */
+    right:30px;
+    top:-112px;
+    margin-left:0;
+ 
 }
 
 .accessibility-menu .dropdown-content{
@@ -323,7 +354,60 @@ body{
     flex-shrink:0;
 }
 
+/* Accessibility Statement Modal */
+.accessibility-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 80px 20px 20px;
+}
 
+.accessibility-modal[hidden] {
+    display: none;
+}
+
+.accessibility-modal-content {
+    position: relative;
+    width: min(600px, 90vw);
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 30px;
+    background: #f8f4e8;
+    border: 2px solid #6E7D32;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.accessibility-modal-content h2 {
+    margin-top: 0;
+    color: #000;
+}
+
+.accessibility-modal-content p {
+    color: #000;
+    line-height: 1.6;
+}
+
+.accessibility-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    color: #000;
+}
+
+.accessibility-modal-close:hover,
+.accessibility-modal-close:focus {
+    text-decoration: underline;
+}
 
 
 
@@ -338,31 +422,20 @@ body.large-text{
     font-size:1.15rem;
 }
 
+
 body.large-text p,
-body.large-text li,
-body.large-text a{
+body.large-text li{
     font-size:1.1em;
 }
 
-body.large-text h1{
-    font-size:3.2rem;
-}
-
-body.large-text h2{
-    font-size:2.3rem;
-}
-
-body.large-text h3{
-    font-size:1.6rem;
-}
 
 /*-----------------------------------------------------
   High Contrast
 -----------------------------------------------------*/
 
 body.high-contrast{
-    background:#000;
-    color:#fff;
+    background:#151515; 
+    color:#ccc;
 }
 
 body.high-contrast p,
@@ -372,27 +445,120 @@ body.high-contrast h2,
 body.high-contrast h3,
 body.high-contrast h4,
 body.high-contrast a{
-    color:#fff;
+    color:#ccc;
 }
 
-body.high-contrast .feature-card,
-body.high-contrast .take2-card,
+
+body.high-contrast .testimonial{
+    color:#151515;
+}
+
+
+body.high-contrast .banner-brand h1{
+    color:#5b6528;
+}
+
+body.high-contrast .banner-brand h2{
+    color:#5b3d18;
+}
+
+body.high-contrast .banner-brand p{
+    font-weight:700;
+    color:#ccc;    /*color:#5b3d18; */
+}
+
+body.high-contrast .accessibility-menu .dropdown-content a{
+    color:#111;
+}
+
+body.high-contrast .accessibility-modal-content {
+    background: #111;
+    color: #ccc;
+    border-color: #ccc;
+}
+
+body.high-contrast .accessibility-modal-content h2,
+body.high-contrast .accessibility-modal-content p,
+body.high-contrast .accessibility-modal-close {
+    color: #ccc;
+}
+
+
+body.high-contrast .feature-card{
+    background:#000;
+    border:2px solid #ccc;
+}
+
+
 body.high-contrast .guided-section,
 body.high-contrast .services-card{
-    background:#111;
-    border:2px solid #fff;
+    background:#ccc;
+    border:2px solid #ccc;
 }
+
+body.high-contrast .take2-card{
+    background:#111;
+    border:1px solid #ccc;
+}
+
+body.high-contrast .take2-list{
+    height: 430px;
+    border:2px solid #ccc;
+    box-shadow: 0 6px 14px rgba(255, 255, 255, 0.45);
+}
+
+body.high-contrast .take2-arrow.up{
+    top:-30px;
+}
+
+body.high-contrast .take2-arrow.down{
+    transform:rotate(90deg);
+    bottom:-96px;
+}
+
+body.high-contrast .take2-footer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;          /* space between buttons */
+    margin-top:96px;
+}
+
+
+
 
 body.high-contrast .overview-panel{
     background:#111;
-    border:2px solid #fff;
-    color:#fff;
+    border:1px solid #ccc;
+    color:#ccc;
 }
 
 body.high-contrast .overview-panel p,
 body.high-contrast .overview-panel h2,
 body.high-contrast .overview-panel a{
-    color:#fff;
+    color:#ccc;
+}
+
+body.high-contrast .take2-header-image img{
+    background:#ccc;
+}
+
+body.high-contrast .journey-overlay a,
+body.high-contrast .journey-content h2,
+body.high-contrast .journey-content p,
+body.high-contrast .journey_scripture p{
+    color:#000;
+}
+
+body.high-contrast .feature-card.coming-soon{
+    opacity: 0.25;
+}
+
+
+
+body.high-contrast .testimonial{
+
+  background:rgba(230,230,230,.9);
 }
 
 /*-----------------------------------------------------
@@ -410,6 +576,7 @@ body.reduce-motion *{
   Dyslexia-Friendly Font
 -----------------------------------------------------*/
 
+/*
 body.dyslexia-font{
     font-family: Arial, Verdana, Tahoma, sans-serif;
     letter-spacing: 0.06em;
@@ -421,7 +588,7 @@ body.dyslexia-font p,
 body.dyslexia-font li{
     max-width: 75ch;
 }
-
+*/
 
 
 
@@ -429,6 +596,37 @@ body.dyslexia-font li{
 
 .hero{
   text-align:center;
+  position:relative;
+  z-index:1;
+}
+
+.hero h1_a{
+    font-family:"Cormorant Garamond",serif;
+    font-size:4rem;
+    letter-spacing:8px;
+    color:#5b3d18;
+    margin:0;
+}
+
+.hero h1{
+    font-family: "Script MT", cursive;
+    font-size: 4rem;
+    font-weight: 400;
+    color: #7a5a12;
+    margin-top: 0;
+    margin-bottom: 12px;
+    line-height: 1.15;
+}
+
+/*     font-family: "Cormorant Garamond", serif;*/ 
+
+.hero h2{
+    font-family:"Cormorant Garamond",sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #7a5a12;
+    margin-top: 0;
+    margin-bottom: 12px;
 }
 
 .hero img{
@@ -436,6 +634,29 @@ body.dyslexia-font li{
   max-width:1180px;
   height:auto;
 }
+
+.hero-scripture{
+    margin-bottom: 2px;
+}
+
+.scripture-reference{
+    margin-top: 0;
+    margin-bottom: 24px;
+
+    position: relative;
+    top: -20px;           /* move it UP */
+
+    width: 100%;
+    max-width: 1180px;
+
+    text-align: right;
+    
+
+    padding-right: 445px;   /* fine tune */
+    font-size: 1.0rem;
+}
+
+
 
 /*=====================================================
   COMPONENT
@@ -496,6 +717,59 @@ body.dyslexia-font li{
   border-radius:30px;
 }
 
+
+.overview-panel h2,
+.guided-header h2,
+.about-tracey h2{
+    text-align:center;
+    margin:0;
+}
+
+/*
+.section-divider{
+    display:flex;
+    align-items:center;
+    gap:32px;
+
+    margin:6px 0 18px;
+}
+*/
+.section-divider {
+    display: flex;
+    align-items: center;
+    gap: 70px;
+    margin: 6px 0 18px;
+    background-image: url("images/oliveBranch_2.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80px 35px;
+    min-height: 35px;
+    /*background-size: 150px 45px;*/
+}
+
+
+
+.section-divider::before,
+.section-divider::after{
+    content:"";
+    height:2px;
+    flex:1;                     /* Stretch to fill */
+    border-top:2px solid #6E7D32;
+
+}
+
+.section-divider::before{
+    margin-right:20px;
+}
+
+.section-divider::after{
+    margin-left:20px;
+}
+
+
+
+
+
 /* GUIDED BY FAITH SECTION
    Flexbox replaces floats entirely */
 /*=====================================================
@@ -507,15 +781,27 @@ body.dyslexia-font li{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:40px;
-    margin:40px 0; /* 25px */
+    margin: -15px 0; /* 25px */
     align-items:start;
 }
+
+.overview-panel{
+    padding-left: 20px;
+}
+
 
 .overview-left{
     display:flex;
     flex-direction:column;
     gap:0px;
 }
+
+.overview-text{
+    padding-right: 12px;
+}
+
+
+
 
 /*=====================================================
   COMPONENT
@@ -575,23 +861,36 @@ body.dyslexia-font li{
 
 .guided-text{
     flex:1;
+     margin:0 10px;
 }
 
-.overview-panel p,
-.guided-text p{
-    margin-top:20;
-    text-align: left;
+
+.overview-panel p{
+    margin-top:20px;
+    text-align:left;
 }
+
+.guided-text p{
+    margin-top:0;
+    text-align:left;
+}
+
 
 /*=====================================================
   ABOUT TRACEY
 =====================================================*/
 
 .about-tracey{
-    background:#f6f1e5;
-    border-radius:18px;
+    background:  #E6D4AE;
+    border-radius:0px;
     padding:17px;
     margin-top:20px;
+}
+
+@media (min-width:901px){
+    .about-tracey{
+        margin-bottom:50px;
+    }
 }
 
 .about-tracey-content{
@@ -612,6 +911,7 @@ body.dyslexia-font li{
 
 .about-text{
     flex:1;
+    margin:0 10px;
 }
 
 .about-text h2{
@@ -622,6 +922,44 @@ body.dyslexia-font li{
 .about-text p{
     margin-bottom:14px;
 }
+
+.about-tracey h2{
+    text-align:center;
+    margin:0;
+}
+
+.second p:last-child {
+    margin-bottom: 0;
+}
+
+.about-tracey .section-divider{
+    width:100%;
+    margin:0 0 4px 0;   /* only 4px below the title */
+}
+
+.ai-note {
+    margin-top: 0px;
+    padding-top: 4px;
+}
+
+.ai-note .section-divider {
+    margin-bottom: 2px;
+}
+
+.ai-note h2 {
+    margin-bottom: 0px;
+}
+
+.ai-note h3 {
+    margin-top: 0px;
+}
+
+.ai-note p {
+    margin-bottom: 22px;
+    line-height: 1.6;
+}
+
+
 
 
 /*=====================================================
@@ -639,7 +977,7 @@ body.dyslexia-font li{
 .take2-carousel{
     position: relative;
     width:100%;
-    height:375px;     /* 360   405px same height as the scrolling area */
+    height:390px;     /* 375   405px same height as the scrolling area */
 }
 
 .take2-header-image{
@@ -653,13 +991,18 @@ body.dyslexia-font li{
 }
 
 .take2-caption{
-    margin:0 0 8px;
-    font-size:1.0rem;
-     color:#777; 
+    margin:0 0 20px;
+    font-size:1.2rem;
+     color:#555;   /* #777;   */
 }
 
 .take2-h2{
      color:#5B4A1F;   /* color:#556B2F */
+     font-weight:600;
+     
+    margin-top:16px;      /* space below image */
+    margin-bottom:6px;   /* space before divider */
+    text-align:center;
 }
 
 .take2-list{
@@ -668,7 +1011,7 @@ body.dyslexia-font li{
     flex-direction: column;
     gap: 8px;
 
-    height: 320px;      /* 320px  adjust as desired */
+    height: 355px;      /* 320px  adjust as desired */
     overflow-y: auto;
     scroll-behavior: smooth;
 
@@ -678,7 +1021,8 @@ body.dyslexia-font li{
     -ms-overflow-style: none;
 
     padding:10px 0;
-
+    border:2px solid #6E7D32;
+    box-shadow:  0 8px 18px rgba(0, 0, 0, 0.45);
 }
 
 .take2-list::-webkit-scrollbar {
@@ -691,14 +1035,19 @@ body.dyslexia-font li{
     align-items:flex-start;
     gap:18px;
     padding:10px 14px;
-    background:#ffffff;
+    background:rgba(255,255,255,.55);
     border-radius:18px;
     box-shadow:
         0 6px 18px rgba(0,0,0,.08);
     transition:
         transform .25s,
         box-shadow .25s;
+
+    margin-left: 8px;
+    margin-right: 8px;
 }
+
+
 
 .take2-card:hover{
     transform:translateY(-3px);
@@ -739,7 +1088,12 @@ body.dyslexia-font li{
     color:#4f4f4f;
 }
 
+
 .take2-card-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    white-space:nowrap;
     color:#556B2F;
     text-decoration:none;
     font-weight:600;
@@ -749,7 +1103,8 @@ body.dyslexia-font li{
     text-decoration:underline;
 }
 
-.take2-button{
+/*
+.pill-button{
     border-radius:999px;
     padding:12px 34px;
 
@@ -773,6 +1128,72 @@ background:
         inset 0 -4px 8px rgba(140,95,0,.18),
         0 5px 14px rgba(0,0,0,.16);
 }
+*/
+
+.pill-button{
+    display:inline-block;
+
+    padding:9px 22px;
+    min-width:145px;
+
+    font-size:.95rem;
+
+    text-align:center;
+    text-decoration:none;
+    font-weight:700;
+    color:  #000;  /* #5a4517;  */
+
+    border-radius:999px;
+
+    /* Translucent amber gradient */
+    background:linear-gradient(
+        to bottom,
+        rgba(255,250,225,.78) 0%,
+        rgba(244,229,180,.68) 50%,
+        rgba(218,190,115,.58) 100%
+    );
+
+    border:1px solid rgba(255,255,255,.45);
+
+    box-shadow:
+        inset 0 1px 2px rgba(255,255,255,.55),
+        inset 0 -1px 2px rgba(170,130,40,.20),
+        0 2px 5px rgba(0,0,0,.18);
+
+    transition:all .25s ease;
+}
+
+.pill-button:hover{
+    background:linear-gradient(
+        to bottom,
+        rgba(255,252,235,.90) 0%,
+        rgba(248,236,190,.78) 50%,
+        rgba(226,198,120,.68) 100%
+    );
+
+    box-shadow:
+        inset 0 1px 3px rgba(255,255,255,.70),
+        0 4px 10px rgba(0,0,0,.22);
+
+    transform:translateY(-2px);
+}
+
+
+
+
+
+.take2-footer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;          /* space between buttons */
+    margin-top:20px;
+}
+
+.take2-footer .pill-button:last-child{
+    opacity:0.45;
+}
+
 
 
 .overview-right{
@@ -844,15 +1265,13 @@ background:
 }
 
 .take2-arrow.up{
-    top:-22px;
+    top:-30px;
     transform:rotate(90deg);
-
-
 }
 
 .take2-arrow.down{
     transform:rotate(90deg);
-    bottom:0px;
+    bottom:-18px;
 }
 
 .take2-arrow.up:hover{
@@ -867,8 +1286,18 @@ background:
 /* CONTENT SECTIONS */
 
 .second{
-  padding:40px 20px;
-  clear:none;
+    padding:2px 2px;
+    clear:none;
+}
+
+.second h2{
+    margin-top:20;
+}
+
+
+.momma-title{
+    color:#7A5A1A;
+    text-align:center;
 }
 
 /* INSIGHT CARDS */
@@ -892,21 +1321,123 @@ background:
     border-radius: 18px 18px 0 0;
 }
 
+.feature-card.coming-soon .feature-image {
+    opacity: 0.55;
+}
 
 /* TESTIMONIALS */
 
 .testimonial{
-  background:white;
-  padding:25px;
+  padding:18px 24px;
   border-left:4px solid var(--bbn-green);
+  border-right:4px solid var(--bbn-green);
   margin-bottom:20px;
+  background:rgba(255,255,255,.55);
+
+  box-shadow:
+    0 12px 28px rgba(0,0,0,.25),
+    0 4px 10px rgba(0,0,0,.15);
+}
+
+
+
+/*  Journey Section */
+.journey-section{
+    max-width:1200px;
+   
+
+    margin: 60px auto 0px;
+
+    background-image:url("images/oliveTree_BG.png"); 
+    background-size: 100% auto;
+    background-repeat:no-repeat;
+    background-position:center top; /* was top */
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+ 
+    padding-bottom: 5px;   /* was much larger */
+
+    min-height: 660px;
+    position: relative;
+}
+
+
+.journey_scripture{
+     padding-top:20px;      /* move everything down */
+
+
+}
+
+.journey_scripture p{
+    margin-top:5px;
+    margin-bottom:0;
+    line-height:1.20;
+    text-align:right;
+
+}
+
+
+
+.journey-overlay{
+
+    top:230px;      /* move everything down */
+    right: 260px; 
+    position: absolute;
+
+}
+
+.journey-content{
+    display:inline-block;
+    width:540px; 
+    
+    padding:20px 28px;
+
+    background:rgba(248,244,232,.66);
+    border-radius:8px;
+
+    margin:20px auto 10px;
+    transform: translateX(170px);
+
+}
+
+.journey-content h2{
+    text-align:center;
+    margin:0;
+    padding-bottom:10px;
+  
+}
+
+.journey-content p{
+    margin-top:16px;
+    margin-bottom:0;
+    line-height:1.55;
+}
+
+.journey-buttons{
+    display:flex;
+    justify-content:center;
+    transform: translateX(125px);
+    gap:40px;
+    margin-top:10px;
+}
+
+.journey-buttons .pill-button:first-child,
+.journey-buttons .pill-button:last-child{
+    opacity:0.45;
 }
 
 /* FOOTER */
 
 footer{
   text-align:center;
-  padding:20px;
+  padding:2px;
+  line-height:1.2;
+}
+
+footer p{
+    margin:4px 0;
 }
 
 /* MOBILE */
@@ -968,12 +1499,13 @@ footer{
 =====================================================*/
 
 .feature-section{
-    overflow:hidden;
+    overflow:visible;
 }
 
 .section-intro{
-    max-width:700px;
-    margin-bottom:40px;
+    max-width:none;
+    margin:0 0 30px;
+    text-align:center;
     color:#555;
 }
 
@@ -999,6 +1531,7 @@ footer{
 
 .carousel-wrapper{
     position:relative;
+    overflow: visible;
 }
 
 .carousel-arrow{
@@ -1058,14 +1591,14 @@ footer{
 
     flex:0 0 340px;
 
-    background:#ffffff;
+    background:rgba(255,255,255,.55);
 
     border-radius:24px;
     overflow:hidden;
 
 /**    box-shadow:0 12px 30px rgba(0,0,0,.12);
 **/
-    background: #fff;
+    
     box-shadow:
         0 8px 24px rgba(0,0,0,.10),
         0 2px 6px rgba(0,0,0,.05);
@@ -1078,6 +1611,7 @@ footer{
     scroll-snap-align:start;
 }
 
+
 .feature-card:hover{
 
     transform:translateY(-8px);
@@ -1085,6 +1619,20 @@ footer{
     box-shadow:0 18px 40px rgba(0,0,0,.18);
 
 }
+
+/* Dimmed / Coming Soon card */
+.feature-card.dimmed{
+    opacity:.45;
+    filter:grayscale(.35);
+}
+
+.feature-card.dimmed:hover{
+    transform:none;
+    box-shadow:
+        0 8px 24px rgba(0,0,0,.10),
+        0 2px 6px rgba(0,0,0,.05);
+}
+
 
 /*----------------------------------*/
 
@@ -1195,6 +1743,8 @@ footer{
 
 }
 
+
+
 /*=====================================================
  Desktop
  Show 3 cards plus peek
@@ -1211,32 +1761,145 @@ footer{
 }
 
 /*=====================================================
- Tablet
+  Responsive Banner
+  Desktop navigation scales until hamburger mode
 =====================================================*/
 
-@media (max-width:1100px){
+@media (min-width:901px) and (max-width:1180px){
 
-.banner{
-    grid-template-columns:140px 1fr;
-    grid-template-rows:auto auto;
-    height:auto;
-    padding:25px;
+    .banner-header{
+        height:clamp(220px, 24.58vw, 290px);
+    }
+
+    .banner-overlay{
+        padding:0 clamp(12px, 1.7vw, 20px);
+    }
+
+    .banner-logo img{
+        width:clamp(90px, 11vw, 130px);
+    }
+
+    .banner-brand{
+        margin-left:clamp(6px, .85vw, 10px);
+    }
+
+    .banner-brand h1{
+        font-size:clamp(2rem, 3.1vw, 2.75rem);
+    }
+
+    .banner-brand h2{
+        font-size:clamp(1.8rem, 2.8vw, 2.5rem);
+        letter-spacing:clamp(4px, .7vw, 8px);
+    }
+
+    .banner-brand p{
+        margin-top:clamp(20px, 5vw, 60px);
+        font-size:clamp(1rem, 1.5vw, 1.25rem);
+    }
+
+    .banner-nav{
+        transform:translateY(clamp(65px, 7.8vw, 92px));
+    }
+
+    .banner-nav ul{
+        gap:clamp(14px, 2.4vw, 32px);
+    }
+
+    .banner-nav a{
+        font-size:clamp(.95rem, 1.25vw, 1.15rem);
+    }
 }
 
-.banner-nav{
-    grid-column:1 / -1;
-    justify-content:center;
-    margin-top:20px;
-}
+/*=====================================================
+  Hamburger Mode
+  Switch before the navigation gets cramped
+=====================================================*/
 
-.banner-brand h1{
-    font-size:3.2rem;
-}
+@media (max-width:900px){
 
-.banner-brand h2{
-    font-size:2.4rem;
-}
+    .banner-header{
+        height:150px;
+    }
 
+    .banner-overlay{
+        padding:8px 14px;
+    }
+
+    .banner-logo img{
+        width:72px;
+    }
+
+    .banner-brand{
+        margin-left:8px;
+    }
+
+    .banner-brand h1{
+        font-size:1.8rem;
+    }
+
+    .banner-brand h2{
+        font-size:1.45rem;
+        letter-spacing:3px;
+    }
+
+    .banner-brand p{
+        margin-top:18px;
+        font-size:1rem;
+    }
+
+    .banner-divider{
+        display:none;
+    }
+
+    .banner-nav{
+        display:none !important;
+    }
+
+    .bbn-menu-toggle{
+        display:flex !important;
+        position:absolute;
+        top:22px;
+        right:38px;
+        z-index:1000;
+        align-items:center;
+        justify-content:center;
+        width:46px;
+        height:46px;
+    }
+
+    .banner-nav.mobile-open{
+        display:flex !important;
+        position:absolute;
+        top:64px;
+        right:18px;
+        z-index:9999;
+        flex-direction:column;
+        align-items:stretch;
+        justify-content:flex-start;
+        transform:none;
+        width:220px;
+        padding:14px 18px;
+        background:#F8F3E7;
+        border:1px solid #C6B17A;
+        border-radius:12px;
+        box-shadow:0 8px 20px rgba(0,0,0,.18);
+    }
+
+    .banner-nav.mobile-open > ul{
+        flex-direction:column;
+        align-items:stretch;
+        gap:10px;
+        width:100%;
+    }
+
+    .banner-nav.mobile-open > ul + ul{
+        margin-top:10px;
+    }
+
+    .banner-nav.mobile-open .accessibility-menu{
+        right:auto;
+        top:auto;
+    }
 }
 
 /*=====================================================
@@ -1336,7 +1999,7 @@ footer{
 .bbn-menu-toggle{
     position: absolute;
     top: 20px;      /* adjust until it sits in the sun */
-    right: 15px;
+    right: 45px;
     z-index: 1000;
 
     display:flex;
@@ -1355,53 +2018,148 @@ footer{
     cursor:pointer;
 }
 
+.container{
+    padding:10px;
+}
+
 /*=====================================================
   Home Overview - Mobile
+  border:3px solid red;
+
+  .overview-left{
+    border:3px solid blue;
+}
 =====================================================*/
 
+
 .home-overview{
+    display:grid;
     grid-template-columns:1fr;
     gap:28px;
+    width:100%;
 }
+
+
 
 .overview-left,
 .take2{
     width:100%;
 }
 
+
 .guided-layout{
-    flex-direction:column;
+    display:block;
+}
+
+.guided-image{
+    width:220px;
+    max-width:100%;
+    margin:0 auto 20px;
+}
+
+.guided-text{
+    display:block;
+    width:90%;
+}
+
+
+
+.guided-header{
+    text-align:center;
+    width:90%;
+}
+
+.guided-text p{
+    text-align:left;
 }
 
 /* Guided by Faith image */
-.about-photo,
-.guided-image{
+
+.about-photo{
     width:220px;
     margin:0 auto;
 }
 
-.about-photo img,
-.guided-image img{
+.guided-image{
     width:100%;
-    height:auto;
-    display:block;
-    border-radius:16px;
+    max-width:220px;
+    margin:0 auto;
 }
 
 .about-tracey-content{
+    display:flex;
     flex-direction:column;
+    align-items:center;
     text-align:center;
+}
+
+
+
+.overview-panel{
+    display:block;
+    width:95%;
+    max-width:none;
+}
+
+
+.overview-panel h2,
+.overview-panel p{
+    width:100%;
+    margin-left:1px;
+}
+
+.overview-panel p{
+    padding-left: 1px;
 }
 
 
 .about-text{
     text-align:center;
+    width:90%;
 }
 
-.take2{
-    margin-top:10px;
+.take2-list{
+    display:flex;
+    flex-direction:row;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+
+    gap:16px;
+
+    height:auto;
+    padding:10px 0;
+
+    scrollbar-width:none;
+}
+
+.take2-list::-webkit-scrollbar{
+    display:none;
+}
+
+.take2-card{
+    flex:0 0 95%;
+}
+
+.take2-arrow{
+    display:none;
+}
+
 }
 
 
 
+
+
+.bbn-hotspot {
+    pointer-events: auto !important;
+    z-index: 9999 !important;
 }
+
+.guided-image img {
+    pointer-events: none !important;
+}
+
