@@ -610,14 +610,13 @@ body.dyslexia-font li{
 
 .hero h1{
     font-family: "Script MT", cursive;
-    font-size: 3.4rem;  /* 4rem */
+    font-size: 4rem;
     font-weight: 400;
     color: #7a5a12;
     margin-top: 0;
     margin-bottom: 12px;
     line-height: 1.15;
 }
-
 
 /*     font-family: "Cormorant Garamond", serif;*/ 
 
@@ -628,15 +627,6 @@ body.dyslexia-font li{
     color: #7a5a12;
     margin-top: 0;
     margin-bottom: 12px;
-}
-
-@media (max-width: 1100px) {
-    .hero h1{
-        font-size: 2rem;
-    }
-    .hero h2 {
-        font-size: 1rem;
-    }
 }
 
 .hero img{
@@ -1508,9 +1498,9 @@ body.dyslexia-font li{
 
 .journey-footer{
     position:absolute;
-     bottom:100px;
-    right:0;
-    width:52%;
+    bottom:100px;
+    right:135px;
+    width:auto;
 }
 
 .journey-buttons{
@@ -1537,7 +1527,7 @@ body.dyslexia-font li{
 
 .journey-buttons .pill-button:first-child,
 .journey-buttons .pill-button:last-child{
-    opacity:0.75;
+    opacity:0.45;
 }
 
 /* FOOTER */
