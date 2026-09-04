@@ -1014,6 +1014,53 @@ body.dyslexia-font li{
     text-align:center;
 }
 
+.take2-footer{
+    position:absolute;
+    right:7%;
+    top:88%;
+
+    transform:none;
+    z-index:3;
+    width:max-content;
+    margin:0;
+    padding:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:clamp(7px,1.5cqw,14px);
+    background:transparent;
+}
+
+
+
+    .take2-footer .pill-button{
+        border:1px solid #C6B17A;
+        border-radius:999px;
+        padding:10px 26px;
+        background:linear-gradient(#FFF9E8,#E8D39A);
+        box-shadow:0 3px 10px rgba(0,0,0,.16);
+        cursor:pointer;
+    }
+
+    .take2-footer .pill-button a,
+    .take2-footer .pill-button{
+        color:#222;
+        font-weight:800;
+        text-decoration:none;
+    }
+
+    .take2-footer .pill-button:last-child{
+        background:linear-gradient(#F4F1DE,#D7E0C0);
+        opacity:1;
+    }
+
+    .take2-footer .icon{
+        margin-right:5px;
+    }
+
+
+
+
 /*=====================================================
   Take 2 — Desktop question feature
   Tree of Life background
@@ -1024,7 +1071,7 @@ body.dyslexia-font li{
         display:block;
         position:relative;
         width:100%;
-        min-height:520px;
+        aspect-ratio: 16 / 9;
         margin:0 0 18px;
         padding:0;
         background-image:url("images/TreeOfLife_2.png");
@@ -1043,7 +1090,7 @@ body.dyslexia-font li{
     .take2-question-panel{
         position:relative;
         width:52%;
-        min-height:520px;
+        top:3%;
         margin-left:auto;
         box-sizing:border-box;
         display:flex;
@@ -1105,38 +1152,7 @@ body.dyslexia-font li{
         font-style:normal;
     }
 
-    .take2-footer{
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        gap:18px;
-        margin-top:4px;
-    }
 
-    .take2-footer .pill-button{
-        border:1px solid #C6B17A;
-        border-radius:999px;
-        padding:10px 26px;
-        background:linear-gradient(#FFF9E8,#E8D39A);
-        box-shadow:0 3px 10px rgba(0,0,0,.16);
-        cursor:pointer;
-    }
-
-    .take2-footer .pill-button a,
-    .take2-footer .pill-button{
-        color:#222;
-        font-weight:800;
-        text-decoration:none;
-    }
-
-    .take2-footer .pill-button:last-child{
-        background:linear-gradient(#F4F1DE,#D7E0C0);
-        opacity:1;
-    }
-
-    .take2-footer .icon{
-        margin-right:5px;
-    }
 }
 
 @media (max-width:900px){
@@ -1177,6 +1193,7 @@ body.dyslexia-font li{
         margin-right:0;
     }
 
+    /*
     .take2-footer{
         display:flex;
         justify-content:flex-end;
@@ -1219,6 +1236,8 @@ body.dyslexia-font li{
     .take2-footer .icon{
         margin-right:5px;
     }
+*/
+
 }
 
 /* Take 2 — horizontal carousel matching the Momma card pattern. */
@@ -1454,7 +1473,8 @@ body.dyslexia-font li{
  
     padding-bottom: 5px;   /* was much larger */
 
-    min-height: 660px;
+    /* min-height: 660px; */
+    aspect-ratio:1316 / 657;
     position: relative;
 }
 
@@ -1475,22 +1495,23 @@ body.dyslexia-font li{
 
 .journey-overlay{
     position:absolute;
-    top:100px;
-    width:52%;
+    top:15%;
+    width:58%;
+    right: 15%;
 }
 
 .journey-content{
-    display:inline-block;
-    width:540px; 
-    
+    display:block;
+    width:100%;
+    box-sizing:border-box;
+
     padding:20px 28px;
 
     background:rgba(248,244,232,.66);
     border-radius:8px;
 
-    margin:20px auto 10px;
-    transform: translateX(170px);
-
+    margin:20px 0 10px;
+    transform:translateX(14.2%);
 }
 
 .journey-content h2{
@@ -1508,9 +1529,10 @@ body.dyslexia-font li{
 
 .journey-footer{
     position:absolute;
-     bottom:100px;
+    bottom:5%;
     right:0;
     width:52%;
+
 }
 
 .journey-buttons{
@@ -1535,8 +1557,7 @@ body.dyslexia-font li{
 }
 
 
-.journey-buttons .pill-button:first-child,
-.journey-buttons .pill-button:last-child{
+.journey-buttons .pill-button:first-child{
     opacity:0.75;
 }
 
@@ -2362,34 +2383,38 @@ footer p{
 
     /* If the existing markup is plain text, hide the opening
        sentence without adding another visual box. */
+
+    .journey-overlay{
+        top:1px;
+        width:75%;
+    }
     .journey_scripture,
+    .journey-content .section-divider,
        .take2-scripture{
         display:none;
     }
 
-    /* Buttons remain outside the floating text panel and sit
-       lower over the dish/background. */
-    .take2-footer{
-        position:absolute;
-        bottom:clamp(7%,9cqw,13%);
-        transform:translateX(-50%);
-        z-index:3;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:clamp(7px,1.5cqw,14px);
-        width:max-content;
-        margin:0;
-        padding:0;
-        background:transparent;
+    .journey-content{
+      padding:10px 10px;  
     }
 
-    .take2-footer .pill-button{
-        padding:clamp(6px,1.15cqw,9px)
-                 clamp(11px,2.1cqw,21px);
-        font-size:clamp(.8rem,1.75cqw,.96rem);
+    .journey-content h2{
+        text-align:center;
+        margin:0;
+        padding-bottom:0px;
+        font-size:1.2rem;
+    } 
+
+    .journey-content p{
+        margin-top:4px;
+        margin-bottom:0;
+        line-height:1.45;
     }
+
+
 }
+
+
 
 /* Let the content progressively tighten as its own container narrows. */
 @container take2 (max-width:650px){
@@ -2403,16 +2428,6 @@ footer p{
 
     .take2-invite{
         font-size:clamp(.73rem,1.95cqw,.88rem);
-    }
-}
-
-@container take2 (max-width:500px){
-    .take2-question-panel{
-        max-width:90cqw;
-    }
-
-    .take2-footer{
-        gap:clamp(6px,1.5cqw,10px);
     }
 }
 
@@ -2453,29 +2468,6 @@ footer p{
         display:none;
     }
 
-    /*
-      IMPORTANT:
-      Because .take2-question-panel is now static, this
-      absolute footer looks for .take2-feature — its nearest
-      positioned ancestor — instead of the text panel.
-    */
-    .take2-footer{
-        position:absolute;
-        left:20%;
-        right:auto;
-        bottom:clamp(7%,9cqw,13%);
-        top:auto;
-        transform:translateY(380%);
-
-        z-index:3;
-        width:max-content;
-        margin:0;
-        padding:0;
-
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        gap:clamp(7px,1.5cqw,14px);
-        background:transparent;
-    }
+    
+    
 }
