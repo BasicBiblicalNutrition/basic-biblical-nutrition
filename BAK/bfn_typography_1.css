@@ -1,0 +1,57 @@
+/* =========================================================
+   BIBLICAL FUNCTIONAL NUTRITION
+   ========================================================= */
+
+.overview-panel .overview-text {
+    font-family: "IM Fell English", Georgia, serif;
+}
+
+.overview-text p.bfn-illuminated {
+    font-family: "IM Fell English", Georgia, serif;
+    font-size: 1.12rem;
+    line-height: 1.65;
+    color: #3f3f38;
+    margin: 0;
+}
+
+
+/* Illuminated opening letter */
+
+.bfn-dropcap {
+    float: left;
+    font-family: "IM Fell English SC", "IM Fell English", Georgia, serif;
+    font-size: 4.2em;
+    line-height: 0.78;
+    padding: 0.08em 0.08em 0 0;
+    color: #6E7D32;
+    font-weight: 400;
+}
+
+
+/* Subtle scholarly terminology */
+
+.bfn-term {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: #6E7D32;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    cursor: help;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   --------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    .overview-text p.bfn-illuminated {
+        font-size: 1rem;
+        line-height: 1.55;
+    }
+
+    .bfn-dropcap {
+        font-size: 3.5em;
+    }
+}

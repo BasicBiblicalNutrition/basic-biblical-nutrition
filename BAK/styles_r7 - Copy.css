@@ -610,13 +610,14 @@ body.dyslexia-font li{
 
 .hero h1{
     font-family: "Script MT", cursive;
-    font-size: 4rem;
+    font-size: 3.4rem;  /* 4rem */
     font-weight: 400;
     color: #7a5a12;
     margin-top: 0;
     margin-bottom: 12px;
     line-height: 1.15;
 }
+
 
 /*     font-family: "Cormorant Garamond", serif;*/ 
 
@@ -627,6 +628,15 @@ body.dyslexia-font li{
     color: #7a5a12;
     margin-top: 0;
     margin-bottom: 12px;
+}
+
+@media (max-width: 1100px) {
+    .hero h1{
+        font-size: 2rem;
+    }
+    .hero h2 {
+        font-size: 1rem;
+    }
 }
 
 .hero img{
@@ -1450,27 +1460,23 @@ body.dyslexia-font li{
 
 
 .journey_scripture{
-     padding-top:20px;      /* move everything down */
+     padding-top:10px;      /* move everything down */
 
 
 }
 
 .journey_scripture p{
-    margin-top:5px;
+    margin-top: 6px;
     margin-bottom:0;
     line-height:1.20;
     text-align:right;
 
 }
 
-
-
 .journey-overlay{
-
-    top:230px;      /* move everything down */
-    right: 260px; 
-    position: absolute;
-
+    position:absolute;
+    top:100px;
+    width:52%;
 }
 
 .journey-content{
@@ -1500,23 +1506,30 @@ body.dyslexia-font li{
     line-height:1.55;
 }
 
+.journey-footer{
+    position:absolute;
+     bottom:100px;
+    right:0;
+    width:52%;
+}
+
 .journey-buttons{
     display:flex;
     justify-content:center;
-    transform: translateX(125px);
     gap:40px;
     margin-top:10px;
 }
 
 .journey-buttons .pill-button{
     display:inline-block;
-    padding:10px 24px;
+    padding:8px 18px;
     border:1px solid #C6B17A;
     border-radius:999px;
     background:linear-gradient(#FFF9E8,#E8D39A);
     color:#3F321A;
     text-decoration:none;
     font-weight:700;
+    font-size:0.9rem;
     box-shadow:0 3px 10px rgba(0,0,0,.16);
     white-space:nowrap;
 }
@@ -1524,7 +1537,7 @@ body.dyslexia-font li{
 
 .journey-buttons .pill-button:first-child,
 .journey-buttons .pill-button:last-child{
-    opacity:0.45;
+    opacity:0.75;
 }
 
 /* FOOTER */
@@ -2349,7 +2362,8 @@ footer p{
 
     /* If the existing markup is plain text, hide the opening
        sentence without adding another visual box. */
-    .take2-scripture{
+    .journey_scripture,
+       .take2-scripture{
         display:none;
     }
 

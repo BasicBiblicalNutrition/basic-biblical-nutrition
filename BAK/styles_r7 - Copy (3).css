@@ -610,13 +610,14 @@ body.dyslexia-font li{
 
 .hero h1{
     font-family: "Script MT", cursive;
-    font-size: 4rem;
+    font-size: 3.4rem;  /* 4rem */
     font-weight: 400;
     color: #7a5a12;
     margin-top: 0;
     margin-bottom: 12px;
     line-height: 1.15;
 }
+
 
 /*     font-family: "Cormorant Garamond", serif;*/ 
 
@@ -627,6 +628,15 @@ body.dyslexia-font li{
     color: #7a5a12;
     margin-top: 0;
     margin-bottom: 12px;
+}
+
+@media (max-width: 1100px) {
+    .hero h1{
+        font-size: 2rem;
+    }
+    .hero h2 {
+        font-size: 1rem;
+    }
 }
 
 .hero img{
@@ -1014,7 +1024,7 @@ body.dyslexia-font li{
         display:block;
         position:relative;
         width:100%;
-        min-height:520px;
+        aspect-ratio: 16 / 9;
         margin:0 0 18px;
         padding:0;
         background-image:url("images/TreeOfLife_2.png");
@@ -1169,7 +1179,7 @@ body.dyslexia-font li{
 
     .take2-footer{
         display:flex;
-        justify-content:center;
+        justify-content:flex-end;
         align-items:center;
         gap:12px;
         margin:14px 0 10px;
@@ -1444,47 +1454,45 @@ body.dyslexia-font li{
  
     padding-bottom: 5px;   /* was much larger */
 
-    min-height: 660px;
+    /* min-height: 660px; */
+    aspect-ratio:1316 / 657;
     position: relative;
 }
 
 
 .journey_scripture{
-     padding-top:20px;      /* move everything down */
+     padding-top:10px;      /* move everything down */
 
 
 }
 
 .journey_scripture p{
-    margin-top:5px;
+    margin-top: 6px;
     margin-bottom:0;
     line-height:1.20;
     text-align:right;
 
 }
 
-
-
 .journey-overlay{
-
-    top:230px;      /* move everything down */
-    right: 260px; 
-    position: absolute;
-
+    position:absolute;
+    top:15%;
+    width:58%;
+    right: 15%;
 }
 
 .journey-content{
-    display:inline-block;
-    width:540px; 
-    
+    display:block;
+    width:100%;
+    box-sizing:border-box;
+
     padding:20px 28px;
 
     background:rgba(248,244,232,.66);
     border-radius:8px;
 
-    margin:20px auto 10px;
-    transform: translateX(170px);
-
+    margin:20px 0 10px;
+    transform:translateX(14.2%);
 }
 
 .journey-content h2{
@@ -1500,17 +1508,38 @@ body.dyslexia-font li{
     line-height:1.55;
 }
 
+.journey-footer{
+    position:absolute;
+    bottom:5%;
+    right:0;
+    width:52%;
+
+}
+
 .journey-buttons{
     display:flex;
     justify-content:center;
-    transform: translateX(125px);
     gap:40px;
     margin-top:10px;
 }
 
-.journey-buttons .pill-button:first-child,
-.journey-buttons .pill-button:last-child{
-    opacity:0.45;
+.journey-buttons .pill-button{
+    display:inline-block;
+    padding:8px 18px;
+    border:1px solid #C6B17A;
+    border-radius:999px;
+    background:linear-gradient(#FFF9E8,#E8D39A);
+    color:#3F321A;
+    text-decoration:none;
+    font-weight:700;
+    font-size:0.9rem;
+    box-shadow:0 3px 10px rgba(0,0,0,.16);
+    white-space:nowrap;
+}
+
+
+.journey-buttons .pill-button:first-child{
+    opacity:0.75;
 }
 
 /* FOOTER */
@@ -2255,143 +2284,237 @@ footer p{
 .take2-proverb-reference:hover::after,.take2-proverb-reference:focus::after{opacity:1;visibility:visible;}
 
 /*=====================================================
-  TAKE 2 — NARROW REFINEMENT
-  Floating text panel + proportional background.
+  TAKE 2 — RESPONSIVE FLOATING CONTENT
+  Uses the feature container for proportional scaling.
+  No fixed mobile heights.
 =====================================================*/
 
 @media (max-width:900px){
 
     .take2-feature{
+        display:block;
+        margin-bottom:18px;
+
         container-type:inline-size;
         container-name:take2;
         position:relative;
-        display:block;
         width:100%;
-        aspect-ratio:16 / 9;
-        background-image:url("images/TreeOfLife_2.png");
-        background-repeat:no-repeat;
-        background-position:center center;
-        background-size:100% 100%;
-        border-radius:18px;
         overflow:hidden;
+        /* Preserve the source image's proportions rather than
+           forcing a mobile height. */
+        aspect-ratio:16 / 9;
+        background-size:cover;
+        background-position:center center;
+        background-repeat:no-repeat;
     }
 
-    /* A single floating panel sized to the text, not the whole image. */
+    /* Floating text area: only as wide as its content,
+       with one translucent background. */
     .take2-question-panel{
         position:absolute;
-        z-index:2;
-        top:clamp(10px,2.5cqw,24px);
+        top:clamp(1.5%,2.5cqw,4%);
         left:50%;
         transform:translateX(-50%);
-        width:fit-content;
-        max-width:88cqw;
+        width:max-content;
+        max-width:82cqw;
         box-sizing:border-box;
         margin:0;
-        padding:clamp(8px,1.6cqw,16px)
-                 clamp(14px,2.5cqw,24px);
-        text-align:center;
+        padding:clamp(7px,1.4cqw,14px)
+                 clamp(12px,2.4cqw,24px);
         background:rgba(248,244,232,.52);
         border-radius:0;
         box-shadow:none;
-        isolation:auto;
-        overflow:visible;
+        text-align:center;
+        z-index:2;
+
     }
 
     .take2-question-panel h3{
-        margin:0 0 clamp(3px,.7cqw,7px);
+        margin:0 0 clamp(3px,.6cqw,6px);
         padding:0;
         background:transparent;
         color:#222;
-        font-size:clamp(.96rem,2.7cqw,1.28rem);
+        font-size:clamp(.9rem,2.5cqw,1.25rem);
         line-height:1.15;
         text-align:center;
     }
 
-    /* Keep only the shorter message at this width. */
+    /* Short version at narrow widths; no extra background
+       is applied to this text. */
     .take2-invite{
-        width:100%;
-        max-width:none;
+        width:auto;
+        max-width:100%;
         margin:0 auto;
         padding:0;
         background:transparent;
         color:#222;
-        font-size:0;
-        line-height:1.35;
+        font-size:clamp(.76rem,1.85cqw,.95rem);
+        line-height:1.3;
         font-weight:700;
         text-align:center;
-        box-sizing:border-box;
     }
 
-    .take2-invite::after{
-        content:"Send us your question. We’ll do our best to help you find clear, science-based answers — with a Biblical perspective.";
-        display:block;
-        width:100%;
-        font-size:clamp(.78rem,1.95cqw,.96rem);
-        line-height:1.32;
-    }
-
-    .take2-scripture{
+    .take2-invite .take2-long-copy{
         display:none;
     }
 
-    /* Pills stay outside the floating box and sit over the dish area. */
+    .take2-invite .take2-short-copy{
+        display:block;
+    }
+
+    /* If the existing markup is plain text, hide the opening
+       sentence without adding another visual box. */
+
+    .journey-overlay{
+        top:1px;
+        width:75%;
+    }
+    .journey_scripture,
+    .journey-content .section-divider,
+       .take2-scripture{
+        display:none;
+    }
+
+    /*
+    .journey-section{
+        min-height:auto;
+    }
+    */
+
+    .journey-content{
+      padding:10px 10px;  
+    }
+
+    .journey-content h2{
+        text-align:center;
+        margin:0;
+        padding-bottom:0px;
+        font-size:1.2rem;
+    } 
+
+    .journey-content p{
+        margin-top:4px;
+        margin-bottom:0;
+        line-height:1.45;
+    }
+
+    /*
+    .journey-footer{
+        bottom:20px;
+    }
+   */
+
+
+
+    /* Buttons remain outside the floating text panel and sit
+       lower over the dish/background. */
     .take2-footer{
         position:absolute;
-        z-index:3;
-        left:50%;
+        bottom:clamp(7%,9cqw,13%);
         transform:translateX(-50%);
-        bottom:clamp(9%,11cqw,15%);
-        width:max-content;
+        z-index:3;
         display:flex;
-        justify-content:center;
         align-items:center;
-        gap:clamp(8px,1.6cqw,16px);
+        justify-content:center;
+        gap:clamp(7px,1.5cqw,14px);
+        width:max-content;
         margin:0;
         padding:0;
         background:transparent;
     }
 
     .take2-footer .pill-button{
-        padding:clamp(6px,1.2cqw,9px)
-                 clamp(11px,2.2cqw,22px);
-        font-size:clamp(.84rem,1.8cqw,.98rem);
+        padding:clamp(6px,1.15cqw,9px)
+                 clamp(11px,2.1cqw,21px);
+        font-size:clamp(.8rem,1.75cqw,.96rem);
     }
 }
 
-/* As the component gets narrower, the floating panel gets proportionally
-   narrower rather than taking over the entire background. */
+/* Let the content progressively tighten as its own container narrows. */
 @container take2 (max-width:650px){
     .take2-question-panel{
-        width:fit-content;
-        max-width:90cqw;
+        max-width:86cqw;
     }
 
     .take2-question-panel h3{
-        font-size:clamp(.92rem,2.9cqw,1.14rem);
+        font-size:clamp(.86rem,2.7cqw,1.1rem);
     }
 
-    .take2-invite::after{
-        font-size:clamp(.76rem,2.05cqw,.90rem);
+    .take2-invite{
+        font-size:clamp(.73rem,1.95cqw,.88rem);
     }
 }
 
 @container take2 (max-width:500px){
     .take2-question-panel{
-        width:fit-content;
-        max-width:92cqw;
-        top:clamp(7px,2cqw,12px);
-    }
-
-    .take2-question-panel h3{
-        font-size:clamp(.88rem,3.1cqw,1.04rem);
-    }
-
-    .take2-invite::after{
-        font-size:clamp(.74rem,2.25cqw,.86rem);
+        max-width:90cqw;
     }
 
     .take2-footer{
-        gap:clamp(6px,1.8cqw,10px);
+        gap:clamp(6px,1.5cqw,10px);
     }
 }
 
+
+/*=====================================================
+  TAKE 2 — DECOUPLE THE PILLS FROM THE TEXT PANEL
+  The question panel is allowed to stay visually on the
+  right, but it no longer establishes the positioning
+  context for the footer.  The footer therefore anchors
+  to .take2-feature itself.
+=====================================================*/
+
+@media (max-width:900px){
+
+    .take2-question-panel{
+        position:static;
+        top:auto;
+        left:auto;
+        /* transform:none; */
+
+        transform:translateY(110%);
+
+        width:50%;
+        max-width:none;
+        margin-left:auto;
+        margin-right:0;
+        box-sizing:border-box;
+
+        /* The panel itself is the single floating text box. */
+        background:rgba(248,244,232,.52);
+        overflow:visible;
+        isolation:auto;
+    }
+
+    /* The old pseudo-element must not become a feature-sized
+       overlay now that the panel is no longer positioned. */
+    .take2-question-panel::before{
+        display:none;
+    }
+
+    /*
+      IMPORTANT:
+      Because .take2-question-panel is now static, this
+      absolute footer looks for .take2-feature — its nearest
+      positioned ancestor — instead of the text panel.
+    */
+    .take2-footer{
+        position:absolute;
+        left:20%;
+        right:auto;
+        bottom:clamp(7%,9cqw,13%);
+        top:auto;
+        transform:translateY(380%);
+
+        z-index:3;
+        width:max-content;
+        margin:0;
+        padding:0;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:clamp(7px,1.5cqw,14px);
+        background:transparent;
+    }
+}

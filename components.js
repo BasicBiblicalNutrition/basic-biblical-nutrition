@@ -32,6 +32,56 @@ async function initializeHomeOverview() {
 
 }
 
+function initializeTake2Popup() {
+
+    const title = document.getElementById("take2-title");
+    const popup = document.getElementById("take2-popup");
+    const close = document.querySelector(".take2-popup-close");
+
+    if (!title || !popup || !close) return;
+
+    title.addEventListener("click", () => {
+        popup.hidden = false;
+    });
+
+    close.addEventListener("click", () => {
+        popup.hidden = true;
+    });
+
+    popup.addEventListener("click", (event) => {
+        if (event.target === popup) {
+            popup.hidden = true;
+        }
+    });
+
+}
+
+function initializeMommaPopup() {
+
+    const title = document.getElementById("momma-title");
+    const popup = document.getElementById("momma-popup");
+    const close = document.querySelector(".momma-popup-close");
+
+    if (!title || !popup || !close) return;
+
+    title.addEventListener("click", () => {
+        popup.hidden = false;
+    });
+
+    close.addEventListener("click", () => {
+        popup.hidden = true;
+    });
+
+    popup.addEventListener("click", (event) => {
+        if (event.target === popup) {
+            popup.hidden = true;
+        }
+    });
+
+}
+
+
+
 async function initializePage() {
 
     await loadComponent("site-banner", "site_banner.html");
@@ -72,8 +122,12 @@ async function initializePage() {
 
     await loadComponent("take2-container", "home_take2.html");
     await initializeTake2();
+    initializeTake2Popup();
+
 
     await loadComponent("feature-section", "feature_section.html");
+    initializeMommaPopup();
+
     await initializeFeatureCarousel();
 
     await loadComponent("journey-container", "journey_section.html");

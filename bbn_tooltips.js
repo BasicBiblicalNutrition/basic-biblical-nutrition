@@ -26,6 +26,17 @@ const BBN_SCRIPTURES = {
     }
 };
 
+const BBN_TERMS = {
+    "genetics": {
+        title: "Genetics",
+        text: "The inherited instructions in our DNA that contribute to how our bodies function."
+    },
+    "epigenetics": {
+        title: "Epigenetics",
+        text: "Processes that can influence how genes are expressed without changing the underlying DNA sequence."
+    }
+};
+
 /*  document.addEventListener("DOMContentLoaded", () => {  */
 
 function initializeTooltips() {
@@ -36,7 +47,7 @@ function initializeTooltips() {
 
     document.body.appendChild(tooltip);
 
-    const hotspots = document.querySelectorAll(".bbn-hotspot");
+    const hotspots = document.querySelectorAll(".bbn-hotspot, .bfn-term");
 
 /*    hotspots.forEach(hotspot => {   */
 
@@ -56,13 +67,27 @@ function initializeTooltips() {
            const type = hotspot.dataset.bbnType;
            const id   = hotspot.dataset.bbnId;
 
-          if (type !== "scripture") return;
+          let content;
 
-           const verse = BBN_SCRIPTURES[id];
+           if (type === "scripture") {
+               const verse = BBN_SCRIPTURES[id];
+               if (!verse) return;
 
-           tooltip.innerHTML =
-           "<strong>" + verse.reference + "</strong><br><br>" +
-           verse.text;
+               content =
+               "<strong>" + verse.reference + "</strong><br><br>" +
+               verse.text;
+           } else if (type === "term") {
+               const term = BBN_TERMS[id];
+               if (!term) return;
+
+               content =
+               "<strong>" + term.title + "</strong><br><br>" +
+               term.text;
+           } else {
+               return;
+           }
+
+           tooltip.innerHTML = content;
 
            const r = hotspot.getBoundingClientRect();
 

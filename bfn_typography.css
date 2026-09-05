@@ -1,0 +1,92 @@
+/* =========================================================
+   BIBLICAL FUNCTIONAL NUTRITION
+   Typography + illuminated initial + scholarly terms
+   ========================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Uncial+Antiqua&display=swap");
+
+.overview-panel .overview-text {
+    font-family: "IM Fell English", Georgia, serif;
+}
+
+.home-overview-left > .overview-panel:first-child{
+    margin-bottom:40px;
+}
+
+
+.guided-text p,
+.about-text p,
+.overview-text p.bfn-illuminated {
+    font-family: Inter, sans-serif;
+    font-size: 1.5rem;
+     font-weight: 600;
+    line-height: 1.65;
+    color: #3f3f38;
+    margin: 0;
+}
+
+
+/* =========================================================
+   ILLUMINATED OPENING LETTER
+   ========================================================= */
+
+@font-face {
+    font-family: "Gebetsbuch Initialen";
+    src: url("fonts/GebetsbuchInitialen.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.bfn-dropcap {
+    float: left;
+    font-family: "Gebetsbuch Initialen", serif;
+    font-size: 5.2em;
+    line-height: 0.72;
+    margin: 0.02em 0.12em 0 0;
+    padding: 0;
+    color: #9A6A3A;
+    font-weight: normal;
+}
+
+.bfn-highlight {
+    color: #9A6A3A;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SCHOLARLY TERMINOLOGY
+   ========================================================= */
+
+.bfn-term {
+    color: #9A6A3A;
+    font-weight: 700;
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: #9A6A3A;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    cursor: help;
+}
+
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .guided-text p,
+    .about-text p,
+    .overview-text p.bfn-illuminated {
+        font-size: 1rem;
+        line-height: 1.55;
+    }
+
+    .bfn-dropcap {
+        font-size: 4.3em;
+        line-height: 0.72;
+        margin-right: 0.1em;
+    }
+}
