@@ -29,6 +29,10 @@ body{
   line-height:1.7;
 }
 
+html,
+body{
+    overflow-x:hidden;
+}
 
 
 .container{
@@ -370,6 +374,8 @@ body{
     display: none;
 }
 
+.take2-popup-content,
+.momma-popup-content,
 .accessibility-modal-content {
     position: relative;
     width: min(600px, 90vw);
@@ -471,12 +477,17 @@ body.high-contrast .accessibility-menu .dropdown-content a{
     color:#111;
 }
 
+
+body.high-contrast .take2-popup-content,
+body.high-contrast .momma-popup-content,
 body.high-contrast .accessibility-modal-content {
     background: #111;
     color: #ccc;
     border-color: #ccc;
 }
 
+body.high-contrast .take2-popup-close,
+body.high-contrast .momma-popup-close,
 body.high-contrast .accessibility-modal-content h2,
 body.high-contrast .accessibility-modal-content p,
 body.high-contrast .accessibility-modal-close {
@@ -521,7 +532,7 @@ body.high-contrast .take2-footer{
     justify-content:center;
     align-items:center;
     gap:18px;          /* space between buttons */
-    margin-top:96px;
+    margin-top:0;
 }
 
 
@@ -1045,19 +1056,6 @@ body.dyslexia-font li{
     display:none;
 }
 
-.momma-popup-content,
-.take2-popup-content{
-    position:relative;
-    width:min(700px,90vw);
-    max-height:85vh;
-    overflow-y:auto;
-    padding:35px 40px;
-    background:#fff;
-    border-radius:18px;
-    box-shadow:0 15px 50px rgba(0,0,0,.3);
-}
-
-
 
 .momma-popup-close,
 .take2-popup-close{
@@ -1102,9 +1100,15 @@ body.dyslexia-font li{
         cursor:pointer;
     }
 
+    .take2-footer .pill-button{
+        display:flex !important;
+        visibility:visible !important;
+        opacity:1 !important;
+    }
+
     .take2-footer .pill-button a,
     .take2-footer .pill-button{
-        color:#222;
+        color:#222 !important;
         font-weight:800;
         text-decoration:none;
     }
@@ -1138,7 +1142,7 @@ body.dyslexia-font li{
         background-repeat:no-repeat;
         background-position:center center;
         background-size:cover;
-        border-radius:18px;
+  
         box-shadow:0 6px 18px rgba(0,0,0,.08);
         overflow:hidden;
     }
@@ -1177,6 +1181,7 @@ body.dyslexia-font li{
         );
     }
 
+    body.high-contrast .take2-question-panel h3,
     .take2-question-panel h3{
         margin:0 0 12px;
         color:#222;
@@ -1184,6 +1189,7 @@ body.dyslexia-font li{
         line-height:1.15;
     }
 
+    body.high-contrast .take2-invite,
     .take2-invite{
         max-width:620px;
         margin:0 0 16px;
@@ -1193,6 +1199,7 @@ body.dyslexia-font li{
         font-weight:700;
     }
 
+    body.high-contrast .take2-scripture,
     .take2-scripture{
         max-width:610px;
         margin:0 0 18px;
@@ -1243,60 +1250,27 @@ body.dyslexia-font li{
         text-align:left;
     }
 
+  
     .take2-question-panel h3{
         text-align:center;
     }
 
+    
     .take2-invite,
     .take2-scripture{
         margin-left:0;
         margin-right:0;
     }
 
-    /*
-    .take2-footer{
-        display:flex;
-        justify-content:flex-end;
-        align-items:center;
-        gap:12px;
-        margin:14px 0 10px;
+    body.high-contrast .take2-popup-close,
+    body.high-contrast .momma-popup-close,
+    body.high-contrast .accessibility-modal-content h2,
+    body.high-contrast .accessibility-modal-content p,
+    body.high-contrast .accessibility-modal-close {
+        color: #ccc;
     }
 
-    .take2-footer .pill-button{
-        border:1px solid #C6B17A;
-        border-radius:999px;
-        padding:8px 18px;
-        background:linear-gradient(#FFF9E8,#E8D39A);
-        box-shadow:0 3px 10px rgba(0,0,0,.16);
-        cursor:pointer;
-        color:#222;
-        font-weight:800;
-        text-decoration:none;
-    }
-
-    .take2-footer .pill-button a{
-        color:#222;
-        font-weight:800;
-        text-decoration:none;
-    }
-
-    .take2-footer .pill-button:last-child{
-        background:linear-gradient(#F4F1DE,#D7E0C0);
-        color:#999;
-        opacity:1;
-        cursor:default;
-        pointer-events:none;
-    }
-
-    .take2-footer .pill-button:last-child,
-    .take2-footer .pill-button:last-child .icon{
-        color:#999;
-    }
-
-    .take2-footer .icon{
-        margin-right:5px;
-    }
-*/
+    
 
 }
 
@@ -2412,7 +2386,7 @@ footer p{
         margin:0 0 clamp(3px,.6cqw,6px);
         padding:0;
         background:transparent;
-        color:#222;
+        color:#222 !important;
         font-size:clamp(.9rem,2.5cqw,1.25rem);
         line-height:1.15;
         text-align:center;
@@ -2426,7 +2400,7 @@ footer p{
         margin:0 auto;
         padding:0;
         background:transparent;
-        color:#222;
+        color:#222 !important;
         font-size:clamp(.76rem,1.85cqw,.95rem);
         line-height:1.3;
         font-weight:700;
