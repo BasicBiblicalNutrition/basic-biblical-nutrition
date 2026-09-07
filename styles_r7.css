@@ -2246,7 +2246,9 @@ footer p{
     display:block;
 }
 
-
+.take2{
+    margin-top:-12px;
+}
 
 
 
@@ -2255,9 +2257,6 @@ footer p{
     width:100%;
 }
 
-.take2-h2{
-    margin-top:4px;
-}
 
 .guided-layout{
     display:block;
