@@ -322,6 +322,7 @@ body{
     gap:12px;
 }
 
+.accessibility-menu a,
 .accessibility-menu .dropdown-content a{
     display:flex;
     align-items:center;
