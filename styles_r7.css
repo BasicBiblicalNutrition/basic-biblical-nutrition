@@ -2214,7 +2214,14 @@ footer p{
     width:100%;
 }
 
-.journey-buttons .pill-button,
+.journey-buttons .pill-button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:6px 12px;
+    font-size:0;
+}
+
 .take2-footer .pill-button{
     padding:6px 12px;
     font-size:0;
