@@ -2245,7 +2245,7 @@ footer p{
         left:auto;
         /* transform:none; */
 
-        transform:translateY(50%);
+        transform:translateY(10%);
 
         width:50%;
         max-width:none;
