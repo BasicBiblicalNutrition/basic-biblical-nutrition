@@ -2496,6 +2496,7 @@ footer p{
 @container take2 (max-width:650px){
     .take2-question-panel{
         max-width:86cqw;
+        top: -2%;
     }
 
     .take2-question-panel h3{
