@@ -1535,6 +1535,10 @@ body.dyslexia-font li{
     right: 15%;
 }
 
+.journey-text-mobile{
+    display:none;
+}
+
 .journey-content{
     display:block;
     width:100%;
@@ -2234,38 +2238,22 @@ footer p{
     font-size:1rem;
 }
 
+.journey-text-full{
+     display:none;
+}
+
+.journey-text-mobile{
+    display:block;
+}
+
+
+
+
+
 .overview-left,
 .take2{
     width:100%;
 }
-
-    .take2-question-panel{
-        position:static;
-        top:auto;
-        left:auto;
-        /* transform:none; */
-
-        transform:translateY(10%);
-
-        width:50%;
-        max-width:none;
-        margin-left:auto;
-        margin-right:0;
-        box-sizing:border-box;
-
-        /* The panel itself is the single floating text box. */
-        background:rgba(248,244,232,.52);
-        overflow:visible;
-        isolation:auto;
-    }
-
-
-
-
-
-
-
-
 
 
 .guided-layout{
