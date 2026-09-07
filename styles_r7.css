@@ -2196,7 +2196,7 @@ footer p{
         color:#222;
     }
 
-    
+
 /*=====================================================
   Home Overview - Mobile
   border:3px solid red;
@@ -2214,7 +2214,16 @@ footer p{
     width:100%;
 }
 
+.take2-footer .pill-button{
+    padding:6px 12px;
+    font-size:0;
+    min-width:34px;
+}
 
+.take2-footer .pill-button .icon{
+    margin-right:0;
+    font-size:1rem;
+}
 
 .overview-left,
 .take2{
