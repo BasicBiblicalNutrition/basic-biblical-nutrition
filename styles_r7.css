@@ -2496,7 +2496,6 @@ footer p{
 @container take2 (max-width:650px){
     .take2-question-panel{
         max-width:86cqw;
-        top: -2%;
     }
 
     .take2-question-panel h3{
@@ -2551,6 +2550,6 @@ footer p{
 
 @media (max-width:700px){
     .take2-question-panel{
-        top: -2%;
-    }
+       transform:translateY(90%);
+}
 }
