@@ -103,7 +103,7 @@ function initializeTooltips() {
             } else {
                 // phone / far left
                 tooltip.style.left =
-                    (window.scrollX + r.left - tooltip.offsetWidth + 76) + "px";
+                    (window.scrollX + r.left - tooltip.offsetWidth + 90) + "px";
             }
 
            tooltip.style.top =
