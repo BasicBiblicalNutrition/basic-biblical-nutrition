@@ -2196,7 +2196,7 @@ footer p{
     padding:10px;
 }
 
-
+    body.high-contrast .banner-nav.mobile-open .banner-nav > a,
     body.high-contrast .banner-nav.mobile-open .accessibility-menu > a,
     body.high-contrast .banner-nav.mobile-open .accessibility-menu .dropdown-content a{
         color:#222;
