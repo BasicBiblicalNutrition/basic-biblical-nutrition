@@ -2190,9 +2190,7 @@ footer p{
     cursor:pointer;
 }
 
-.hero h1{
-    font-weight:700;
-}
+
 
 .container{
     padding:10px;
@@ -2552,4 +2550,8 @@ footer p{
     
 }
 
-
+@media (max-width:700px){
+    .hero h1{
+        font-weight:700;
+    }
+}
