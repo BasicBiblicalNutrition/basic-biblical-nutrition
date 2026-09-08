@@ -1232,7 +1232,7 @@ body.dyslexia-font li{
         background-repeat:no-repeat;
         background-position:center center;
         background-size:cover;
-        border-radius:18px;
+        border-radius:0px;
         overflow:hidden;
     }
 
