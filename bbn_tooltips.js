@@ -90,11 +90,36 @@ function initializeTooltips() {
            tooltip.innerHTML = content;
 
            const r = hotspot.getBoundingClientRect();
+            const spaceLeft = r.left;
+            const spaceRight = window.innerWidth - r.right;
 
            tooltip.style.display = "block";
 
-           tooltip.style.left =
+           /*
+           if (spaceLeft >= tooltip.offsetWidth + 20) {
+                tooltip.style.left =
                    (window.scrollX + r.right + 20) + "px";
+
+           } else { 
+                tooltip.style.left =
+                     (window.scrollX + r.left - tooltip.offsetWidth - 20) + "px";  
+           }
+            */
+            if (window.innerWidth >= 1100) {
+                // far right / desktop
+                tooltip.style.left =
+                    (window.scrollX + r.right + 20) + "px";
+
+            } else if (window.innerWidth >= 701) {
+                // middle range
+                tooltip.style.left =
+                    (window.scrollX + r.right + 20) + "px";
+
+            } else {
+                // phone / far left
+                tooltip.style.left =
+                    (window.scrollX + r.left - tooltip.offsetWidth - 20) + "px";
+            }
 
            tooltip.style.top =
                    (window.scrollY + r.top - 10) + "px";
