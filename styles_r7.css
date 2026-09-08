@@ -2552,6 +2552,10 @@ footer p{
 
 @media (max-width:700px){
     .hero h1{
-        font-weight:700;
+        font-family:"Lato", sans-serif;
+        font-size:1.6rem;
+        font-weight:600;
+        color:#6b4d23;
+        margin-top:60px;
     }
 }
