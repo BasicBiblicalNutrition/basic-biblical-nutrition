@@ -105,12 +105,7 @@ function initializeTooltips() {
                      (window.scrollX + r.left - tooltip.offsetWidth - 20) + "px";  
            }
             */
-            if (window.innerWidth >= 1100) {
-                // far right / desktop
-                tooltip.style.left =
-                    (window.scrollX + r.right + 20) + "px";
-
-            } else if (window.innerWidth >= 701) {
+            if (window.innerWidth >= 701) {
                 // middle range
                 tooltip.style.left =
                     (window.scrollX + r.right + 20) + "px";
