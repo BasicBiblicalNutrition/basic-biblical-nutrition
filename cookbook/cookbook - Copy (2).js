@@ -66,7 +66,7 @@ function render(pageIndex, direction="", animate=true){
     ? Math.min(startPage+2,pages.length)
     : startPage+1;
 
-  status.textContent=`Pages ${startPage+1} of ${pages.length}`;
+  status.textContent=`Pages ${startPage+1}–${endPage} of ${pages.length}`;
 
   const atBeginning=startPage===0;
   const atEnd=endPage>=pages.length;
@@ -214,25 +214,18 @@ async function loadTOC(){
       button.className = 'toc-item';
       button.textContent = title;
 
+      /*
+         Navigation hook comes later.
+         For now we are only testing the
+         seven XML recipe titles.
+      */
       button.dataset.recipeIndex = index;
 
       button.addEventListener('click', async () => {
-        if (typeof window.BBN_LOAD_RECIPE_FROM_TOC !== 'function') {
-          console.error('BBN_LOAD_RECIPE_FROM_TOC is not available.');
-          return;
-        }
-
-        try {
+        if (typeof window.BBN_LOAD_RECIPE_FROM_TOC === 'function') {
           await window.BBN_LOAD_RECIPE_FROM_TOC(index);
-
-          const menu = document.getElementById('tocMenu');
-          const toggle = document.getElementById('tocToggle');
-          if (menu) menu.setAttribute('hidden', '');
-          if (toggle) toggle.setAttribute('aria-expanded', 'false');
-
-          document.getElementById('book')?.focus({preventScroll:true});
-        } catch (error) {
-          console.error('Unable to load recipe from ToC:', title, error);
+        } else {
+          console.error('BBN_LOAD_RECIPE_FROM_TOC is not available.');
         }
       });
 
@@ -250,23 +243,25 @@ async function loadTOC(){
 
 loadTOC();
 
-// Banner ToC dropdown — mirrors the recipe list in the main ToC.
 function syncBannerTOC(){
   const source = document.getElementById('recipeTOCList');
   const menu = document.getElementById('tocMenu');
   if(!source || !menu) return;
 
   menu.innerHTML = '';
+
   source.querySelectorAll('.toc-item').forEach(original => {
     const item = document.createElement('button');
     item.type = 'button';
     item.className = 'toc-menu-item';
     item.textContent = original.textContent.trim();
+
     item.addEventListener('click', () => {
       original.click();
       menu.setAttribute('hidden','');
-      tocToggle?.setAttribute('aria-expanded','false');
+      document.getElementById('tocToggle')?.setAttribute('aria-expanded','false');
     });
+
     menu.appendChild(item);
   });
 }
@@ -277,13 +272,16 @@ if(tocList) tocListObserver.observe(tocList, {childList:true});
 
 const tocToggle = document.getElementById('tocToggle');
 const tocMenu = document.getElementById('tocMenu');
+
 if(tocToggle && tocMenu){
   tocToggle.addEventListener('click', e => {
     e.stopPropagation();
     syncBannerTOC();
+
     const open = tocMenu.hasAttribute('hidden');
     if(open) tocMenu.removeAttribute('hidden');
     else tocMenu.setAttribute('hidden','');
+
     tocToggle.setAttribute('aria-expanded', String(open));
   });
 

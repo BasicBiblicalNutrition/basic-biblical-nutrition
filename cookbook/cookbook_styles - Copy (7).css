@@ -1046,25 +1046,6 @@ body {
 }
 
 @media(max-width:780px){
-    /* V32 — mobile ToC opens as a readable pull-down */
-    #tocContainer.toc-open{
-        position:absolute;
-        top:72px;
-        left:10px;
-        width:min(300px, calc(100vw - 20px));
-        z-index:9999;
-    }
-    #tocContainer.toc-open .toc-panel{
-        display:block!important;
-        position:relative;
-        top:auto;
-        width:100%;
-        max-height:60vh;
-        overflow-y:auto;
-        margin:0;
-        padding:10px;
-    }
-
     .toc-dropdown-menu{
         left:auto;
         right:0;
