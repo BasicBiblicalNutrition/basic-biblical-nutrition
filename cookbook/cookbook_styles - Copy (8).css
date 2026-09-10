@@ -1254,19 +1254,3 @@ body {
     line-height:.95 !important;
   }
 }
-
-/* V33 — phone cleanup: hide page counter and pull ToC closer to the button */
-@media (max-width:700px){
-  .status{
-    display:none!important;
-  }
-}
-
-@media (max-width:780px){
-  .toc-dropdown-menu{
-    right:-10px!important;
-    left:auto!important;
-    min-width:250px!important;
-    max-width:calc(100vw - 20px)!important;
-  }
-}
