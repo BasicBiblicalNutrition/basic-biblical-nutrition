@@ -1227,11 +1227,3 @@ body {
     letter-spacing:2px !important;
   }
 }
-
-/* V31 — wrap cookbook title on phone */
-@media (max-width:700px){
-  .banner-brand-text h1{
-    white-space:normal !important;
-    line-height:.95 !important;
-  }
-}
