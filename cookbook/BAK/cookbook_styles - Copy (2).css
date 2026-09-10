@@ -227,14 +227,6 @@ h3{color:var(--olive);line-height:1.05}
   .header{grid-template-columns:1fr}
   .controls{justify-content:flex-start}
 }
-
-/* V28 — remove the flipbook spine below 900px */
-@media(max-width:900px){
-  .notebook::before{
-    display:none!important;
-  }
-}
-
 @media(max-width:780px){
   .toc-panel{display:none}.reading-layout{display:block}
   .book-arrow{width:42px;height:42px;font-size:34px;line-height:34px}
@@ -263,10 +255,10 @@ h3{color:var(--olive);line-height:1.05}
 /* Extracted from cookbook_rev1.html */
 /* V21: banner logo only */
 .header .banner-logo{
-  width:clamp(48px, 6.1vw, 68px);
-  height:clamp(48px, 6.1vw, 68px);
+  width:68px;
+  height:68px;
   object-fit:contain;
-  flex:0 0 auto;
+  flex:0 0 68px;
   display:block;
 }
 
@@ -587,10 +579,10 @@ h3{color:var(--olive);line-height:1.05;margin:8px 0 3px}
 
 /* V21: banner logo only */
 .header .banner-logo{
-  width:clamp(48px, 6.1vw, 68px);
-  height:clamp(48px, 6.1vw, 68px);
+  width:68px;
+  height:68px;
   object-fit:contain;
-  flex:0 0 auto;
+  flex:0 0 68px;
   display:block;
 }
 
@@ -930,15 +922,7 @@ body {
     white-space: nowrap;
 }
 
-@media (max-width: 1250px) {
-    .banner-brand-text > div:not(.banner-kicker) {
-        display: none !important;
-    }
-
-    .banner-brand-text h1 {
-        font-size: clamp(1.7rem, 3.1vw, 2.55rem) !important;
-    }
-
+@media (max-width: 1000px) {
     .header {
         display: flex !important;
         flex-wrap: wrap !important;
@@ -977,7 +961,6 @@ body {
     grid-row: 1 / span 2 !important;
     align-self: center !important;
     margin: 0 !important;
-    font-size: clamp(1.05rem, 1.4vw, 1.65rem) !important;
 }
 
 .banner-brand-text h1 {
@@ -987,7 +970,7 @@ body {
     white-space: nowrap !important;
     font-family: "Alex Brush", cursive !important;
     font-weight: 800 !important;
-    font-size: clamp(1.7rem, 3.1vw, 2.55rem) !important;
+    font-size: 2.55rem !important;
 }
 
 .banner-brand-text > div:not(.banner-kicker) {
@@ -997,62 +980,6 @@ body {
     white-space: nowrap !important;
 }
 
-
-/* V27 — banner Table of Contents dropdown
-   Mirrors the actual recipe list built in the cookbook TOC.
-*/
-.toc-dropdown{
-    position:relative;
-    flex:0 0 auto;
-}
-
-.toc-dropdown-menu{
-    position:absolute;
-    top:calc(100% + 8px);
-    left:0;
-    z-index:500;
-    min-width:260px;
-    max-width:min(360px, calc(100vw - 32px));
-    max-height:min(70vh, 520px);
-    overflow-y:auto;
-    padding:8px;
-    background:linear-gradient(#f8f0dc,#eee3c5);
-    border:1px solid #c5b68d;
-    border-radius:12px;
-    box-shadow:0 8px 16px rgba(40,25,10,.25);
-}
-
-.toc-menu-item{
-    display:block;
-    width:100%;
-    text-align:left;
-    border:0;
-    border-bottom:1px solid rgba(203,189,155,.75);
-    background:transparent;
-    border-radius:0;
-    padding:10px 12px;
-    color:var(--ink);
-    font-size:.94rem;
-    cursor:pointer;
-}
-
-.toc-menu-item:last-child{border-bottom:0}
-
-.toc-menu-item:hover{
-    background:#e7e5bf;
-    color:var(--olive-dark);
-    font-weight:bold;
-    border-radius:6px;
-}
-
-@media(max-width:780px){
-    .toc-dropdown-menu{
-        left:auto;
-        right:0;
-        min-width:230px;
-        max-width:calc(100vw - 32px);
-    }
-}
 
 /* ----------------------------------------------------------
    TEMPORARY RED TEXT-CAPACITY GUIDE

@@ -243,6 +243,63 @@ async function loadTOC(){
 
 loadTOC();
 
+function syncBannerTOC(){
+  const source = document.getElementById('recipeTOCList');
+  const menu = document.getElementById('tocMenu');
+  if(!source || !menu) return;
+
+  menu.innerHTML = '';
+
+  source.querySelectorAll('.toc-item').forEach(original => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'toc-menu-item';
+    item.textContent = original.textContent.trim();
+
+    item.addEventListener('click', () => {
+      original.click();
+      menu.setAttribute('hidden','');
+      document.getElementById('tocToggle')?.setAttribute('aria-expanded','false');
+    });
+
+    menu.appendChild(item);
+  });
+}
+
+const tocListObserver = new MutationObserver(syncBannerTOC);
+const tocList = document.getElementById('recipeTOCList');
+if(tocList) tocListObserver.observe(tocList, {childList:true});
+
+const tocToggle = document.getElementById('tocToggle');
+const tocMenu = document.getElementById('tocMenu');
+
+if(tocToggle && tocMenu){
+  tocToggle.addEventListener('click', e => {
+    e.stopPropagation();
+    syncBannerTOC();
+
+    const open = tocMenu.hasAttribute('hidden');
+    if(open) tocMenu.removeAttribute('hidden');
+    else tocMenu.setAttribute('hidden','');
+
+    tocToggle.setAttribute('aria-expanded', String(open));
+  });
+
+  document.addEventListener('click', e => {
+    if(!e.target.closest('.toc-dropdown')){
+      tocMenu.setAttribute('hidden','');
+      tocToggle.setAttribute('aria-expanded','false');
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape'){
+      tocMenu.setAttribute('hidden','');
+      tocToggle.setAttribute('aria-expanded','false');
+    }
+  });
+}
+
 if(fontSize){
   fontSize.addEventListener('change',e=>{
     document.documentElement.style.setProperty('--font-scale',e.target.value);

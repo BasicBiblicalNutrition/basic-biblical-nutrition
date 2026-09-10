@@ -40,7 +40,13 @@
     </svg>
   </button>
 
-  <button id="prev" type="button">← Previous</button>
+  <div class="toc-dropdown">
+    <button id="tocToggle" type="button" aria-label="Table of Contents" title="Table of Contents"
+            aria-haspopup="true" aria-expanded="false">ToC</button>
+    <div id="tocMenu" class="toc-dropdown-menu" hidden></div>
+  </div>
+
+  <button id="prev" type="button">← Prev</button>
     <span id="status" class="status" aria-live="polite">
       Pages 1–2 of 4
     </span>

@@ -227,14 +227,6 @@ h3{color:var(--olive);line-height:1.05}
   .header{grid-template-columns:1fr}
   .controls{justify-content:flex-start}
 }
-
-/* V28 — remove the flipbook spine below 900px */
-@media(max-width:900px){
-  .notebook::before{
-    display:none!important;
-  }
-}
-
 @media(max-width:780px){
   .toc-panel{display:none}.reading-layout{display:block}
   .book-arrow{width:42px;height:42px;font-size:34px;line-height:34px}
