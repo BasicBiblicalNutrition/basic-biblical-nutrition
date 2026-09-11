@@ -1265,7 +1265,7 @@ body {
 @media(max-width:780px){
   /* V34 — keep the ToC pull-down wide enough to read recipe names */
   .toc-dropdown-menu{
-    left:-55px!important;
+    left:0!important;
     right:auto!important;
     width:min(340px, calc(100vw - 20px))!important;
     min-width:0!important;
