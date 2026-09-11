@@ -9,11 +9,7 @@ import {
 
 const contactForm = document.getElementById("contact-form");
 
-
 contactForm.addEventListener("submit", async (event) => {
-
-    // Take control of the submission so Web3Forms does not
-    // replace our BBN thank-you page with its own success page.
     event.preventDefault();
     event.stopImmediatePropagation();
 
@@ -26,46 +22,52 @@ contactForm.addEventListener("submit", async (event) => {
         return;
     }
 
-    const from = document.getElementById("contact-from").value;
-    const subject = document.getElementById("contact-subject").value;
-    const body = document.getElementById("contact-body").value;
-    const mailingList = document.getElementById("mailing-list").value;
+    const formData = new FormData(contactForm);
+    const data = Object.fromEntries(formData.entries());
 
     try {
-        // Save the message to Firestore first.
-        await addDoc(collection(db, "contact_messages"), {
-            from: from,
-            subject: subject,
-            body: body,
-            mailingList: mailingList,
-            createdAt: serverTimestamp()
-        });
-
-        // Send the same form to Web3Forms for the email.
+        // Send the email FIRST. This prevents a Firebase problem
+        // from stopping the Web3Forms email from being delivered.
         const response = await fetch(
             "https://api.web3forms.com/submit",
             {
                 method: "POST",
                 headers: {
+                    "Content-Type": "application/json",
                     "Accept": "application/json"
                 },
-                body: new FormData(contactForm)
+                body: JSON.stringify(data)
             }
         );
 
         const result = await response.json();
 
-        if (response.ok && result.success) {
-            window.location.href =
-                "https://basicbiblicalnutrition.github.io/basic-biblical-nutrition/contact_thankYou.html";
+        if (!response.ok || !result.success) {
+            console.error("Web3Forms error:", result);
+            alert(
+                "Web3Forms could not send the message.\n\n" +
+                (result.message || "Unknown Web3Forms error.")
+            );
             return;
         }
 
-        console.error("Web3Forms error:", result);
-        alert("Sorry, there was a problem sending your message.");
+        // Save a copy to Firestore after Web3Forms accepts the email.
+        await addDoc(collection(db, "contact_messages"), {
+            from: data.email || "",
+            subject: data.subject || "",
+            body: data.message || "",
+            mailingList: data.mailing_list || "",
+            createdAt: serverTimestamp()
+        });
+
+        window.location.href =
+            "https://basicbiblicalnutrition.github.io/basic-biblical-nutrition/contact_thankYou.html";
 
     } catch (error) {
-        console.error("Error sending message:", error);
-        alert("Sorry, there was a problem sending your message.");
+        console.error("Contact form error:", error);
+        alert(
+            "Sorry, there was a problem sending your message.\n\n" +
+            (error.message || error)
+        );
     }
 });
