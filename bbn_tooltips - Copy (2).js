@@ -96,12 +96,14 @@ function initializeTooltips() {
            tooltip.style.display = "block";
 
             if (window.innerWidth >= 701) {
-                // Laptop / desktop: center the tooltip horizontally on the display.
+                // middle range
                 tooltip.style.left =
-                    (window.scrollX + (window.innerWidth - tooltip.offsetWidth) / 2) + "px";
+                    (window.scrollX + r.right + 20) + "px";
 
             } else {
-                // Phone: keep the existing positioning, except Epigenetics.
+                // phone
+                // Only Epigenetics gets the right-side placement.
+                // Scripture and all other tooltips keep the existing placement.
                 if (type === "term" && id === "epigenetics") {
                     tooltip.style.left =
                         (window.scrollX + r.right + 10) + "px";
