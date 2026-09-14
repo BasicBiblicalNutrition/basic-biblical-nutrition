@@ -101,9 +101,16 @@ function initializeTooltips() {
                     (window.scrollX + r.right + 20) + "px";
 
             } else {
-                // phone / far left
-                tooltip.style.left =
-                    (window.scrollX + r.left - tooltip.offsetWidth + 90) + "px";
+                // phone
+                // Only Epigenetics gets the right-side placement.
+                // Scripture and all other tooltips keep the existing placement.
+                if (type === "term" && id === "epigenetics") {
+                    tooltip.style.left =
+                        (window.scrollX + r.right + 10) + "px";
+                } else {
+                    tooltip.style.left =
+                        (window.scrollX + r.left - tooltip.offsetWidth + 90) + "px";
+                }
             }
 
            tooltip.style.top =
